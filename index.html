@@ -368,7 +368,134 @@
   .overlay-card button:disabled{opacity:.4;cursor:not-allowed;}
   .overlay-card button:hover:not(:disabled){background:#000;}
 
-  /* ---------- Datumbalk ---------- */
+  /* ---------- Landingspagina ---------- */
+  .landing-bg{
+    position:fixed;inset:0;
+    background:var(--charcoal);
+    display:flex;align-items:center;justify-content:center;
+    z-index:200;
+    background-image: radial-gradient(ellipse at 60% 40%, #2A2A2A 0%, #1A1A1A 100%);
+  }
+  .landing-card{
+    background:#fff;
+    border-radius:10px;
+    padding:40px 44px;
+    width:360px;
+    box-shadow:0 24px 60px rgba(0,0,0,.4);
+    text-align:center;
+  }
+  .landing-logo{display:flex;justify-content:center;margin-bottom:16px;}
+  .landing-title{
+    margin:0 0 4px 0;
+    font-size:20px;
+    font-family:Georgia,serif;
+    color:var(--charcoal);
+    font-weight:700;
+  }
+  .landing-sub{
+    margin:0 0 28px 0;
+    font-size:13px;
+    color:#9A9284;
+    font-family:Arial,sans-serif;
+  }
+  .landing-form{text-align:left;}
+  .landing-label{
+    display:block;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:#77705F;
+    font-family:Arial,sans-serif;
+    margin-bottom:5px;
+    margin-top:14px;
+  }
+  .landing-form select,
+  .landing-form input[type="password"]{
+    width:100%;
+    padding:11px 13px;
+    font-size:14px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:inherit;
+    box-sizing:border-box;
+    margin-bottom:2px;
+  }
+  .landing-form select:focus,
+  .landing-form input[type="password"]:focus{
+    outline:none;
+    border-color:var(--gold);
+    box-shadow:0 0 0 2px rgba(176,141,87,.15);
+  }
+  #landing-btn{
+    width:100%;
+    margin-top:20px;
+    padding:13px;
+    background:var(--charcoal);
+    color:var(--gold-light);
+    border:none;
+    border-radius:6px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    font-family:inherit;
+    letter-spacing:.01em;
+  }
+  #landing-btn:hover:not(:disabled){background:#000;}
+  #landing-btn:disabled{background:#C4BCAC;color:#fff;cursor:not-allowed;}
+  #landing-error{
+    color:#B04545;
+    font-size:12px;
+    margin-top:6px;
+    font-family:Arial,sans-serif;
+  }
+  .landing-new{
+    font-size:12px;
+    color:#9A9284;
+    text-align:center;
+    margin-top:14px;
+    font-family:Arial,sans-serif;
+    font-style:italic;
+  }
+  .dept-grid{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin:20px 0;
+  }
+  .dept-btn{
+    padding:16px;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    background:var(--paper);
+    cursor:pointer;
+    font-family:inherit;
+    text-align:left;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    transition:border-color .15s;
+  }
+  .dept-btn:hover{border-color:var(--gold);background:var(--cream);}
+  .dept-btn.own-dept{border-color:var(--gold);background:var(--cream);}
+  .dept-btn-icon{font-size:22px;flex-shrink:0;}
+  .dept-btn-name{font-size:14px;font-weight:700;color:var(--charcoal);display:block;}
+  .dept-btn-sub{font-size:11.5px;color:#9A9284;display:block;margin-top:1px;}
+  .landing-logout{
+    background:none;
+    border:none;
+    color:#9A9284;
+    font-size:12px;
+    cursor:pointer;
+    font-family:inherit;
+    text-decoration:underline;
+    margin-top:4px;
+  }
+  .landing-logout:hover{color:var(--charcoal);}
+  @media (max-width:440px){
+    .landing-card{width:92vw;padding:32px 24px;}
+  }
   .date-bar{
     position:fixed;
     bottom:0;
@@ -855,7 +982,56 @@
 </head>
 <body>
 
-<div class="sidebar">
+<!-- Landingspagina -->
+<div id="landing" style="display:none;">
+  <div class="landing-bg">
+    <div class="landing-card">
+      <div class="landing-logo">
+        <div class="brand-mark" style="width:48px;height:48px;font-size:18px;border:2px solid #B08D57;color:#B08D57;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-weight:700;">UR</div>
+      </div>
+      <h1 class="landing-title">Urban Residences</h1>
+      <p class="landing-sub">Checklisten — Alle Afdelingen</p>
+
+      <div class="landing-form">
+        <label class="landing-label">Naam</label>
+        <select id="landing-name">
+          <option value="" disabled selected>Kies je naam…</option>
+        </select>
+
+        <div id="landing-pin-wrap" style="display:none;">
+          <label class="landing-label" id="landing-pin-label">Pincode</label>
+          <input type="password" id="landing-pin" inputmode="numeric" maxlength="4" placeholder="4 cijfers" autocomplete="off">
+          <div id="landing-confirm-wrap" style="display:none;">
+            <label class="landing-label">Herhaal pincode</label>
+            <input type="password" id="landing-confirm" inputmode="numeric" maxlength="4" placeholder="Herhaal 4 cijfers" autocomplete="off">
+          </div>
+          <div id="landing-error" style="display:none;"></div>
+        </div>
+
+        <button id="landing-btn" disabled>Inloggen</button>
+
+        <p class="landing-new" id="landing-new-hint" style="display:none;">Nieuwe medewerker? Vraag Martin om je naam toe te voegen.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Afdeling keuzemenu na inloggen -->
+<div id="dept-picker" style="display:none;">
+  <div class="landing-bg">
+    <div class="landing-card">
+      <div class="landing-logo">
+        <div class="brand-mark" style="width:48px;height:48px;font-size:18px;border:2px solid #B08D57;color:#B08D57;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-weight:700;">UR</div>
+      </div>
+      <h1 class="landing-title">Welkom, <span id="dept-welcome-name"></span></h1>
+      <p class="landing-sub">Kies je afdeling om te starten</p>
+      <div id="dept-buttons" class="dept-grid"></div>
+      <button class="landing-logout" onclick="logout()">Andere naam inloggen</button>
+    </div>
+  </div>
+</div>
+
+<div class="sidebar" style="display:none;">
   <div class="brand">
     <div class="brand-mark">UR</div>
     <div class="brand-text"><strong>Urban Residences</strong>Checklisten — Alle Afdelingen</div>
@@ -887,7 +1063,7 @@
   </div>
 </div>
 
-<main>
+<main style="display:none;">
   <div class="page-header">
     <h1 id="page-title" class="serif"></h1>
     <div class="sub" id="page-sub"></div>
@@ -904,7 +1080,7 @@
   </footer>
 </main>
 
-<div class="date-bar">
+<div class="date-bar" style="display:none;">
   <button class="date-nav" id="date-prev" title="Vorige week">‹</button>
   <div class="date-month" id="date-month"></div>
   <div class="date-strip" id="date-strip"></div>
@@ -938,6 +1114,24 @@ const EMPLOYEE_LISTS = {
   hk: ["Martin Snijders"],
 };
 function employeesFor(dept){ return EMPLOYEE_LISTS[dept] || []; }
+
+// Bepaal de primaire afdeling van een medewerker (eerste match)
+function userDept(name){
+  for(const [dept, list] of Object.entries(EMPLOYEE_LISTS)){
+    if(list.includes(name)) return dept;
+  }
+  return "fo";
+}
+
+// Eerste shift die bij een afdeling hoort
+function deptDefaultShift(dept){
+  const map = { fo: "ochtend", ad: "ad", hk: "hk" };
+  return map[dept] || "ochtend";
+}
+
+function deptLabel(dept){
+  return dept === "fo" ? "Front Office" : dept === "ad" ? "Algemene Dienst" : "Housekeeping";
+}
 const ADMIN_NAME = "Martin Snijders";
 // Admin-pincode is NIET in broncode opgeslagen — wordt lokaal bewaard net als medewerkers.
 
@@ -1366,7 +1560,7 @@ function startAutoLogout(){
     if(idleMin >= AUTO_LOGOUT_MINUTES){
       currentUser = null;
       try{ if(window.storage) window.storage.delete(USER_KEY, false); }catch(e){}
-      render();
+      showLanding();
     }
   }, 60000);
 }
@@ -3167,13 +3361,141 @@ function renderSendBar(){
   btn.onclick = sendReportMail;
 }
 
+// ---------- Landingspagina ----------
+const ALL_EMPLOYEES = [...new Set(Object.values(EMPLOYEE_LISTS).flat())].sort((a,b)=>a.localeCompare(b,"nl"));
+
+function showLanding(){
+  document.getElementById("landing").style.display = "block";
+  document.getElementById("dept-picker").style.display = "none";
+  document.querySelector(".sidebar").style.display = "none";
+  document.querySelector("main").style.display = "none";
+  document.querySelector(".date-bar")?.style && (document.querySelector(".date-bar").style.display = "none");
+
+  const sel = document.getElementById("landing-name");
+  sel.innerHTML = '<option value="" disabled selected>Kies je naam…</option>';
+  ALL_EMPLOYEES.forEach(n=>{
+    const opt = document.createElement("option");
+    opt.value = n; opt.textContent = n;
+    sel.appendChild(opt);
+  });
+
+  const pinWrap = document.getElementById("landing-pin-wrap");
+  const pinInput = document.getElementById("landing-pin");
+  const confirmWrap = document.getElementById("landing-confirm-wrap");
+  const confirmInput = document.getElementById("landing-confirm");
+  const pinLabel = document.getElementById("landing-pin-label");
+  const errorEl = document.getElementById("landing-error");
+  const btn = document.getElementById("landing-btn");
+  const newHint = document.getElementById("landing-new-hint");
+
+  pinWrap.style.display = "none";
+  btn.disabled = true;
+  errorEl.style.display = "none";
+  newHint.style.display = "none";
+
+  sel.onchange = async ()=>{
+    pinInput.value = ""; confirmInput.value = "";
+    errorEl.style.display = "none";
+    btn.disabled = true;
+    if(!sel.value){ pinWrap.style.display = "none"; return; }
+    pinWrap.style.display = "block";
+    const existing = await getPin(sel.value);
+    if(!existing){
+      pinLabel.textContent = "Kies een pincode (4 cijfers)";
+      confirmWrap.style.display = "block";
+      newHint.style.display = "none";
+    } else {
+      pinLabel.textContent = "Pincode";
+      confirmWrap.style.display = "none";
+    }
+    pinInput.focus();
+  };
+
+  const checkBtn = ()=>{
+    const isNew = confirmWrap.style.display !== "none";
+    btn.disabled = isNew
+      ? (pinInput.value.length !== 4 || confirmInput.value.length !== 4)
+      : pinInput.value.length !== 4;
+  };
+  pinInput.oninput = ()=>{ errorEl.style.display = "none"; checkBtn(); };
+  confirmInput.oninput = ()=>{ errorEl.style.display = "none"; checkBtn(); };
+  pinInput.onkeydown = (e)=>{ if(e.key==="Enter" && !btn.disabled) btn.click(); };
+  confirmInput.onkeydown = (e)=>{ if(e.key==="Enter" && !btn.disabled) btn.click(); };
+
+  btn.onclick = async ()=>{
+    const name = sel.value;
+    if(!name) return;
+    const existing = await getPin(name);
+    if(!existing){
+      if(pinInput.value.length !== 4){ showError("Kies een pincode van 4 cijfers."); return; }
+      if(pinInput.value !== confirmInput.value){ showError("Pincodes komen niet overeen."); pinInput.value=""; confirmInput.value=""; pinInput.focus(); return; }
+      await savePin(name, pinInput.value);
+    } else {
+      if(pinInput.value !== existing){ showError("Onjuiste pincode. Probeer opnieuw."); pinInput.value=""; pinInput.focus(); btn.disabled=true; return; }
+    }
+    await saveUser(name);
+    showDeptPicker(name);
+  };
+
+  function showError(msg){ errorEl.textContent = msg; errorEl.style.display = "block"; }
+}
+
+function showDeptPicker(name){
+  document.getElementById("landing").style.display = "none";
+  document.getElementById("dept-picker").style.display = "block";
+  document.getElementById("dept-welcome-name").textContent = name.split(" ")[0];
+
+  const ownDept = userDept(name);
+  const depts = [
+    { key:"fo", icon:"🏨", name:"Front Office", sub:"Ochtend, Avond, Nacht, Duty Rapport" },
+    { key:"ad", icon:"🧹", name:"Algemene Dienst", sub:"09:30 – 19:30 uur" },
+    { key:"hk", icon:"🛏️", name:"Housekeeping", sub:"HK Supervisor 09:00 – 17:00 uur" },
+  ];
+
+  const grid = document.getElementById("dept-buttons");
+  grid.innerHTML = "";
+  depts.forEach(d=>{
+    const btn = document.createElement("button");
+    btn.className = "dept-btn" + (d.key === ownDept ? " own-dept" : "");
+    btn.innerHTML = `
+      <span class="dept-btn-icon">${d.icon}</span>
+      <span>
+        <span class="dept-btn-name">${d.name}${d.key===ownDept?" <small style='color:var(--gold);font-size:10px;font-weight:400;'>Jouw afdeling</small>":""}</span>
+        <span class="dept-btn-sub">${d.sub}</span>
+      </span>`;
+    btn.onclick = ()=>{
+      document.getElementById("dept-picker").style.display = "none";
+      showApp(d.key);
+    };
+    grid.appendChild(btn);
+  });
+}
+
+function showApp(dept){
+  document.querySelector(".sidebar").style.display = "flex";
+  document.querySelector("main").style.display = "block";
+  if(document.querySelector(".date-bar")) document.querySelector(".date-bar").style.display = "flex";
+  currentShift = deptDefaultShift(dept);
+  render();
+  startAutoLogout();
+}
+
+function logout(){
+  currentUser = null;
+  try{ if(window.storage) window.storage.delete(USER_KEY, false); }catch(e){}
+  showLanding();
+}
+
 (async ()=>{
   currentUser = await loadUser();
   state = await loadState();
-  render();
-  startAutoLogout();
+  if(!currentUser){
+    showLanding();
+  } else {
+    showDeptPicker(currentUser);
+  }
   setInterval(()=>{
-    if(currentShift !== "handover") renderContent();
+    if(currentShift !== "handover" && currentShift !== "sop" && currentShift !== "report") renderContent();
   }, 60000);
 })();
 </script>
