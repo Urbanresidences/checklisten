@@ -1118,6 +1118,15 @@ const EMPLOYEE_LISTS = {
     "Rick Aalders",
     "Martin Snijders",
   ],
+  td: [
+    "Ricardo Mathew",
+    "Theys Snijders",
+    "Manu dos Santos",
+    "Boobakar Youla",
+    "David Reinders Folmer",
+    "Rick Aalders",
+    "Martin Snijders",
+  ],
   hk: [
     "Nasra Ahmed",
     "Sihem Belghiti",
@@ -1167,12 +1176,12 @@ function userDept(name){
 
 // Eerste shift die bij een afdeling hoort
 function deptDefaultShift(dept){
-  const map = { fo: "ochtend", ad: "ad", hk: "hk" };
+  const map = { fo: "ochtend", ad: "ad", hk: "hk", td: "ochtend" };
   return map[dept] || "ochtend";
 }
 
 function deptLabel(dept){
-  return dept === "fo" ? "Front Office" : dept === "ad" ? "Algemene Dienst" : "Housekeeping";
+  return dept === "fo" ? "Front Office" : dept === "ad" ? "Algemene Dienst" : dept === "hk" ? "Housekeeping" : dept === "td" ? "Technische Dienst" : dept;
 }
 const ADMIN_NAME = "Martin Snijders";
 // Admin-pincode is NIET in broncode opgeslagen — wordt lokaal bewaard net als medewerkers.
@@ -3567,6 +3576,7 @@ function showDeptPicker(name){
     { key:"fo", icon:"🏨", name:"Front Office", sub:"Ochtend, Avond, Nacht, Duty Rapport" },
     { key:"ad", icon:"🧹", name:"Algemene Dienst", sub:"09:30 – 19:30 uur" },
     { key:"hk", icon:"🛏️", name:"Housekeeping", sub:"HK Supervisor 09:00 – 17:00 uur" },
+    { key:"td", icon:"🔧", name:"Technische Dienst", sub:"Onderhoud & storingen" },
   ];
 
   const grid = document.getElementById("dept-buttons");
