@@ -939,11 +939,11 @@ const EMPLOYEE_LISTS = {
 };
 function employeesFor(dept){ return EMPLOYEE_LISTS[dept] || []; }
 const ADMIN_NAME = "Martin Snijders";
-const ADMIN_PIN = "0445";
+// Admin-pincode is NIET in broncode opgeslagen — wordt lokaal bewaard net als medewerkers.
 
 // Pincode per medewerker. Wijzig deze in overleg; Martin kan ze aanpassen in de broncode.
 const PINS = {
-  "Martin Snijders": "0445", // Beheerder: vaste pincode
+  // Martin Snijders: pincode wordt lokaal opgeslagen, niet in broncode.
 };
 const PIN_STORAGE_PREFIX = "ur-pin-"; // persoonlijk per apparaat/browser
 
