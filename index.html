@@ -3242,19 +3242,29 @@ function showUserOverlay(dept){
 
   function syncPinVisibility(){
     if(select.value){
-      pinWrap.style.display = "block";
-      btn.disabled = pinInput.value.length !== 4;
+      // Beheerder kan andere gebruikers overnemen zonder pincode
+      if(currentUser === ADMIN_NAME && select.value !== ADMIN_NAME){
+        pinWrap.style.display = "none";
+        btn.disabled = false;
+      } else {
+        pinWrap.style.display = "block";
+        btn.disabled = pinInput.value.length !== 4;
+      }
     } else {
       pinWrap.style.display = "none";
-      pinError.style.display = "none";
       btn.disabled = true;
     }
   }
   select.onchange = async ()=>{
     pinInput.value = ""; pinError.style.display = "none";
     if(select.value){
+      if(currentUser === ADMIN_NAME && select.value !== ADMIN_NAME){
+        pinWrap.style.display = "none";
+        btn.disabled = false;
+        return;
+      }
       const existingPin = await getPin(select.value);
-      if(!existingPin && select.value !== ADMIN_NAME){
+      if(!existingPin){
         pinLabel.textContent = "Kies een pincode van 4 cijfers (jouw eigen code):";
         pinConfirmWrap.style.display = "block";
       } else {
@@ -3284,27 +3294,20 @@ function showUserOverlay(dept){
 
   btn.onclick = async ()=>{
     if(!select.value) return;
+    // Beheerder kan direct overschakelen
+    if(currentUser === ADMIN_NAME && select.value !== ADMIN_NAME){
+      await saveUser(select.value);
+      document.body.removeChild(overlay);
+      render();
+      return;
+    }
     const existingPin = await getPin(select.value);
-    if(!existingPin && select.value !== ADMIN_NAME){
-      // Eerste keer: pincode aanmaken
-      if(pinInput.value.length !== 4){
-        pinError.textContent = "Kies een pincode van precies 4 cijfers.";
-        pinError.style.display = "block"; return;
-      }
-      if(pinInput.value !== pinConfirm.value){
-        pinError.textContent = "Pincodes komen niet overeen. Probeer opnieuw.";
-        pinError.style.display = "block";
-        pinInput.value = ""; pinConfirm.value = ""; pinInput.focus(); return;
-      }
+    if(!existingPin){
+      if(pinInput.value.length !== 4){ pinError.textContent = "Kies een pincode van precies 4 cijfers."; pinError.style.display = "block"; return; }
+      if(pinInput.value !== pinConfirm.value){ pinError.textContent = "Pincodes komen niet overeen."; pinError.style.display = "block"; pinInput.value=""; pinConfirm.value=""; pinInput.focus(); return; }
       await savePin(select.value, pinInput.value);
     } else {
-      // Verificatie
-      const expected = existingPin;
-      if(!expected || pinInput.value !== expected){
-        pinError.textContent = "Onjuiste pincode.";
-        pinError.style.display = "block";
-        pinInput.value = ""; pinInput.focus(); btn.disabled = true; return;
-      }
+      if(pinInput.value !== existingPin){ pinError.textContent = "Onjuiste pincode."; pinError.style.display = "block"; pinInput.value=""; pinInput.focus(); btn.disabled=true; return; }
     }
     await saveUser(select.value);
     document.body.removeChild(overlay);
@@ -3424,45 +3427,47 @@ function showLanding(){
     errorEl.style.display = "none";
     btn.disabled = true;
     if(!sel.value){ pinWrap.style.display = "none"; return; }
+    // Beheerder kan andere gebruikers overnemen zonder pincode
+    if(currentUser === ADMIN_NAME && sel.value !== ADMIN_NAME){
+      pinWrap.style.display = "none";
+      btn.disabled = false;
+      return;
+    }
     pinWrap.style.display = "block";
     const existing = await getPin(sel.value);
     if(!existing){
       pinLabel.textContent = "Kies een pincode (4 cijfers)";
       confirmWrap.style.display = "block";
-      newHint.style.display = "none";
-      pinForgotWrap.style.display = "none";
     } else {
       pinLabel.textContent = "Pincode";
       confirmWrap.style.display = "none";
-      pinForgotWrap.style.display = "block";
     }
-    if(pinForgot) pinForgot.onclick = async ()=>{
-      if(!confirm(`Pincode van ${sel.value} wissen op dit apparaat? Je kunt daarna een nieuwe aanmaken.`)) return;
-      try{ if(window.storage) await window.storage.delete(PIN_STORAGE_PREFIX + sel.value, false); }catch(e){}
-      pinLabel.textContent = "Kies een nieuwe pincode (4 cijfers)";
-      confirmWrap.style.display = "block";
-      pinForgotWrap.style.display = "none";
-      pinInput.value = ""; confirmInput.value = "";
-      pinError.style.display = "none"; btn.disabled = true;
-      pinInput.focus();
-    };
+    btn.disabled = pinInput.value.length !== 4;
     pinInput.focus();
   };
 
-  const checkBtn = ()=>{
-    const isNew = confirmWrap.style.display !== "none";
-    btn.disabled = isNew
+  pinInput?.addEventListener("input", ()=>{
+    errorEl.style.display = "none";
+    const confirmVisible = confirmWrap.style.display !== "none";
+    btn.disabled = confirmVisible
       ? (pinInput.value.length !== 4 || confirmInput.value.length !== 4)
       : pinInput.value.length !== 4;
-  };
-  pinInput.oninput = ()=>{ errorEl.style.display = "none"; checkBtn(); };
-  confirmInput.oninput = ()=>{ errorEl.style.display = "none"; checkBtn(); };
-  pinInput.onkeydown = (e)=>{ if(e.key==="Enter" && !btn.disabled) btn.click(); };
-  confirmInput.onkeydown = (e)=>{ if(e.key==="Enter" && !btn.disabled) btn.click(); };
+  });
+  confirmInput?.addEventListener("input", ()=>{
+    errorEl.style.display = "none";
+    btn.disabled = pinInput.value.length !== 4 || confirmInput.value.length !== 4;
+  });
+  pinInput?.addEventListener("keydown", (e)=>{ if(e.key==="Enter" && !btn.disabled) btn.click(); });
 
   btn.onclick = async ()=>{
     const name = sel.value;
     if(!name) return;
+    // Beheerder kan direct overschakelen
+    if(currentUser === ADMIN_NAME && name !== ADMIN_NAME){
+      await saveUser(name);
+      showDeptPicker(name);
+      return;
+    }
     const existing = await getPin(name);
     if(!existing){
       if(pinInput.value.length !== 4){ showError("Kies een pincode van 4 cijfers."); return; }
