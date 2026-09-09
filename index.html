@@ -3221,6 +3221,9 @@ function showUserOverlay(dept){
           <input type="password" id="pin-confirm" inputmode="numeric" maxlength="4" placeholder="Herhaal pincode" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--line);border-radius:5px;margin-bottom:6px;font-family:inherit;letter-spacing:.2em;box-sizing:border-box;">
         </div>
         <div id="pin-error" style="display:none;color:#B04545;font-size:12px;margin-bottom:10px;"></div>
+        <div id="pin-forgot-wrap" style="display:none;text-align:right;">
+          <button type="button" id="pin-forgot" style="background:none;border:none;color:#9A9284;font-size:11.5px;cursor:pointer;font-family:inherit;text-decoration:underline;padding:0;">Pincode vergeten?</button>
+        </div>
       </div>
       <button id="user-confirm" ${selected ? "" : "disabled"}>Doorgaan</button>
     </div>
@@ -3234,6 +3237,8 @@ function showUserOverlay(dept){
   const pinConfirmWrap = overlay.querySelector("#pin-confirm-wrap");
   const pinConfirm = overlay.querySelector("#pin-confirm");
   const pinError = overlay.querySelector("#pin-error");
+  const pinForgotWrap = overlay.querySelector("#pin-forgot-wrap");
+  const pinForgot = overlay.querySelector("#pin-forgot");
 
   function syncPinVisibility(){
     if(select.value){
@@ -3425,10 +3430,22 @@ function showLanding(){
       pinLabel.textContent = "Kies een pincode (4 cijfers)";
       confirmWrap.style.display = "block";
       newHint.style.display = "none";
+      pinForgotWrap.style.display = "none";
     } else {
       pinLabel.textContent = "Pincode";
       confirmWrap.style.display = "none";
+      pinForgotWrap.style.display = "block";
     }
+    if(pinForgot) pinForgot.onclick = async ()=>{
+      if(!confirm(`Pincode van ${sel.value} wissen op dit apparaat? Je kunt daarna een nieuwe aanmaken.`)) return;
+      try{ if(window.storage) await window.storage.delete(PIN_STORAGE_PREFIX + sel.value, false); }catch(e){}
+      pinLabel.textContent = "Kies een nieuwe pincode (4 cijfers)";
+      confirmWrap.style.display = "block";
+      pinForgotWrap.style.display = "none";
+      pinInput.value = ""; confirmInput.value = "";
+      pinError.style.display = "none"; btn.disabled = true;
+      pinInput.focus();
+    };
     pinInput.focus();
   };
 
