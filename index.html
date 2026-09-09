@@ -1161,6 +1161,39 @@ const PINS = {
   // Martin Snijders: pincode wordt lokaal opgeslagen, niet in broncode.
 };
 const PIN_STORAGE_PREFIX = "ur-pin-"; // persoonlijk per apparaat/browser
+const PIN_ATTEMPTS_PREFIX = "ur-pin-attempts-";
+const PIN_MAX_ATTEMPTS = 3;
+const PIN_LOCKOUT_MINUTES = 5;
+
+async function getPinAttempts(name){
+  try{
+    if(window.storage){
+      const res = await window.storage.get(PIN_ATTEMPTS_PREFIX + name, false);
+      if(res && res.value) return JSON.parse(res.value);
+    }
+  }catch(e){}
+  return { count: 0, lockedUntil: null };
+}
+
+async function recordFailedAttempt(name){
+  const data = await getPinAttempts(name);
+  data.count = (data.count || 0) + 1;
+  if(data.count >= PIN_MAX_ATTEMPTS){
+    data.lockedUntil = Date.now() + PIN_LOCKOUT_MINUTES * 60 * 1000;
+    data.count = 0;
+  }
+  try{ if(window.storage) await window.storage.set(PIN_ATTEMPTS_PREFIX + name, JSON.stringify(data), false); }catch(e){}
+  return data;
+}
+
+async function resetAttempts(name){
+  try{ if(window.storage) await window.storage.delete(PIN_ATTEMPTS_PREFIX + name, false); }catch(e){}
+}
+
+function lockoutRemaining(lockedUntil){
+  if(!lockedUntil) return 0;
+  return Math.max(0, Math.ceil((lockedUntil - Date.now()) / 1000));
+}
 
 async function getPin(name){
   if(PINS[name]) return PINS[name]; // vaste pin (beheerder)
@@ -3307,7 +3340,17 @@ function showUserOverlay(dept){
       if(pinInput.value !== pinConfirm.value){ pinError.textContent = "Pincodes komen niet overeen."; pinError.style.display = "block"; pinInput.value=""; pinConfirm.value=""; pinInput.focus(); return; }
       await savePin(select.value, pinInput.value);
     } else {
-      if(pinInput.value !== existingPin){ pinError.textContent = "Onjuiste pincode."; pinError.style.display = "block"; pinInput.value=""; pinInput.focus(); btn.disabled=true; return; }
+      const attempts = await getPinAttempts(select.value);
+      const remaining = lockoutRemaining(attempts.lockedUntil);
+      if(remaining > 0){ pinError.textContent = `Te veel pogingen. Wacht nog ${remaining} seconden.`; pinError.style.display="block"; pinInput.value=""; btn.disabled=true; return; }
+      if(pinInput.value !== existingPin){
+        const updated = await recordFailedAttempt(select.value);
+        const rem = lockoutRemaining(updated.lockedUntil);
+        if(rem > 0) pinError.textContent = `Te veel foute pogingen. Geblokkeerd voor ${PIN_LOCKOUT_MINUTES} minuten.`;
+        else pinError.textContent = `Onjuiste pincode. Nog ${PIN_MAX_ATTEMPTS - updated.count} poging(en).`;
+        pinError.style.display="block"; pinInput.value=""; pinInput.focus(); btn.disabled=true; return;
+      }
+      await resetAttempts(select.value);
     }
     await saveUser(select.value);
     document.body.removeChild(overlay);
@@ -3474,7 +3517,17 @@ function showLanding(){
       if(pinInput.value !== confirmInput.value){ showError("Pincodes komen niet overeen."); pinInput.value=""; confirmInput.value=""; pinInput.focus(); return; }
       await savePin(name, pinInput.value);
     } else {
-      if(pinInput.value !== existing){ showError("Onjuiste pincode. Probeer opnieuw."); pinInput.value=""; pinInput.focus(); btn.disabled=true; return; }
+      const attempts = await getPinAttempts(name);
+      const remaining = lockoutRemaining(attempts.lockedUntil);
+      if(remaining > 0){ showError(`Te veel pogingen. Wacht nog ${remaining} seconden.`); pinInput.value=""; btn.disabled=true; return; }
+      if(pinInput.value !== existing){
+        const updated = await recordFailedAttempt(name);
+        const rem = lockoutRemaining(updated.lockedUntil);
+        if(rem > 0) showError(`Te veel foute pogingen. Geblokkeerd voor ${PIN_LOCKOUT_MINUTES} minuten.`);
+        else showError(`Onjuiste pincode. Nog ${PIN_MAX_ATTEMPTS - updated.count} poging(en).`);
+        pinInput.value=""; pinInput.focus(); btn.disabled=true; return;
+      }
+      await resetAttempts(name);
     }
     await saveUser(name);
     showDeptPicker(name);
