@@ -1026,7 +1026,7 @@
       <h1 class="landing-title">Welkom, <span id="dept-welcome-name"></span></h1>
       <p class="landing-sub">Kies je afdeling om te starten</p>
       <div id="dept-buttons" class="dept-grid"></div>
-      <button class="landing-logout" onclick="logout()">Andere naam inloggen</button>
+      <button class="landing-logout" onklik="logout()">Andere naam inloggen</button>
     </div>
   </div>
 </div>
@@ -1255,16 +1255,16 @@ const SHIFTS = {
     dept: "fo",
     label: "Ochtenddienst",
     time: "08:00 – 16:00 uur",
-    notice: "Let op: alle Late Check-in (LCI), Late Check-out (LCO) en overige taken voor Technische Dienst (TD) en Housekeeping (HK) altijd verwerken in MEWS (Tasks) én in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com.",
+    notice: "Let op: alle Late Check-in (LCI), Late Check-out (LCO) en overige taken voor Technische Dienst (TD) en Housekeeping (HK) altijd verwerken in MEWS (Tasks) én in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com",
     roleLabel: "Onderdeel",
     blocks: [
       { time:"08:00", name:"Starten", tasks:[
         {t:"Inklokken bij aanvang dienst", d:"Inklokken volgens de geldende tijdregistratie."},
       ]},
       { time:"08:05", name:"Systemen", tasks:[
-        {t:"PMS", d:""},
-        {t:"Muziek", d:""},
-        {t:"Handover aanmaken", d:""},
+        {t:"PMS", d:"Inloggen in MEWS en het systeem controleren op openstaande taken en meldingen."},
+        {t:"Muziek", d:"Achtergrondmuziek in de lobby aanzetten via het systeem."},
+        {t:"Handover aanmaken", d:"Overdrachtslog aanmaken in het systeem voor de volgende dienst."},
       ]},
       { time:"08:10", name:"Voorbereiding dienst", tasks:[
         {t:"Nightaudit rapport", d:"Overdrachtslog nachtdienst doornemen: bijzonderheden, openstaande zaken."},
@@ -1294,7 +1294,7 @@ const SHIFTS = {
         {t:"Airbnb", d:"Berichten in het Extranet beantwoorden."},
       ]},
       { time:"10:00 - 11:00", name:"Check-out", tasks:[
-        {t:"Check-out afhandelen", d:""},
+        {t:"Check-out afhandelen", d:"Vertrekkende gasten uitchecken in MEWS: billing controleren, borg verwerken en factuur versturen."},
       ]},
       { time:"12:00 - 13:00", name:"Communicatie", tasks:[
         {t:"Reserveringen verwerken", d:"Nieuwe boekingen, wijzigingen en annuleringen verwerken."},
@@ -1310,7 +1310,7 @@ const SHIFTS = {
         {t:"Accounting ledgers MEWS controleren en verwerken", d:"Accounting ledgers in MEWS controleren en openstaande posten verwerken (zie ook SOP 'Update Accounting Ledger')."},
         {t:"Gastnamen bij meerdere kamers opvragen", d:"Bij reserveringen met 2+ kamers: booker/hoofdgast bellen (of mailen) voor namen en kamerverdeling van alle gasten; namen correct invoeren in MEWS."},
         {t:"Optionele boekingen bewaken", d:"Vervaldeadlines van optionele (direct) boekingen controleren."},
-        {t:"ZVK Reserveringen", d:"Zorgverzekeringkantoor reserveringen."},
+        {t:"ZVK Reserveringen", d:"Reserveringen van zorgverzekeringskantoren controleren en verwerken: tarief, betalingswijze en eventuele bijzonderheden vastleggen in MEWS."},
         {t:"Borg (deposit) terugbetalen", d:"Na inspectie door HSK of front office: borg van vertrokken gasten terugbetalen (€300 studio's / €500 appartementen, minus eventuele inhoudingen)."},
       ]},
       { time:"15:00 - 16:00", name:"Afronden", tasks:[
@@ -1326,7 +1326,7 @@ const SHIFTS = {
     dept: "fo",
     label: "Avonddienst",
     time: "14:00 – 22:00 uur",
-    notice: "Let op: alle Late Check-in (LCI), Late Check-out (LCO) en overige taken voor Technische Dienst (TD) en Housekeeping (HK) altijd verwerken in MEWS (Tasks) én in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com.",
+    notice: "Let op: alle Late Check-in (LCI), Late Check-out (LCO) en overige taken voor Technische Dienst (TD) en Housekeeping (HK) altijd verwerken in MEWS (Tasks) én in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com",
     roleLabel: "Onderdeel",
     blocks: [
       { time:"14:00 - 15:00", name:"Overdracht", tasks:[
@@ -1385,7 +1385,7 @@ const SHIFTS = {
     dept: "fo",
     label: "Nachtdienst",
     time: "22:00 – 07:00 uur",
-    notice: "Let op: alle Late Check-in (LCI), Late Check-out (LCO) en overige taken voor Technische Dienst (TD) en Housekeeping (HK) altijd verwerken in MEWS (Tasks) én in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com.",
+    notice: "Let op: alle Late Check-in (LCI), Late Check-out (LCO) en overige taken voor Technische Dienst (TD) en Housekeeping (HK) altijd verwerken in MEWS (Tasks) én in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com",
     roleLabel: "Onderdeel",
     blocks: [
       { time:"22:00 - 23:00", name:"Overdracht", tasks:[
@@ -1430,7 +1430,7 @@ const SHIFTS = {
     dept: "hk",
     label: "HK Supervisor",
     time: "09:00 – 17:00 uur",
-    notice: "Let op: alle taken voor Technische Dienst (TD) en overige afdelingen altijd verwerken in MEWS (Tasks) en in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com.",
+    notice: "Let op: alle taken voor Technische Dienst (TD) en overige afdelingen altijd verwerken in MEWS (Tasks) en in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com",
     roleLabel: "Onderdeel",
     blocks: [
       { time:"09:00", name:"Start dienst", tasks:[
@@ -1454,7 +1454,7 @@ const SHIFTS = {
         {t:"Linnen en vuilnis naar beneden", d:"Linnen en vuilnis voor de pauze naar beneden brengen."},
       ]},
       { time:"12:30 - 13:00", name:"Pauze", tasks:[
-        {t:"Lunchpauze", d:"Lunchpauze."},
+        {t:"Lunchpauze", d:"Lunchpauze. Zorg voor bezetting van de balie of draag over aan een collega."},
       ]},
       { time:"13:00 - 15:30", name:"Afhandeling", tasks:[
         {t:"Bevindingen verwerken", d:"Geconstateerde gebreken en TD-punten aanmaken als taak in MEWS (Tasks) en verwerken in de Timeline."},
@@ -1473,7 +1473,7 @@ const SHIFTS = {
     dept: "ad",
     label: "AD (Algemene Dienst)",
     time: "09:30 – 19:30 uur",
-    notice: "Let op: alle taken altijd verwerken in MEWS (Tasks) en in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com. Bron: AD Werkplanning (HKM@urbanresidences.com, 3 september 2026). Geen Front Office-shift — algemene/facilitaire dienst.",
+    notice: "Let op: alle taken altijd verwerken in MEWS (Tasks) en in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com Bron: AD Werkplanning (HKM@urbanresidences.com, 3 september 2026). Geen Front Office-shift — algemene/facilitaire dienst.",
     roleLabel: "Onderdeel",
     blocks: [
       { time:"09:30", name:"Controle", tasks:[ {t:"Ronde door het hotel, troep opruimen", d:"Algemene ruimtes langslopen en rondslingerend afval en rommel opruimen."} ]},
@@ -1486,14 +1486,14 @@ const SHIFTS = {
         {t:"Vuilnisbakken legen op parkeerdekken", d:"Vuilnisbakken op de parkeerdekken legen en van nieuwe zak voorzien."},
         {t:"Autolift controleren op vervuiling", d:"Autolift controleren op vervuiling en indien nodig schoonmaken."},
       ]},
-      { time:"12:00", name:"Pauze", tasks:[ {t:"Pauze (30 min)", d:""} ]},
+      { time:"12:00", name:"Pauze", tasks:[ {t:"Pauze (30 min)", d:"30 minuten pauze. Zorg voor bezetting van de balie of draag over aan een collega."} ]},
       { time:"12:30", name:"Voorraad", tasks:[ {t:"Linnen controleren en bijvullen", d:"Voorraad linnen controleren en aanvullen waar nodig."} ]},
       { time:"13:45", name:"Schoonmaak", tasks:[ {t:"Receptie stofzuigen en dweilen", d:"Vloer van de receptie stofzuigen en dweilen."} ]},
       { time:"14:15", name:"MEWS", tasks:[ {t:"Task bijwerken", d:"Openstaande taken in MEWS nalopen en bijwerken."} ]},
       { time:"14:45", name:"Schoonmaak", tasks:[ {t:"WC -1 schoonmaken", d:"Toilet op -1 reinigen: sanitair, spiegels en vloer."} ]},
       { time:"15:00", name:"Schoonmaak", tasks:[ {t:"Etages van 19e t/m 5e verdieping dweilen", d:"Gangen op de etages van de 19e tot en met de 5e verdieping dweilen."} ]},
       { time:"16:00", name:"Controle", tasks:[ {t:"Controleronde P1 en P2", d:"Parkeerdekken P1 en P2 controleren op netheid en bijzonderheden."} ]},
-      { time:"16:15", name:"Pauze", tasks:[ {t:"Pauze (30 min)", d:""} ]},
+      { time:"16:15", name:"Pauze", tasks:[ {t:"Pauze (30 min)", d:"30 minuten pauze. Zorg voor bezetting van de balie of draag over aan een collega."} ]},
       { time:"16:45", name:"Schoonmaak", tasks:[ {t:"Kantoor op de 5e verdieping schoonmaken", d:"Kantoorruimte op de 5e verdieping afstoffen, stofzuigen/dweilen en opruimen."} ]},
       { time:"17:30", name:"Schoonmaak", tasks:[ {t:"Vuilnisruimte en -1 dweilen", d:"Vuilnisruimte en verdieping -1 dweilen."} ]},
       { time:"18:15", name:"Schoonmaak", tasks:[ {t:"Kantoor op -1 schoonmaken", d:"Kantoorruimte op -1 afstoffen, stofzuigen/dweilen en opruimen."} ]},
@@ -1581,7 +1581,7 @@ const SHIFTS = {
         {t:"Werkplek tijdens de dienst", d:"Zit de gehele dienst — buiten de controlerondes en werkzaamheden om — beneden achter de receptie bij de camerabeelden."},
         {t:"Toegang tot het hotel", d:"Er mogen nooit mensen het hotel betreden die geen kamer hebben — dit geldt zowel voor onbevoegden als voor mensen uit de privésfeer. Ook collega's mogen 's nachts niet langskomen."},
         {t:"Gebruik van apparatuur", d:"Apparatuur van het hotel mag niet voor privédoeleinden worden gebruikt. Gebruik je eigen mobiele telefoon."},
-        {t:"Te laat komen", d:"Kom je zelf te laat, of komt de ochtendreceptie te laat: noteer tijd en reden in het nachtverslag en mail dit desnoods opnieuw. Mail tijd + reden dezelfde dag ook naar administratie@HOSTatNight.nl."},
+        {t:"Te laat komen", d:"Kom je zelf te laat, of komt de ochtendreceptie te laat: noteer tijd en reden in het nachtverslag en mail dit desnoods opnieuw. Mail tijd + reden dezelfde dag ook naar administratie@HOSTatNight.nl"},
         {t:"Parkeren", d:"Gebruik van het parkeerterrein van het hotel is toegestaan."},
       ]},
     ]
@@ -1635,7 +1635,7 @@ async function touchUser(){
 
 function startAutoLogout(){
   let lastActivity = Date.now();
-  ["click","keydown","touchstart"].forEach(ev=>{
+  ["klik","keydown","touchstart"].forEach(ev=>{
     document.addEventListener(ev, ()=>{ lastActivity = Date.now(); touchUser(); }, true);
   });
   setInterval(()=>{
@@ -1835,23 +1835,23 @@ function renderTabs(){
     const btn = document.createElement("button");
     btn.className = "tab" + (key===currentShift ? " active" : "");
     btn.innerHTML = s.label + "<small>" + s.time + "</small>";
-    btn.onclick = () => { currentShift = key; render(); };
+    btn.onklik = () => { currentShift = key; render(); };
     nav.appendChild(btn);
   });
   const hbtn = document.getElementById("handover-tab-btn");
   hbtn.classList.toggle("active", currentShift === "handover");
-  hbtn.onclick = ()=>{ currentShift = "handover"; render(); };
+  hbtn.onklik = ()=>{ currentShift = "handover"; render(); };
 
   const sbtn = document.getElementById("sop-tab-btn");
   sbtn.classList.toggle("active", currentShift === "sop");
-  sbtn.onclick = ()=>{ pendingSopId = null; currentShift = "sop"; render(); };
+  sbtn.onklik = ()=>{ pendingSopId = null; currentShift = "sop"; render(); };
 
   const adminWrap = document.getElementById("admin-wrap");
   if(currentUser === ADMIN_NAME){
     adminWrap.style.display = "block";
     const rbtn = document.getElementById("admin-tab-btn");
     rbtn.classList.toggle("active", currentShift === "report");
-    rbtn.onclick = ()=>{ currentShift = "report"; render(); };
+    rbtn.onklik = ()=>{ currentShift = "report"; render(); };
   } else {
     adminWrap.style.display = "none";
   }
@@ -2014,7 +2014,7 @@ async function renderContent(){
         });
 
         setToggleLabel();
-        toggle.onclick = ()=>{
+        toggle.onklik = ()=>{
           clWrap.classList.toggle("open");
           table.style.display = clWrap.classList.contains("open") ? "block" : "none";
           setToggleLabel();
@@ -2032,7 +2032,7 @@ async function renderContent(){
         sopLink.type = "button";
         sopLink.textContent = "📄 SOP openen";
         sopLink.title = "Opent de bijbehorende procedure in de SOP Bibliotheek.";
-        sopLink.onclick = ()=> openSop(task.sopId);
+        sopLink.onklik = ()=> openSop(task.sopId);
         mainCol.appendChild(sopLink);
       }
 
@@ -2053,7 +2053,7 @@ async function renderContent(){
         statusBtn.classList.add("status-locked");
         statusBtn.textContent = "🔒 " + st;
       }
-      statusBtn.onclick = ()=>{
+      statusBtn.onklik = ()=>{
         if(isNvt){
           stampEl.textContent = "Maak eerst N.v.t. ongedaan via de N.v.t.-knop.";
           setTimeout(()=>{ renderContent(); }, 1800);
@@ -2097,7 +2097,7 @@ async function renderContent(){
       nvtBtn.className = "nvt-btn" + (entry.s === "N.v.t." ? " nvt-active" : "");
       nvtBtn.textContent = entry.s === "N.v.t." ? "N.v.t. ✎" : "N.v.t.";
       nvtBtn.title = entry.s === "N.v.t." ? "Reden aanpassen of ongedaan maken" : "Markeer als niet van toepassing (reden verplicht)";
-      nvtBtn.onclick = ()=>{
+      nvtBtn.onklik = ()=>{
         if(timeLocked){
           stampEl.textContent = "Dit tijdblok is nog niet begonnen.";
           setTimeout(()=>{ renderContent(); }, 1800);
@@ -2396,7 +2396,7 @@ const SOPS = [
   <h2>Overdracht met nachtdienst</h2>
   <ul>
     <li>Overdracht van de nachtdienst lezen in het Duty Report in de Google Drive.</li>
-    <li>Aandachtspunten zoals overlast van kamers of opmerkingen voor receptie, HK, TD verwerken in de notities van de reserveringen in Mews en doorgeven aan de betreffende afdeling.</li>
+    <li>Aandachtspunten zoals overlast van kamers of opmerkingen voor receptie, HK, TD verwerken in de notities van de reserveringen in MEWS en doorgeven aan de betreffende afdeling.</li>
     <li>Betalingen van check-ins verwerken van de beveiliger (indien nodig).</li>
     <li>Overdrachten van de afgelopen dagen globaal doorlezen (weet wat er speelt!).</li>
   </ul>
@@ -2410,31 +2410,31 @@ const SOPS = [
   <h2>Wat is een no-show?</h2>
   <ul>
     <li>Het is mogelijk dat een gast niet op komt dagen en dus ook niet incheckt, dit is een no-show.</li>
-    <li>Check altijd eerst heel goed of de reservering écht een no-show is! Kijk o.a. of er een registration card is in de map of een notitie in de reservering.</li>
+    <li>Controleer altijd eerst goed of de reservering écht een no-show is! Kijk o.a. of er een registration card is in de map of een notitie in de reservering.</li>
     <li>Is dit niet het geval en is de reservering dus een no-show, controleer dan of er al betaald is en hoe het is geboekt.</li>
   </ul>
 
-  <h2>No Show — Mews/Synxis</h2>
-  <p>Is de reservering gemaakt via onze eigen website, verwerk de no-show dan via Mews.</p>
-  <p>Open de reservering in Mews → Tabblad Status → Cancellation → Kies bij Reason 'No-show' en vul je eigen initialen in → Vink 'Apply Cancellation Fee' → Klik op OK.</p>
+  <h2>No Show — MEWS/Synxis</h2>
+  <p>Is de reservering gemaakt via onze eigen website, verwerk de no-show dan via MEWS.</p>
+  <p>Open de reservering in MEWS → Tabblad Status → Cancellation → Kies bij Reason 'No-show' en vul je eigen initialen in → Vink 'Apply Cancellation Fee' → Klik op OK.</p>
 
   <h2>No Show — Booking.com</h2>
   <p>Is de reservering gemaakt via Booking.com, verwerk de no-show dan via Extranet.</p>
-  <p>Open de reservering via het Extranet van Booking.com → Selecteer rechts in het profiel 'Mark as a no show'. Vervolgens popt het volgende scherm op:</p>
+  <p>Open de reservering via het Extranet van Booking.com → selecteer rechts in het profiel 'Mark as a no show'. Vervolgens popt het volgende scherm op:</p>
   <ul>
     <li>Als de gast online de boeking al heeft betaald kan je klikken op "nee, kosten in rekening brengen". Dit geldt ook voor als de gast bij aankomst moet betalen en de kaart geverifieerd is.</li>
     <li>Als de gast bij aankomst moest betalen en de kaart is <strong>niet</strong> geverifieerd, dan moet je de optie "ja, kosten kwijtschelden" aanklikken. Dit is omdat we geen garantie hebben.</li>
-    <li>Vervolgens ga je naar Mews en annuleer je de reservering ook via Mews. Hier moet je de optie "apply cancellation fee" aanklikken. Vervolgens ga je naar de billing, hier zal het totale bedrag in de min staan en opgeboekt als "cancellation fee". Dit kan je dan doorschuiven naar de paymaster van Booking.com.</li>
+    <li>Vervolgens ga je naar MEWS en annuleer je de reservering ook via MEWS. Hier moet je de optie "apply cancellation fee" aanklikken. Vervolgens ga je naar de billing, hier zal het totale bedrag in de min staan en opgeboekt als "cancellation fee". Dit kan je dan doorschuiven naar de paymaster van Booking.com.</li>
   </ul>
   <div class="sop-callout">Mocht de billing niet uit zichzelf de min in gaan, of ben je vergeten om "apply cancellation fee" aan te zetten? Dat is geen ramp — je kan dan in de billing de totale nachten van de gast opboeken als "cancellation fee" en doorschuiven naar de paymaster van Booking.com.</div>
 
   <h2>No Show — Expedia</h2>
   <p>Is de reservering gemaakt via Expedia, verwerk de no-show dan via het extranet.</p>
-  <p>Open de reservering via het extranet van Expedia → Zoek het profiel van de gast op rechtsboven bij het vergrootglas → Selecteer links in het profiel "Markeren als no-show". Vervolgens popt het volgende scherm op:</p>
+  <p>Open de reservering via het Extranet van Expedia → zoek het profiel van de gast op rechtsboven bij het vergrootglas → Selecteer links in het profiel "Markeren als no-show". Vervolgens popt het volgende scherm op:</p>
   <ul>
     <li>Mocht de gast alles betaald hebben online, dan kan je klikken op "volledige annuleringskosten in rekening brengen". Ook als de gast alles bij aankomst moest betalen is dit het geval.</li>
   </ul>
-  <div class="sop-callout">Zorg dat je al deze stappen doorloopt, anders betalen we commissie erover! Kijk daarna in Mews of de reservering ook geannuleerd is (dit kan enkele minuten duren). Zo niet: Tabblad Status → Cancellation → Reason: No-show → Vink "Apply cancellation fee" aan (alleen als de reservering betaald is) → OK. Klaar.</div>
+  <div class="sop-callout">Zorg dat je al deze stappen doorloopt, anders betalen we commissie erover! Kijk daarna in MEWS of de reservering ook geannuleerd is (dit kan enkele minuten duren). Zo niet: tabblad Status → Cancellation → Reason: No-show → Vink "Apply cancellation fee" aan (alleen als de reservering betaald is) → OK. Klaar.</div>
 `
   },
   {
@@ -2461,7 +2461,7 @@ const SOPS = [
     category: "Front Office",
     html: `
   <h2>Departures openen</h2>
-  <p>Open de lijst met departures via <em>Remaining departures</em> op je Mews dashboard.</p>
+  <p>Open de lijst met departures via <em>Remaining departures</em> op je MEWS dashboard.</p>
 
   <h2>Openstaande betalingen controleren</h2>
   <ul>
@@ -2541,13 +2541,13 @@ const SOPS = [
     category: "Reservations",
     html: `
   <h2>Synxis — reserveringen van onze eigen website</h2>
-  <p>Je ontvangt 2 e-mails per boeking: 1x GlobRes-bevestiging en 1x van Cubilis (onze connectie tussen de website en Mews). Vervolgens verwerk je de betaling in MEWS.</p>
+  <p>Je ontvangt 2 e-mails per boeking: 1x GlobRes-bevestiging en 1x van Cubilis (onze connectie tussen de website en MEWS). Vervolgens verwerk je de betaling in MEWS.</p>
 
   <h2>Booking.com — Prepaid</h2>
   <p>In de reservering van de gast staat hoe er geboekt is:</p>
   <ul>
     <li>Staat er in de notities <strong>"this reservation has been pre-paid"</strong>, dan is de boeking al online betaald. Zet dan in de notities: "Nachten + CT bij co verplaatsen naar paymaster Booking.com + borg bij aankomst".</li>
-    <li>Weet je niet zeker of de reservering is betaald? Check dit in het Extranet: kopieer het reserveringsnummer en zoek het op bij Booking.com. Bij status betaling zie je of de gast online heeft betaald.</li>
+    <li>Weet je niet zeker of de reservering is betaald? Controleer dit in het Extranet: kopieer het reserveringsnummer en zoek het op bij Booking.com. Bij status betaling zie je of de gast online heeft betaald.</li>
     <li>Staat er in de notities <strong>"U int de betaling van gasten bij uw accommodatie"</strong>, dan heeft de gast nog niets online betaald en betaalt bij aankomst. Zet dan in de notities: "Gasten betalen alles bij aankomst + borg".</li>
     <li>In het Extranet kan ook staan "U bent verantwoordelijk voor het innen van betaling" — de gast moet dan alles bij check-in betalen.</li>
   </ul>
@@ -2626,10 +2626,10 @@ const SOPS = [
   <h2>Annulering — eigen website (Synxis)</h2>
   <p>Wanneer iemand een reservering annuleert via www.urbanresidences.com komen er twee e-mails binnen: (1) help@globres.com "GlobRes Cancelled-GUEST", en (2) Urban Residences Rotterdam "Cancelled reservation via SynXis".</p>
   <ul>
-    <li>Verwerk e-mail 1: zoek de reservering op in Mews via het reserveringsnummer ('Confirmation Number').</li>
+    <li>Verwerk e-mail 1: zoek de reservering op in MEWS via het reserveringsnummer ('Confirmation Number').</li>
     <li>Check of de gast mocht annuleren (Fully Flexible rate en minstens 7 dagen voor aankomstdatum).</li>
     <li>Mocht annuleren + betaald via iDeal → dit moet de Manager of Supervisor terugstorten via de bank; stuur de annulering door naar een leidinggevende.</li>
-    <li>Mocht annuleren + betaald via Creditcard → wordt automatisch gerefund, maar de betaling moet nog naar €0 gebracht worden in de Billing van Mews (External Payment – Prepayment tegenboeken, dan de bill sluiten).</li>
+    <li>Mocht annuleren + betaald via Creditcard → wordt automatisch gerefund, maar de betaling moet nog naar €0 gebracht worden in de Billing van MEWS (External Payment – Prepayment tegenboeken, dan de bill sluiten).</li>
   </ul>
   <p>Als alles verwerkt is: sleep e-mail 1 en 2 naar de map 'A-verwerkt' → 02. OTA/Boekingen → Globres/Hoteliers.</p>
 
@@ -2637,17 +2637,17 @@ const SOPS = [
   <p>Boekingen via onze website zijn altijd al betaald, behalve de toeristenbelasting. Check bij een annulering altijd eerst of de gast mocht annuleren (Early Bird is non-refundable).</p>
   <ul>
     <li>iDeal-betalingen: worden teruggestort door Brigitte via de bank. Stuur de annulering door naar Mildred zodat zij het rekeningnummer kunnen opzoeken en doorsturen naar Brigitte. Vermeld in de mail ook wáárom de gast geld terugkrijgt en het reserveringsnummer.</li>
-    <li>Creditcardbetalingen: worden automatisch teruggestort als het een fully flexible boeking is en buiten de 7-dagen-cancellation-policy valt. Verwerk de refund daarna in Mews als Payment → External Payment → Pre-payment (net als een gewone betaling, maar dan als refund). Close en stuur de rekening naar de gast, en annuleer de reservering in Mews.</li>
+    <li>Creditcardbetalingen: worden automatisch teruggestort als het een fully flexible boeking is en buiten de 7-dagen-cancellation-policy valt. Verwerk de refund daarna in MEWS als Payment → External Payment → Pre-payment (net als een gewone betaling, maar dan als refund). Close en stuur de rekening naar de gast, en annuleer de reservering in MEWS.</li>
   </ul>
 
   <h2>Nieuwe reservering — Booking.com</h2>
   <ul>
-    <li>Notities van de gast worden automatisch in de notes in Mews verwerkt. Vragen beantwoord je via het Booking.com Extranet.</li>
+    <li>Notities van de gast worden automatisch in de notes in MEWS verwerkt. Vragen beantwoord je via het Booking.com-extranet.</li>
     <li>Sleep de e-mail na verwerking naar 'A-verwerkt' → 02. OTA/Boekingen → Booking.com.</li>
   </ul>
 
   <h2>Terugbetaling — Booking.com</h2>
-  <div class="sop-callout">Fully Flexible-annuleringen doen gasten, buiten de annuleerperiode, <strong>altijd zelf</strong> via het Extranet van Booking.com. Wij ontvangen dan een mail "Cancelled reservation via Booking.com". Mocht de gast gewoon mogen annuleren: sleep de mail naar de verwerkt-map, verder niets te doen. Staat er in de mail een "Cancellation fee"? Dan heeft de gast buiten de toegestane periode geannuleerd (of non-refundable). Probeer dan de kaart van de gast te belasten via MEWS (tabblad Billing) als er nog niet betaald is. Lukt dit niet, dan zien Brigitte en Mildred de reservering vanzelf in de accounting ledger en lossen zij het op.</div>
+  <div class="sop-callout">Fully Flexible-annuleringen doen gasten, buiten de annuleerperiode, <strong>altijd zelf</strong> via het Extranet van Booking.com. Wij ontvangen dan een mail "Cancelled reservation via Booking.com". Mocht de gast gewoon mogen annuleren: sleep de mail naar de verwerkt-map, verder niets te doen. Staat er in de mail een "Cancellation fee"? Dan heeft de gast buiten de toegestane periode geannuleerd (of non-refundable). Probeer dan de kaart van de gast te belasten via MEWS (het tabblad Billing) als er nog niet betaald is. Lukt dit niet, dan zien Brigitte en Mildred de reservering vanzelf in de accounting ledger en lossen zij het op.</div>
 `
   },
   {
@@ -2677,7 +2677,7 @@ const SOPS = [
     <li>CC: maak de betaling in billing via payments → pre-authorisation. Check in het tabblad payments of de rest automatisch is vrijgegeven.</li>
   </ul>
 
-  <h2>Iemand uitchecken in Mews</h2>
+  <h2>Iemand uitchecken in MEWS</h2>
   <ul>
     <li>Open de reservering en controleer in de notities en/of Billing/Payments of de gast borg heeft betaald. Is dat zo? Vraag TD om de kamer te checken.</li>
     <li>Kijk of de betalingsbalans in 'Billing' op €0 staat. Zo niet: zoek uit welk bedrag nog openstaat en waarom (bijv. parkeergeld, toeristenbelasting, of de terug te storten borg).</li>
@@ -2696,7 +2696,7 @@ const SOPS = [
     <li>Late check-outs kunnen nooit vooraf geboekt worden — dit mag de gast pas bij aankomst vragen, op basis van beschikbaarheid.</li>
     <li>De kosten voor een late check-out bedragen €50; uitchecken kan dan uiterlijk tot 15:00 uur.</li>
     <li>We boeken geen late check-out als de occupancy van de kamer 80% of hoger is — dan proberen we de kamer liever te verkopen.</li>
-    <li>Boekt iemand een late check-out? Zet de kamer dan OOO in Mews met de tekst 'late check-out hsk morgen'. Zo ziet de collega die de volgende ochtend werkt duidelijk dat de kamer op de schoonmaaklijst als Eind gemarkeerd moet worden.</li>
+    <li>Boekt iemand een late check-out? Zet de kamer dan OOO in MEWS met de tekst 'late check-out hsk morgen'. Zo ziet de collega die de volgende ochtend werkt duidelijk dat de kamer op de schoonmaaklijst als Eind gemarkeerd moet worden.</li>
   </ol>
 `
   },
@@ -2708,7 +2708,7 @@ const SOPS = [
   <p>Oaky is onze upselling-tool. Gasten ontvangen na hun reservering een e-mail met opties om hun verblijf te personaliseren, zoals een room upgrade, parkeren, rose petals en Nespresso koffiecups.</p>
   <ul>
     <li>Elke dag ontvangen we in de mailbox een Oaky Pre-arrival Report met de producten die zijn bijgeboekt door gasten die die dag arriveren.</li>
-    <li>In Mews staan deze extra geboekte opties bij iedere reservering onder "Products".</li>
+    <li>In MEWS staan deze extra geboekte opties bij iedere reservering onder "Products".</li>
     <li>De meeste requests worden automatisch verwerkt, maar soms moet je ze zelf accepteren of afwijzen — hiervan ontvang je dan een e-mail. Bekijk deze via <a href="https://dashboard.getoaky.com/" target="_blank" rel="noopener">dashboard.getoaky.com</a>.</li>
   </ul>
   <div class="sop-callout">Kijk vóórdat je een request accepteert altijd goed of er beschikbaarheid is — bijvoorbeeld: bij een room upgrade eerst checken of het gewenste kamertype beschikbaar is.</div>
@@ -2775,7 +2775,7 @@ const SOPS = [
   <h2>Kassa tellen</h2>
   <ul>
     <li>Tel de kassa.</li>
-    <li>Controleer of de kassa overeenkomt met de Balance in Mews (te vinden via Cashier op het dashboard).</li>
+    <li>Controleer of de kassa overeenkomt met de Balance in MEWS (te vinden via Cashier op het dashboard).</li>
     <li>Verwerk de kassa-inhoud (en eventuele overschotten/tekorten) via interne berichten bij 'Kassa' (Messages rechtsboven op het dashboard).</li>
   </ul>
 
@@ -2824,7 +2824,7 @@ const SOPS = [
     <li>Ga naar 'Rentals' bovenaan de pagina → 'Add rental' → vul het formulier in en klik op 'Submit'.</li>
     <li>Print het formulier uit en laat de gast het ondertekenen. Het formulier mag in de map 'Fietsverhuur' bij de receptie.</li>
     <li>Laat de gast het bedrag betalen dat in het scherm staat.</li>
-    <li>Verwerk de betaling altijd in Mews via Billing → Hotel Service → Facilities → Bicycle rent.</li>
+    <li>Verwerk de betaling in MEWS via Billing → Hotel Service → Facilities → Bicycle rent.</li>
   </ul>
 
   <h2>Wijzigen van een verhuurde fiets</h2>
@@ -2833,7 +2833,7 @@ const SOPS = [
   <h2>Fiets inleveren & reparaties</h2>
   <ul>
     <li>Worden fiets en sleutels ingeleverd? Klik op 'End now'.</li>
-    <li>Reparatie noteren: ga naar 'Repairs' → 'Add repair' → kies het fietsnummer → 'Submit'. Geeft het systeem aan dat er bijbetaald moet worden? Laat de gast betalen en verwerk dit ook altijd in Mews.</li>
+    <li>Reparatie noteren: ga naar 'Repairs' → 'Add repair' → kies het fietsnummer → 'Submit'. Geeft het systeem aan dat er bijbetaald moet worden? Laat de gast betalen en verwerk dit ook altijd in MEWS.</li>
   </ul>
 `
   },
@@ -2865,7 +2865,7 @@ const SOPS = [
   <ul>
     <li>Open <a href="https://secure.paybylink.com/" target="_blank" rel="noopener">secure.paybylink.com</a> en log in (staan de gegevens niet correct, kijk dan in het wachtwoordenbestand).</li>
     <li>Klik bovenin op 'Actions' → 'Create Payment'.</li>
-    <li>Vul in: Order ID (reserveringsnummer uit Mews, 5 cijfers), Amount (totaalbedrag), Client name, Mail address.</li>
+    <li>Vul in: Order ID (reserveringsnummer uit MEWS, 5 cijfers), Amount (totaalbedrag), Client name, Mail address.</li>
     <li>Description: 'Betaling nodig voor uw boeking bij Urban Residences' (NL) of 'Payment required for your reservation at Urban Residences Rotterdam' (EN).</li>
     <li>Language: naar keuze Nederlands of Engels.</li>
     <li>Klik op 'Create'. De gast ontvangt nu een e-mail met de betaallink.</li>
@@ -3110,7 +3110,7 @@ function renderSop(){
     const item = document.createElement("button");
     item.className = "sop-list-item";
     item.innerHTML = `<span>${sop.title}</span><small>${sop.category}</small>`;
-    item.onclick = ()=>{ document.getElementById("sop-" + sop.id).scrollIntoView({behavior:"smooth", block:"start"}); };
+    item.onklik = ()=>{ document.getElementById("sop-" + sop.id).scrollIntoView({behavior:"smooth", block:"start"}); };
     list.appendChild(item);
   });
   content.appendChild(list);
@@ -3181,7 +3181,7 @@ async function renderHandover(){
     const postBtn = document.createElement("button");
     postBtn.textContent = "Toevoegen";
     postBtn.disabled = !canPost;
-    postBtn.onclick = async ()=>{
+    postBtn.onklik = async ()=>{
       const text = textarea.value.trim();
       if(!text) return;
       if(!currentUser){ showUserOverlay("fo"); return; }
@@ -3229,7 +3229,7 @@ async function renderHandover(){
           del.className = "handover-del";
           del.textContent = "✕";
           del.title = "Verwijderen";
-          del.onclick = async ()=>{
+          del.onklik = async ()=>{
             entries.splice(entry._idx, 1);
             handoverCache[selectedDate] = entries;
             await saveHandover(selectedDate);
@@ -3251,7 +3251,7 @@ function renderUserBadge(){
   const list = employeesFor(dept);
   if(list.length === 0){
     el.innerHTML = `<span class="lbl">Naamregistratie</span><span class="name" style="color:#8B8477;font-weight:400;">n.v.t. voor deze afdeling</span>`;
-    el.onclick = null;
+    el.onklik = null;
     return;
   }
   const deptLabel = dept === "fo" ? "Front Office" : (dept === "ad" ? "Algemene Dienst" : "Housekeeping");
@@ -3260,7 +3260,7 @@ function renderUserBadge(){
   } else {
     el.innerHTML = `<span class="lbl">${deptLabel}</span><span class="name">Kies je naam…</span>`;
   }
-  el.onclick = ()=> showUserOverlay(dept);
+  el.onklik = ()=> showUserOverlay(dept);
 }
 
 function showUserOverlay(dept){
@@ -3352,10 +3352,10 @@ function showUserOverlay(dept){
     pinError.style.display = "none";
     btn.disabled = pinInput.value.length !== 4 || pinConfirm.value.length !== 4;
   });
-  pinInput?.addEventListener("keydown", (e)=>{ if(e.key === "Enter" && !btn.disabled) btn.click(); });
+  pinInput?.addEventListener("keydown", (e)=>{ if(e.key === "Enter" && !btn.disabled) btn.klik(); });
   syncPinVisibility();
 
-  btn.onclick = async ()=>{
+  btn.onklik = async ()=>{
     if(!select.value) return;
     // Beheerder kan direct overschakelen
     if(currentUser === ADMIN_NAME && select.value !== ADMIN_NAME){
@@ -3405,20 +3405,20 @@ function renderDateBar(){
     const pill = document.createElement("button");
     pill.className = "day-pill" + (key===TODAY_KEY ? " is-today" : "") + (key===selectedDate ? " is-selected" : "");
     pill.innerHTML = `<span class="wd">${WEEKDAYS[d.getDay()]}</span><span class="num">${d.getDate()}</span>`;
-    pill.onclick = ()=>{ selectedDate = key; renderDateBar(); if(currentShift === "report"){ loadReport(selectedDate).then(renderReport); } else { renderContent(); } };
+    pill.onklik = ()=>{ selectedDate = key; renderDateBar(); if(currentShift === "report"){ loadReport(selectedDate).then(renderReport); } else { renderContent(); } };
     strip.appendChild(pill);
   });
 }
 
-document.getElementById("date-prev").onclick = ()=>{
+document.getElementById("date-prev").onklik = ()=>{
   windowStart.setDate(windowStart.getDate() - 7);
   renderDateBar();
 };
-document.getElementById("date-next").onclick = ()=>{
+document.getElementById("date-next").onklik = ()=>{
   windowStart.setDate(windowStart.getDate() + 7);
   renderDateBar();
 };
-document.getElementById("date-today").onclick = ()=>{
+document.getElementById("date-today").onklik = ()=>{
   selectedDate = TODAY_KEY;
   const d = new Date(); d.setDate(d.getDate()-6);
   windowStart = d;
@@ -3460,7 +3460,7 @@ function renderSendBar(){
   const btn = document.getElementById("send-report-btn");
   btn.textContent = `Verstuur ${state[currentShift].label.toLowerCase()}-overzicht`;
   btn.href = "#";
-  btn.onclick = sendReportMail;
+  btn.onklik = sendReportMail;
 }
 
 // ---------- Landingspagina ----------
@@ -3530,9 +3530,9 @@ function showLanding(){
     errorEl.style.display = "none";
     btn.disabled = pinInput.value.length !== 4 || confirmInput.value.length !== 4;
   });
-  pinInput?.addEventListener("keydown", (e)=>{ if(e.key==="Enter" && !btn.disabled) btn.click(); });
+  pinInput?.addEventListener("keydown", (e)=>{ if(e.key==="Enter" && !btn.disabled) btn.klik(); });
 
-  btn.onclick = async ()=>{
+  btn.onklik = async ()=>{
     const name = sel.value;
     if(!name) return;
     // Beheerder kan direct overschakelen
@@ -3590,7 +3590,7 @@ function showDeptPicker(name){
         <span class="dept-btn-name">${d.name}${d.key===ownDept?" <small style='color:var(--gold);font-size:10px;font-weight:400;'>Jouw afdeling</small>":""}</span>
         <span class="dept-btn-sub">${d.sub}</span>
       </span>`;
-    btn.onclick = ()=>{
+    btn.onklik = ()=>{
       document.getElementById("dept-picker").style.display = "none";
       showApp(d.key);
     };
