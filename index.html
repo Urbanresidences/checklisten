@@ -1,0 +1,3182 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Urban Residences Checklisten — Alle Afdelingen</title>
+<style>
+  :root{
+    --charcoal:#1A1A1A;
+    --ink:#2B2620;
+    --gold:#B08D57;
+    --gold-light:#D9C7A8;
+    --cream:#F3EDE3;
+    --paper:#FAF9F6;
+    --line:#E4DDD1;
+    --open:#B08D57;
+    --bezig:#6E85A0;
+    --gereed:#6B7A5E;
+    --nvt:#A79C8C;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    display:flex;
+    min-height:100vh;
+  }
+  h1,h2,h3,.serif{
+    font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    width:220px;
+    flex-shrink:0;
+    background:var(--charcoal);
+    color:var(--cream);
+    display:flex;
+    flex-direction:column;
+    padding:24px 0;
+    position:sticky;
+    top:0;
+    height:100vh;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:0 20px 22px 20px;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    margin-bottom:18px;
+  }
+  .brand-mark{
+    width:34px;height:34px;
+    border:1px solid var(--gold);
+    border-radius:3px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--gold);
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:.5px;
+    font-family:Georgia,serif;
+  }
+  .brand-text{
+    font-size:11px;
+    line-height:1.35;
+    letter-spacing:.04em;
+    color:var(--gold-light);
+  }
+  .brand-text strong{
+    display:block;
+    color:#fff;
+    font-size:13px;
+    font-family:Georgia,serif;
+    letter-spacing:.02em;
+  }
+  nav{display:flex;flex-direction:column;gap:2px;padding:0 10px;}
+  .tab{
+    text-align:left;
+    background:none;
+    border:none;
+    color:#C9C2B4;
+    padding:11px 12px;
+    font-size:14px;
+    cursor:pointer;
+    border-radius:4px;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    font-family:inherit;
+  }
+  .tab small{
+    color:#8B8477;
+    font-size:11px;
+  }
+  .tab:hover{background:rgba(255,255,255,.05);color:#fff;}
+  .tab.active{
+    background:rgba(176,141,87,.15);
+    color:#fff;
+    box-shadow:inset 3px 0 0 var(--gold);
+  }
+  .tab.active small{color:var(--gold-light);}
+
+  .handover-tab-wrap{padding:0 10px;}
+  .nav-divider{
+    height:1px;
+    background:rgba(255,255,255,.1);
+    margin:10px 20px 10px 20px;
+  }
+
+  .admin-wrap{padding:0 10px;}
+  .admin-tab{margin-top:4px;}
+  .admin-only{
+    display:inline-block;
+    background:var(--gold);
+    color:var(--charcoal);
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.04em;
+    padding:1px 5px;
+    border-radius:3px;
+    margin-left:4px;
+    vertical-align:middle;
+    text-transform:uppercase;
+  }
+
+  /* ---------- Dagoverzicht ---------- */
+  .report-shift{
+    border:1px solid var(--line);
+    border-radius:7px;
+    margin-bottom:18px;
+    overflow:hidden;
+  }
+  .report-shift-head{
+    background:var(--cream);
+    padding:14px 18px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .report-shift-head h3{
+    margin:0;
+    font-size:14px;
+    color:var(--charcoal);
+    flex:1;
+  }
+  .report-shift-stat{
+    font-size:12px;
+    color:#77705F;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .report-pct{
+    font-size:22px;
+    font-weight:700;
+    color:var(--charcoal);
+    min-width:50px;
+    text-align:right;
+  }
+  .report-pct small{font-size:12px;font-weight:400;}
+  .report-pct.pct-100{color:#4A8C5C;}
+  .dot{
+    display:inline-block;
+    width:8px;height:8px;
+    border-radius:50%;
+    flex-shrink:0;
+  }
+  .dot.done{background:#4A8C5C;}
+  .dot.nvt{background:#B0A090;}
+  .dot.open{background:#C4855A;}
+  .dot.notes{background:#5A7EB0;}
+  .report-task-list{padding:6px 0;}
+  .report-task{
+    display:grid;
+    grid-template-columns:18px 1fr;
+    gap:4px 8px;
+    align-items:start;
+    padding:6px 18px;
+    border-top:1px solid var(--line);
+    font-size:13px;
+  }
+  .report-task:first-child{border-top:none;}
+  .report-task-icon{padding-top:3px;}
+  .report-task-title{color:var(--ink);}
+  .report-task-notes{
+    grid-column:2;
+    font-size:11.5px;
+    color:#8B8477;
+    font-style:italic;
+    margin-top:1px;
+  }
+  .report-task.has-notes .report-task-title{font-weight:600;}
+
+  /* ---------- SOP Bibliotheek (in-file) ---------- */
+  .sop-tab small{color:#8B8477;}
+  .sop-list{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    margin-bottom:28px;
+  }
+  .sop-list-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--cream);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:11px 16px;
+    font-family:inherit;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--charcoal);
+    cursor:pointer;
+    text-align:left;
+  }
+  .sop-list-item:hover{border-color:var(--gold);}
+  .sop-list-item small{
+    font-weight:400;
+    color:#9A9284;
+    font-family:Arial,sans-serif;
+    font-size:11px;
+  }
+  .sop-doc{
+    font-family:Georgia,'Times New Roman',serif;
+    border-top:2px solid var(--line);
+    padding-top:24px;
+    margin-top:8px;
+  }
+  .sop-banner{
+    background:var(--charcoal);
+    color:var(--gold-light);
+    padding:14px 20px;
+    border-radius:6px;
+    font-weight:700;
+    font-size:15px;
+    margin-bottom:6px;
+  }
+  .sop-sub{
+    font-size:12px;
+    color:#8B8477;
+    margin-bottom:26px;
+    font-family:Arial,sans-serif;
+  }
+  .sop-doc h2{
+    font-size:15px;
+    color:var(--charcoal);
+    border-bottom:2px solid var(--gold);
+    padding-bottom:5px;
+    margin:28px 0 12px 0;
+  }
+  .sop-doc h2:first-of-type{margin-top:0;}
+  .sop-doc p{line-height:1.65;font-size:14px;margin:0 0 12px 0;}
+  .sop-doc ul{margin:0 0 12px 0;padding-left:20px;line-height:1.65;font-size:14px;}
+  .sop-doc ul li{margin-bottom:3px;}
+  .sop-callout{
+    background:var(--cream);
+    border-left:3px solid var(--gold);
+    padding:11px 15px;
+    font-size:13px;
+    border-radius:0 5px 5px 0;
+    margin:12px 0;
+  }
+  table.sop-table{
+    width:100%;
+    border-collapse:collapse;
+    margin:8px 0 18px 0;
+    font-size:12.5px;
+    font-family:Arial,sans-serif;
+  }
+  table.sop-table th{
+    background:var(--charcoal);
+    color:#fff;
+    text-align:left;
+    padding:8px 11px;
+    font-weight:600;
+  }
+  table.sop-table td{padding:7px 11px;border-bottom:1px solid var(--line);}
+  table.sop-table tr:nth-child(even) td{background:var(--cream);}
+  .sop-checklist{list-style:none;padding-left:0;}
+  .sop-checklist li{
+    padding:6px 0 6px 24px;
+    position:relative;
+    border-bottom:1px solid var(--line);
+    font-size:13px;
+  }
+  .sop-checklist li::before{content:"☐";position:absolute;left:0;color:var(--gold);font-size:14px;}
+  .sop-signoff{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+  .sop-signoff div{border:1px solid var(--line);border-radius:5px;padding:11px 13px;}
+  .sop-signoff label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#9A9284;font-family:Arial,sans-serif;margin-bottom:5px;}
+  .sop-signoff .sop-line{border-bottom:1px solid var(--line);height:22px;}
+  @media (max-width:760px){
+    .sop-signoff{grid-template-columns:1fr;}
+  }
+
+  .sidebar-footer{
+    margin-top:auto;
+    padding:14px 20px 0 20px;
+    border-top:1px solid rgba(255,255,255,.12);
+    font-size:11px;
+    color:#8B8477;
+    line-height:1.5;
+  }
+
+  .user-badge{
+    margin:0 20px 18px 20px;
+    padding:10px 12px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:5px;
+    font-size:12px;
+    color:#C9C2B4;
+    cursor:pointer;
+  }
+  .user-badge .lbl{font-size:10px;letter-spacing:.04em;color:#8B8477;text-transform:uppercase;display:block;margin-bottom:2px;}
+  .user-badge .name{color:#fff;font-weight:600;font-size:13.5px;}
+  .user-badge .switch{color:var(--gold-light);font-size:11px;margin-left:6px;}
+
+  .overlay{
+    position:fixed;inset:0;
+    background:rgba(26,26,26,.75);
+    display:flex;align-items:center;justify-content:center;
+    z-index:100;
+  }
+  .overlay-card{
+    background:#fff;
+    border-radius:8px;
+    padding:32px 34px;
+    width:340px;
+    box-shadow:0 12px 40px rgba(0,0,0,.25);
+  }
+  .overlay-card h2{
+    margin:0 0 6px 0;
+    font-size:19px;
+    color:var(--charcoal);
+  }
+  .overlay-card p{
+    margin:0 0 18px 0;
+    font-size:13px;
+    color:#77705F;
+  }
+  .overlay-card select{
+    width:100%;
+    padding:10px 12px;
+    font-size:14px;
+    border:1px solid var(--line);
+    border-radius:5px;
+    background:var(--paper);
+    color:var(--ink);
+    margin-bottom:16px;
+    font-family:inherit;
+  }
+  .overlay-card button{
+    width:100%;
+    padding:11px;
+    background:var(--charcoal);
+    color:var(--gold-light);
+    border:none;
+    border-radius:5px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .overlay-card button:disabled{opacity:.4;cursor:not-allowed;}
+  .overlay-card button:hover:not(:disabled){background:#000;}
+
+  /* ---------- Datumbalk ---------- */
+  .date-bar{
+    position:fixed;
+    bottom:0;
+    left:220px;
+    right:0;
+    background:#fff;
+    border-top:1px solid var(--line);
+    padding:10px 24px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    z-index:50;
+    box-shadow:0 -2px 10px rgba(0,0,0,.04);
+  }
+  .date-nav{
+    background:var(--cream);
+    border:none;
+    color:var(--charcoal);
+    width:28px;height:28px;
+    border-radius:50%;
+    font-size:16px;
+    cursor:pointer;
+    flex-shrink:0;
+    line-height:1;
+  }
+  .date-nav:hover{background:var(--gold-light);}
+  .date-month{
+    font-family:Georgia,serif;
+    font-size:13px;
+    font-weight:700;
+    color:var(--charcoal);
+    white-space:nowrap;
+    flex-shrink:0;
+    width:100px;
+    text-transform:capitalize;
+  }
+  .date-strip{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    flex:1;
+    scrollbar-width:none;
+  }
+  .date-strip::-webkit-scrollbar{display:none;}
+  .day-pill{
+    flex-shrink:0;
+    width:46px;
+    padding:6px 0 7px 0;
+    border:1px solid var(--line);
+    background:var(--paper);
+    border-radius:6px;
+    cursor:pointer;
+    text-align:center;
+    font-family:inherit;
+    position:relative;
+  }
+  .day-pill .wd{
+    display:block;
+    font-size:10px;
+    color:#9A9284;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+  }
+  .day-pill .num{
+    display:block;
+    font-size:15px;
+    font-weight:700;
+    color:var(--charcoal);
+    margin-top:1px;
+  }
+  .day-pill.is-today{border-color:var(--gold);}
+  .day-pill.is-today .num::after{
+    content:"";
+    display:block;
+    width:4px;height:4px;
+    border-radius:50%;
+    background:var(--gold);
+    margin:3px auto 0 auto;
+  }
+  .day-pill.is-selected{
+    background:var(--charcoal);
+    border-color:var(--charcoal);
+  }
+  .day-pill.is-selected .wd{color:var(--gold-light);}
+  .day-pill.is-selected .num{color:#fff;}
+  .day-pill.is-selected .num::after{background:var(--gold-light);}
+  .date-today{
+    background:var(--charcoal);
+    color:var(--gold-light);
+    border:none;
+    padding:8px 14px;
+    border-radius:5px;
+    font-size:12.5px;
+    font-weight:600;
+    cursor:pointer;
+    flex-shrink:0;
+    font-family:inherit;
+  }
+  .date-today:hover{background:#000;}
+
+  @media (max-width:760px){
+    .date-bar{left:0;padding:8px 12px;}
+    .date-month{width:70px;font-size:11.5px;}
+    .day-pill{width:38px;}
+  }
+
+  /* ---------- Overdrachtslog ---------- */
+  .handover-composer{
+    display:flex;
+    gap:10px;
+    align-items:flex-end;
+    background:var(--cream);
+    border-radius:6px;
+    padding:14px;
+    margin-bottom:24px;
+  }
+  .handover-composer textarea{
+    flex:1;
+    min-height:52px;
+    resize:vertical;
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:9px 11px;
+    font-family:inherit;
+    font-size:13.5px;
+    color:var(--ink);
+    background:#fff;
+  }
+  .handover-composer textarea:disabled{
+    background:#F0EBE1;
+    color:#B3AC9E;
+  }
+  .handover-composer button{
+    background:var(--charcoal);
+    color:var(--gold-light);
+    border:none;
+    padding:12px 18px;
+    border-radius:5px;
+    font-weight:600;
+    font-size:13px;
+    cursor:pointer;
+    font-family:inherit;
+    flex-shrink:0;
+  }
+  .handover-composer button:disabled{
+    background:#D8D2C6;
+    color:#fff;
+    cursor:not-allowed;
+  }
+  .handover-composer button:hover:not(:disabled){background:#000;}
+
+  .handover-empty{
+    font-size:13.5px;
+    color:#9A9284;
+    font-style:italic;
+    padding:20px 0;
+  }
+  .handover-item{
+    position:relative;
+    border-left:3px solid var(--gold);
+    background:var(--paper);
+    border-radius:0 5px 5px 0;
+    padding:11px 34px 11px 14px;
+    margin-bottom:10px;
+  }
+  .handover-meta{
+    font-size:11.5px;
+    color:#9A9284;
+    margin-bottom:3px;
+  }
+  .handover-meta strong{color:var(--charcoal);font-weight:700;margin-right:8px;}
+  .handover-text{
+    font-size:14px;
+    color:var(--ink);
+    line-height:1.5;
+    white-space:pre-wrap;
+  }
+  .handover-del{
+    position:absolute;
+    top:8px;right:8px;
+    background:none;
+    border:none;
+    color:#C4BCAC;
+    font-size:13px;
+    cursor:pointer;
+    padding:2px 6px;
+  }
+  .handover-del:hover{color:#B04545;}
+
+  /* ---------- Main ---------- */
+  main{
+    flex:1;
+    padding:36px 48px 100px 48px;
+    max-width:920px;
+  }
+  .page-header{
+    margin-bottom:28px;
+  }
+  .page-header h1{
+    font-size:26px;
+    margin:0 0 4px 0;
+    color:var(--charcoal);
+    font-weight:600;
+  }
+  .page-header .sub{
+    color:#77705F;
+    font-size:14px;
+  }
+  .notice{
+    margin-top:14px;
+    background:var(--cream);
+    border-left:3px solid var(--gold);
+    padding:10px 14px;
+    font-size:13px;
+    color:var(--ink);
+    line-height:1.5;
+    border-radius:0 3px 3px 0;
+  }
+  .edit-hint{
+    font-size:12px;
+    color:#9A9284;
+    margin-top:10px;
+    font-style:italic;
+  }
+
+  .block{
+    margin-top:30px;
+  }
+  .block-head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:10px;
+  }
+  .block-time{
+    font-family:Georgia,serif;
+    font-weight:700;
+    font-size:15px;
+    color:var(--charcoal);
+    white-space:nowrap;
+  }
+  .block-name{
+    font-size:12px;
+    letter-spacing:.03em;
+    color:#fff;
+    background:var(--gold);
+    padding:3px 10px;
+    border-radius:2px;
+    font-weight:600;
+  }
+  .block hr{
+    border:none;
+    border-top:1px solid var(--line);
+    margin:8px 0 0 0;
+  }
+  .block-early{
+    font-size:12px;
+    color:#9A9284;
+    font-style:italic;
+    padding:8px 0 2px 0;
+  }
+
+  .task{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:6px 16px;
+    padding:13px 0;
+    border-bottom:1px solid var(--line);
+    align-items:start;
+  }
+  .task:last-child{border-bottom:none;}
+  .task-main{min-width:0;}
+  .task-title{
+    font-weight:600;
+    font-size:14.5px;
+    color:var(--charcoal);
+    outline:none;
+    padding:2px 4px;
+    margin:-2px -4px;
+    border-radius:3px;
+  }
+  .task-desc{
+    font-size:13.5px;
+    color:#57503F;
+    margin-top:3px;
+    line-height:1.5;
+    outline:none;
+    padding:2px 4px;
+    margin-left:-4px;
+    margin-right:-4px;
+    border-radius:3px;
+  }
+  .task-notes{
+    font-size:12.5px;
+    color:#8B8477;
+    margin-top:5px;
+    outline:none;
+    padding:2px 4px;
+    margin-left:-4px;
+    border-radius:3px;
+    min-height:16px;
+  }
+  .task-notes:empty::before{
+    content:"+ opmerking toevoegen";
+    color:#C4BCAC;
+  }
+  [contenteditable="true"]:hover{
+    background:rgba(176,141,87,.08);
+    box-shadow:0 0 0 1px var(--gold-light);
+  }
+  [contenteditable="true"]:focus{
+    background:#fff;
+    box-shadow:0 0 0 1px var(--gold);
+  }
+  .locked{
+    cursor:default;
+  }
+
+  .status-btn{
+    justify-self:end;
+    border:1px solid transparent;
+    background:var(--cream);
+    color:var(--ink);
+    font-size:12px;
+    font-weight:600;
+    padding:5px 11px;
+    border-radius:20px;
+    cursor:pointer;
+    white-space:nowrap;
+    font-family:inherit;
+    transition:background .12s;
+  }
+  .status-btn[data-status="Open"]{background:#F1E7D6;color:#8A6A34;}
+  .status-btn[data-status="Bezig"]{background:#E3EAF1;color:#42597A;}
+  .status-btn[data-status="Gereed"]{background:#E5ECDF;color:#4B5A40;}
+  .status-btn.status-locked{
+    background:#F0EDE7 !important;
+    color:#B3AC9E !important;
+    text-decoration:none !important;
+    cursor:not-allowed;
+  }
+  .status-btn.status-nvt{
+    background:#EFEBE4 !important;
+    color:#8B8477 !important;
+    text-decoration:line-through;
+  }
+  .nvt-btn{
+    border:1px solid var(--line);
+    background:transparent;
+    color:#9A9284;
+    font-size:11px;
+    padding:4px 8px;
+    border-radius:20px;
+    cursor:pointer;
+    white-space:nowrap;
+    font-family:inherit;
+  }
+  .nvt-btn:hover{border-color:var(--gold);color:var(--charcoal);}
+  .nvt-btn.nvt-active{
+    background:#EFEBE4;
+    border-color:#C9C0AF;
+    color:#6E675A;
+    font-weight:600;
+  }
+  .note-meta{
+    font-size:10.5px;
+    color:#B3AC9E;
+    margin-top:2px;
+    font-style:italic;
+  }
+  .sop-link{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    margin-top:8px;
+    font-size:12px;
+    font-weight:600;
+    color:var(--charcoal);
+    background:var(--cream);
+    border:1px solid var(--gold-light);
+    padding:5px 10px;
+    border-radius:5px;
+    text-decoration:none;
+    font-family:Arial,sans-serif;
+    width:fit-content;
+  }
+  .sop-link:hover{background:var(--gold-light);color:#fff;}
+
+  .task-cl{margin-top:8px;}
+  .task-cl-toggle{
+    background:none;
+    border:1px solid var(--line);
+    color:var(--charcoal);
+    font-size:12px;
+    font-weight:600;
+    padding:6px 10px;
+    border-radius:5px;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .task-cl-toggle:hover{border-color:var(--gold);}
+  .task-cl.open .task-cl-toggle{background:var(--cream);border-color:var(--gold-light);}
+  .task-cl-table{
+    margin-top:8px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .task-cl-row{
+    display:grid;
+    grid-template-columns:1fr 60px 60px;
+    align-items:center;
+    padding:6px 12px;
+    border-bottom:1px solid var(--line);
+    font-size:12.5px;
+  }
+  .task-cl-row:last-child{border-bottom:none;}
+  .task-cl-row div:nth-child(2),
+  .task-cl-row div:nth-child(3){text-align:center;}
+  .task-cl-head{
+    background:var(--charcoal);
+    color:#fff;
+    font-weight:600;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+  }
+  .task-cl-row:not(.task-cl-head):nth-child(odd){background:var(--cream);}
+  .task-cl-row input[type="checkbox"]{
+    width:16px;height:16px;
+    accent-color:var(--gold);
+    cursor:pointer;
+  }
+
+  .role-badge{
+    font-size:11px;
+    color:#8B8477;
+    margin-top:2px;
+  }
+
+  footer.page-footer{
+    margin-top:40px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+    font-size:11px;
+    color:#B3AC9E;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+  }
+  #send-report-btn{
+    background:var(--charcoal);
+    color:var(--cream);
+    font-size:12px;
+    font-weight:600;
+    padding:7px 12px;
+    border-radius:5px;
+    font-family:inherit;
+    border:none;
+    cursor:pointer;
+    text-decoration:none;
+  }
+  #send-report-btn:hover{background:#000;}
+  @media (max-width:760px){
+    #send-report-btn{width:100%;}
+    footer.page-footer{flex-direction:column;align-items:stretch;gap:10px;}
+  }
+
+  @media (max-width:760px){
+    body{flex-direction:column;}
+    .sidebar{
+      width:100%;height:auto;position:relative;
+      flex-direction:row;overflow-x:auto;padding:14px;
+    }
+    .brand{border-bottom:none;border-right:1px solid rgba(255,255,255,.12);margin:0 12px 0 0;padding:0 12px 0 0;}
+    nav{flex-direction:row;}
+    .sidebar-footer{display:none;}
+    main{padding:24px;}
+    .task{grid-template-columns:1fr;}
+    .status-btn{justify-self:start;}
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="brand">
+    <div class="brand-mark">UR</div>
+    <div class="brand-text"><strong>Urban Residences</strong>Checklisten — Alle Afdelingen</div>
+  </div>
+  <div id="user-badge" class="user-badge"></div>
+  <div class="handover-tab-wrap">
+    <button class="tab handover-tab" id="handover-tab-btn">
+      📋 Overdrachtslog
+      <small>Belangrijke punten van vandaag</small>
+    </button>
+  </div>
+  <div id="admin-wrap" class="admin-wrap" style="display:none;">
+    <button class="tab admin-tab" id="admin-tab-btn">
+      🗓️ Dagoverzicht <span class="admin-only">Beheer</span>
+      <small>Samenvatting van alle diensten</small>
+    </button>
+  </div>
+  <div class="nav-divider"></div>
+  <nav id="tabs"></nav>
+  <div class="nav-divider"></div>
+  <div class="handover-tab-wrap">
+    <button class="tab sop-tab" id="sop-tab-btn">
+      📄 SOP Bibliotheek
+      <small>Standaardprocedures</small>
+    </button>
+  </div>
+  <div class="sidebar-footer">
+    Wijzigingen worden automatisch<br>bewaard in deze browser.
+  </div>
+</div>
+
+<main>
+  <div class="page-header">
+    <h1 id="page-title" class="serif"></h1>
+    <div class="sub" id="page-sub"></div>
+    <div class="notice" id="page-notice"></div>
+    <div class="edit-hint" id="page-hint"></div>
+  </div>
+  <div id="content"></div>
+  <footer class="page-footer">
+    <span>Urban Residences Rotterdam</span>
+    <div id="send-bar-wrap">
+      <a href="#" id="send-report-btn">Verstuur overzicht</a>
+    </div>
+    <span id="save-indicator">Opgeslagen</span>
+  </footer>
+</main>
+
+<div class="date-bar">
+  <button class="date-nav" id="date-prev" title="Vorige week">‹</button>
+  <div class="date-month" id="date-month"></div>
+  <div class="date-strip" id="date-strip"></div>
+  <button class="date-nav" id="date-next" title="Volgende week">›</button>
+  <button class="date-today" id="date-today">Vandaag</button>
+</div>
+
+<script>
+const STATUS_CYCLE = ["Open","Bezig","Gereed"];
+
+const EMPLOYEE_LISTS = {
+  fo: [
+    "Aurora Bonafacia",
+    "Sule Cam",
+    "Rani Iqbal",
+    "Victoria James",
+    "Noémie Oostindie",
+    "Robbin Pols",
+    "Shannon Vieira Sequeira",
+    "Sevim Güden",
+    "Martin Snijders",
+  ],
+  ad: [
+    "Luiz Alves",
+    "Abdulkadir Mohamed",
+    "Adnan Ali",
+    "Amber Fattoe",
+    "Boobakar Youla",
+    "Martin Snijders",
+  ],
+  hk: ["Martin Snijders"],
+};
+function employeesFor(dept){ return EMPLOYEE_LISTS[dept] || []; }
+const ADMIN_NAME = "Martin Snijders";
+const ADMIN_PIN = "0445";
+
+// Pincode per medewerker. Wijzig deze in overleg; Martin kan ze aanpassen in de broncode.
+const PINS = {
+  "Martin Snijders": "0445", // Beheerder: vaste pincode
+};
+const PIN_STORAGE_PREFIX = "ur-pin-"; // persoonlijk per apparaat/browser
+
+async function getPin(name){
+  if(PINS[name]) return PINS[name]; // vaste pin (beheerder)
+  try{
+    if(window.storage){
+      const res = await window.storage.get(PIN_STORAGE_PREFIX + name, false);
+      if(res && res.value) return res.value;
+    }
+  }catch(e){}
+  return null; // nog geen pin aangemaakt
+}
+
+async function savePin(name, pin){
+  try{
+    if(window.storage){
+      await window.storage.set(PIN_STORAGE_PREFIX + name, pin, false);
+    }
+  }catch(e){}
+}
+
+// Automatisch uitloggen na inactiviteit (gedeelde baliecomputer)
+const AUTO_LOGOUT_MINUTES = 45;
+
+let currentUser = null;
+
+const SHIFTS = {
+  ochtend: {
+    rev: 2,
+    dept: "fo",
+    label: "Ochtenddienst",
+    time: "08:00 – 16:00 uur",
+    notice: "Let op: alle Late Check-in (LCI), Late Check-out (LCO) en overige taken voor Technische Dienst (TD) en Housekeeping (HK) altijd verwerken in MEWS (Tasks) én in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com.",
+    roleLabel: "Onderdeel",
+    blocks: [
+      { time:"08:00", name:"Starten", tasks:[
+        {t:"Inklokken bij aanvang dienst", d:"Inklokken volgens de geldende tijdregistratie."},
+      ]},
+      { time:"08:05", name:"Systemen", tasks:[
+        {t:"PMS", d:""},
+        {t:"Muziek", d:""},
+        {t:"Handover aanmaken", d:""},
+      ]},
+      { time:"08:10", name:"Voorbereiding dienst", tasks:[
+        {t:"Nightaudit rapport", d:"Overdrachtslog nachtdienst doornemen: bijzonderheden, openstaande zaken."},
+        {t:"Klachten afhandelen", d:"Geregistreerde klachten controleren; task aanmaken in MEWS (Tasks) voor de juiste afdeling (TD/HK) en verwerken in de Timeline."},
+        {t:"Voorraad front office", d:"Voorraad formulieren, sleutelkaarten en kantoorbenodigdheden controleren."},
+        {t:"Late check-out (LCO) verwerken", d:"Verzoeken om late check-out (LCO) beoordelen/stayover en in PMS vastleggen; sleutel verlengen. Verwerken in MEWS (Tasks) én in de Timeline."},
+        {t:"Early check-out verwerken", d:"Early check-outs controleren en verwerken in MEWS (Tasks) én in de Timeline."},
+        {t:"Late check-in (LCI) verwerken", d:"Late check-ins (LCI) verwerken in MEWS (Tasks) én in de Timeline."},
+        {t:"No-show verwerken", d:"No-shows verwerken in MEWS (Tasks) én in de Timeline."},
+      ]},
+      { time:"08:30", name:"Presentatie", tasks:[
+        {t:"Receptie schoonmaken", d:"Doekje over de receptie halen."},
+        {t:"Representatief lobby", d:"Opruimen van zaken die niet thuis horen bij de lobby."},
+      ]},
+      { time:"09:00", name:"Arrivals", tasks:[
+        {t:"Early check-in voorbereiden", d:"Kamers gereedmelden en pre-assignment controleren voor vroege aankomsten."},
+        {t:"MEWS-taken verwerken", d:"Openstaande taken in MEWS nalopen en verwerken."},
+        {t:"Bijzonderheden HSK", d:"MEWS-taken aanmaken: Extra's (babybed, twin, wijn etc.) en schoonmaakprioriteiten doorgeven aan HK."},
+        {t:"Groepsaankomsten voorbereiden", d:"Sleutelpakketten en registratieformulieren voor groepen klaarzetten."},
+        {t:"Dagverwachting doornemen", d:"Aankomst- en vertrekverwachting van vandaag doorlopen (groepen, allergieën, bijzonderheden)."},
+      ]},
+      { time:"09:30", name:"Communicatie", tasks:[
+        {t:"Reserveringen verwerken", d:"Nieuwe boekingen, wijzigingen en annuleringen verwerken."},
+        {t:"E-Mails", d:"Beantwoorden e-mails in Outlook."},
+        {t:"Booking.com Messages", d:"Berichten in het Extranet beantwoorden."},
+        {t:"Expedia Messages", d:"Berichten in het Extranet beantwoorden."},
+        {t:"Airbnb", d:"Berichten in het Extranet beantwoorden."},
+      ]},
+      { time:"10:00 - 11:00", name:"Check-out", tasks:[
+        {t:"Check-out afhandelen", d:""},
+      ]},
+      { time:"12:00 - 13:00", name:"Communicatie", tasks:[
+        {t:"Reserveringen verwerken", d:"Nieuwe boekingen, wijzigingen en annuleringen verwerken."},
+        {t:"E-Mails", d:"Beantwoorden e-mails in Outlook."},
+        {t:"Booking.com Messages", d:"Berichten in het Extranet beantwoorden."},
+        {t:"Expedia Messages", d:"Berichten in het Extranet beantwoorden."},
+        {t:"Airbnb", d:"Berichten in het Extranet beantwoorden."},
+      ]},
+      { time:"13:00 - 14:00", name:"Lunch / rotatie", tasks:[
+        {t:"Lunchpauze inplannen", d:"Bezetting balie borgen tijdens lunchpauzes (minimaal 1 medewerker aanwezig)."},
+      ]},
+      { time:"14:00 - 15:00", name:"Administratie", tasks:[
+        {t:"Accounting ledgers MEWS controleren en verwerken", d:"Accounting ledgers in MEWS controleren en openstaande posten verwerken (zie ook SOP 'Update Accounting Ledger')."},
+        {t:"Gastnamen bij meerdere kamers opvragen", d:"Bij reserveringen met 2+ kamers: booker/hoofdgast bellen (of mailen) voor namen en kamerverdeling van alle gasten; namen correct invoeren in MEWS."},
+        {t:"Optionele boekingen bewaken", d:"Vervaldeadlines van optionele (direct) boekingen controleren."},
+        {t:"ZVK Reserveringen", d:"Zorgverzekeringkantoor reserveringen."},
+        {t:"Borg (deposit) terugbetalen", d:"Na inspectie door HSK of front office: borg van vertrokken gasten terugbetalen (€300 studio's / €500 appartementen, minus eventuele inhoudingen)."},
+      ]},
+      { time:"15:00 - 16:00", name:"Afronden", tasks:[
+        {t:"Overdracht nachtdienst voorbereiden", d:"Overdrachtslog invullen: bijzonderheden, openstaande taken, aandachtspunten."},
+        {t:"Desk schoonmaken en opruimen", d:"Balie en lobby schoonmaken: bureau afnemen, rommel en papieren opruimen, prullenbak legen, spullen op vaste plek terugleggen. Front desk netjes en presentabel achterlaten voor de nachtdienst."},
+        {t:"Uitklokken bij einde dienst", d:"Uitklokken bij einde van de dienst."},
+      ]},
+    ]
+  },
+
+  avond: {
+    rev: 6,
+    dept: "fo",
+    label: "Avonddienst",
+    time: "14:00 – 22:00 uur",
+    notice: "Let op: alle Late Check-in (LCI), Late Check-out (LCO) en overige taken voor Technische Dienst (TD) en Housekeeping (HK) altijd verwerken in MEWS (Tasks) én in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com.",
+    roleLabel: "Onderdeel",
+    blocks: [
+      { time:"14:00 - 15:00", name:"Overdracht", tasks:[
+        {t:"Inklokken bij aanvang dienst", d:"Inklokken volgens de geldende tijdregistratie."},
+        {t:"Overdracht ochtenddienst", d:"Overdrachtslog ochtenddienst doornemen."},
+        {t:"Dagverwachting doornemen", d:"Verwachte aankomsten, vertrekken en bijzonderheden van de avond doorlopen."},
+        {t:"MEWS-taken verwerken", d:"Doorlopend gedurende de dienst: openstaande taken in MEWS nalopen en verwerken zodra ze zich aandienen."},
+      ]},
+      { time:"15:00 - 17:00", name:"Arrivals", tasks:[
+        {t:"Check-in gasten", d:"Gasten inchecken, identiteit controleren en betaalgegevens vastleggen."},
+        {t:"SOP: Directe boekingen (telefoon/mail/walk-in)", d:"Vóór bevestiging altijd melden: borg vereist — €300 voor studio's, €500 voor appartementen — en cash-free beleid. Bij weerstand tegen borg/cash-free: alert zijn op mogelijk risico; naar eigen inschatting de boeking eventueel weigeren en overleggen met Martin of FOM. Bij telefonische boeking: e-mailadres dubbel controleren op spelling en bevestigen dat bevestigingsmail is ontvangen. Reservering pas bevestigd na creditcardgegevens óf vooruitbetaling. Zie tab 'SOP Referentie'."},
+        {t:"Ontbijt", d:"Gasten attenderen op ontbijtservice (vóór 19:00 uur bestellen via QR-code)."},
+        {t:"SOP: Gastnamen meerdere kamers controleren", d:"Bij check-in van reserveringen met 2+ kamers: controleren of namen per kamer al bekend zijn; zo niet alsnog opvragen bij de booker en invoeren in MEWS. Zie tab 'SOP Referentie'."},
+        {t:"Groepsaankomsten begeleiden", d:"Groepen ontvangen, sleutels uitdelen en instructies geven."},
+        {t:"Parkeren & bagage", d:"Parkeerverwijzing en bagageservice coördineren."},
+      ]},
+      { time:"17:00", name:"Communicatie", tasks:[
+        {t:"Reserveringen verwerken", d:"Nieuwe boekingen, wijzigingen en annuleringen verwerken."},
+        {t:"E-Mails", d:"Beantwoorden e-mails in Outlook."},
+        {t:"Booking.com Messages", d:"Berichten in het Extranet beantwoorden."},
+        {t:"Expedia Messages", d:"Berichten in het Extranet beantwoorden."},
+        {t:"Airbnb", d:"Berichten in het Extranet beantwoorden."},
+      ]},
+      { time:"17:30 - 19:00", name:"Afhandeling", tasks:[
+        {t:"Desk schoonmaken en opruimen", d:"Balie en lobby schoonmaken: bureau afnemen, rommel en papieren opruimen, prullenbak legen, spullen op vaste plek terugleggen. Front desk netjes en presentabel houden."},
+        {t:"Klachten afhandelen", d:"Vragen en klachten van gasten oppakken; klachten voor TD/HK vastleggen en verwerken in MEWS (Tasks) én in de Timeline."},
+      ]},
+      { time:"19:30", name:"Communicatie", tasks:[
+        {t:"Reserveringen verwerken", d:"Nieuwe boekingen, wijzigingen en annuleringen verwerken."},
+        {t:"E-Mails", d:"Beantwoorden e-mails in Outlook."},
+        {t:"Booking.com Messages", d:"Berichten in het Extranet beantwoorden."},
+        {t:"Expedia Messages", d:"Berichten in het Extranet beantwoorden."},
+        {t:"Airbnb", d:"Berichten in het Extranet beantwoorden."},
+      ]},
+      { time:"20:00", name:"Avond", tasks:[
+        {t:"Late check-in (LCI) & no-show verwerken", d:"Late check-ins (LCI) verwerken en no-show beleid toepassen bij niet-verschenen gasten. Verwerken in MEWS (Tasks) én in de Timeline."},
+      ]},
+      { time:"20:30 - 21:30", name:"Avond laat", tasks:[
+        {t:"72-uur controle reserveringen", d:"", sopId:"72uur-controle-reserveringen", checklist:[
+          "Gastnaam","Aantal gasten","Incheckdatum","Uitcheckdatum","Kamertype",
+          "Aantal kamers","Prijs / totaalbedrag","Tariefplan","Betaalwijze / garantie",
+          "Speciale verzoeken","Status",
+        ]},
+      ]},
+      { time:"21:00 - 22:00", name:"Overdracht", tasks:[
+        {t:"Accounting ledgers MEWS controleren en verwerken", d:"Accounting ledgers in MEWS controleren en openstaande posten verwerken (zie ook SOP 'Update Accounting Ledger')."},
+        {t:"Overdracht nachtdienst voorbereiden", d:"Overdrachtslog invullen: bijzonderheden, openstaande taken, aandachtspunten."},
+        {t:"Desk schoonmaken en opruimen", d:"Balie en lobby schoonmaken: bureau afnemen, rommel en papieren opruimen, prullenbak legen, spullen op vaste plek terugleggen. Front desk netjes en presentabel achterlaten voor de nachtdienst."},
+        {t:"Uitklokken bij einde dienst", d:"Uitklokken bij einde van de dienst."},
+      ]},
+    ]
+  },
+
+  nacht: {
+    rev: 2,
+    dept: "fo",
+    label: "Nachtdienst",
+    time: "22:00 – 07:00 uur",
+    notice: "Let op: alle Late Check-in (LCI), Late Check-out (LCO) en overige taken voor Technische Dienst (TD) en Housekeeping (HK) altijd verwerken in MEWS (Tasks) én in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com.",
+    roleLabel: "Onderdeel",
+    blocks: [
+      { time:"22:00 - 23:00", name:"Overdracht", tasks:[
+        {t:"Inklokken bij aanvang dienst", d:"Inklokken volgens de geldende tijdregistratie (bijv. Dyflexis) bij aanvang van de dienst."},
+        {t:"Overdracht avonddienst", d:"Overdrachtslog avonddienst doornemen."},
+        {t:"Deuren & toegang controleren", d:"Hoofdingang, nooduitgangen en toegangscontrole controleren volgens procedure."},
+        {t:"MEWS-taken verwerken", d:"Doorlopend gedurende de dienst: openstaande taken in MEWS nalopen en verwerken zodra ze zich aandienen."},
+      ]},
+      { time:"23:00 - 01:00", name:"Nacht vroeg", tasks:[
+        {t:"Late check-ins afhandelen", d:"Laatkomers inchecken en identiteit/betaling controleren."},
+        {t:"Brandronde uitvoeren", d:"Ronde door het pand: nooduitgangen, brandblussers en algemene veiligheid controleren."},
+        {t:"Openbare ruimtes controleren", d:"Lobby, gangen en parkeerplaats controleren op orde en veiligheid."},
+      ]},
+      { time:"01:00 - 03:00", name:"Nachtaudit", tasks:[
+        {t:"Nachtaudit starten", d:"Dagafsluiting in PMS uitvoeren: omzet, kamerstatus en betalingen controleren."},
+        {t:"No-show verwerken", d:"Eventuele resterende no-show reserveringen verwerken conform annuleringsbeleid en factureren (zie SOP Processing No Shows, tab 'SOP Referentie')."},
+        {t:"SOP: BTW-correcties annuleringen/no-shows", d:"Controleren of BTW-correcties op annuleringen en no-shows van vandaag correct zijn verwerkt in de administratie. Zie tab 'SOP Referentie'."},
+        {t:"SOP: Accounting ledger eindcontrole", d:"Controleren of alle bills met saldo €0 gesloten zijn (behalve paymaster Booking.com/Social Deal) en of openstaande bills een taak/reminder hebben voor opvolging. Zie tab 'SOP Referentie'."},
+        {t:"Rapportages genereren", d:"Bezettingsrapport, omzetrapport en overige managementrapportages klaarzetten."},
+      ]},
+      { time:"03:00 - 05:00", name:"Midden nacht", tasks:[
+        {t:"Tweede beveiligingsronde", d:"Controlerondes herhalen, bijzonderheden noteren in logboek."},
+        {t:"Telefooncentrale bemannen", d:"Inkomende gesprekken en noodoproepen beantwoorden en correct afhandelen."},
+        {t:"OTA-vragen en opmerkingen beantwoorden", d:"Berichten/vragen via Booking.com, Expedia en overige OTA's (Extranet/inbox) beantwoorden en opmerkingen afhandelen."},
+        {t:"Voorbereiding ontbijt", d:"Ontbijtruimte gereedmelden en ontbijtlijst doorgeven aan keuken/housekeeping."},
+      ]},
+      { time:"05:00 - 06:00", name:"Vroege ochtend", tasks:[
+        {t:"Vroege vertrekken voorbereiden", d:"Facturen van vroege vertrekkers klaarzetten en expresscheck-out mogelijkheden gereedmaken."},
+        {t:"Keycards aanmaken", d:"Keycards en registratiekaarten voor de check-ins van de volgende dag aanmaken."},
+        {t:"Wake-up calls uitvoeren", d:"Geplande wake-up calls uitvoeren en afvinken."},
+      ]},
+      { time:"06:00 - 07:00", name:"Overdracht", tasks:[
+        {t:"Overdracht ochtenddienst voorbereiden", d:"Overdrachtslog invullen: nachtaudit-resultaten, bijzonderheden, openstaande taken."},
+        {t:"Desk schoonmaken en opruimen", d:"Balie en achterkantoor schoonmaken: bureau afnemen, rommel en papieren opruimen, prullenbak legen, spullen op vaste plek terugleggen. Front desk netjes en presentabel achterlaten voor de ochtenddienst."},
+        {t:"Uitklokken bij einde dienst", d:"Uitklokken volgens de geldende tijdregistratie (bijv. Dyflexis) bij einde van de dienst."},
+      ]},
+    ]
+  },
+
+  hk: {
+    rev: 5,
+    dept: "hk",
+    label: "HK Supervisor",
+    time: "09:00 – 17:00 uur",
+    notice: "Let op: alle taken voor Technische Dienst (TD) en overige afdelingen altijd verwerken in MEWS (Tasks) en in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com.",
+    roleLabel: "Onderdeel",
+    blocks: [
+      { time:"09:00", name:"Start dienst", tasks:[
+        {t:"Inklokken bij aanvang dienst", d:"Inklokken volgens de geldende tijdregistratie."},
+        {t:"Overdracht vorige dienst", d:"Overdrachtslog en openstaande HK-taken in MEWS doornemen."},
+        {t:"Dagplanning HK doornemen", d:"Vertrekkende, aankomende en stayover-kamers bepalen; taken verdelen onder het team."},
+      ]},
+      { time:"09:30 - 12:30", name:"Kamercontrole", tasks:[
+        {t:"Kamercontrole — Entree", d:"Plafondlampen; Muren."},
+        {t:"Kamercontrole — WC", d:"Spiegellamp; WC rolhouders; WC borstelhouder; Muren checken."},
+        {t:"Kamercontrole — Woonkamer", d:"Plafondlampen; Staande lampen; TV + antenne + afstandsbediening; Gordijnen schoon?; Fauteuil en bank schoon?; Tapijt schoon?"},
+        {t:"Kamercontrole — Eetkamer", d:"Hanglamp."},
+        {t:"Kamercontrole — Keuken", d:"Afzuigkap lamp en afzuiging; Plafondlampen; Koelkast schoon en werkend; Vaatwasser leeg, schoon en werkend; Inventaris checken; Wasbak schoon/wit?; Aanrecht schoon?; Waterkoker ontkalken; Nespresso nalopen."},
+        {t:"Kamercontrole — Washok", d:"Plafondlamp; Wasmachines laten draaien; Droger checken op stof."},
+        {t:"Kamercontrole — Badkamer", d:"Douchestang; Doucheputje; Wc-rolhouder; Wc-borstel; Plafondlamp; Spiegellamp; Afvoerputje bad; Kranen goed afgesteld in bad?; Zeep bijgevuld?"},
+      ]},
+      { time:"12:00", name:"TD/MEWS", tasks:[
+        {t:"Bevindingen verwerken", d:"Geconstateerde gebreken en TD-punten aanmaken als taak in MEWS (Tasks) en verwerken in de Timeline."},
+      ]},
+      { time:"12:30", name:"Voor pauze", tasks:[
+        {t:"Linnen en vuilnis naar beneden", d:"Linnen en vuilnis voor de pauze naar beneden brengen."},
+      ]},
+      { time:"12:30 - 13:00", name:"Pauze", tasks:[
+        {t:"Lunchpauze", d:"Lunchpauze."},
+      ]},
+      { time:"13:00 - 15:30", name:"Afhandeling", tasks:[
+        {t:"Bevindingen verwerken", d:"Geconstateerde gebreken en TD-punten aanmaken als taak in MEWS (Tasks) en verwerken in de Timeline."},
+        {t:"Voorraadcontrole", d:"Linnen, schoonmaakmiddelen en amenities controleren en aanvullen/bestellen indien nodig."},
+      ]},
+      { time:"16:00 - 17:00", name:"Afronden", tasks:[
+        {t:"Rapportage HK opstellen", d:"Dagrapportage met bevindingen en openstaande punten opstellen."},
+        {t:"Overdracht volgende dienst voorbereiden", d:"Overdrachtslog invullen: bijzonderheden, openstaande taken, aandachtspunten."},
+        {t:"Uitklokken bij einde dienst", d:"Uitklokken bij einde van de dienst."},
+      ]},
+    ]
+  },
+
+  ad: {
+    rev: 4,
+    dept: "ad",
+    label: "AD (Algemene Dienst)",
+    time: "09:30 – 19:30 uur",
+    notice: "Let op: alle taken altijd verwerken in MEWS (Tasks) en in de Timeline. Bij einde shift mailen naar ms@urbanresidences.com en fom@urbanresidences.com. Bron: AD Werkplanning (HKM@urbanresidences.com, 3 september 2026). Geen Front Office-shift — algemene/facilitaire dienst.",
+    roleLabel: "Onderdeel",
+    blocks: [
+      { time:"09:30", name:"Controle", tasks:[ {t:"Ronde door het hotel, troep opruimen", d:"Algemene ruimtes langslopen en rondslingerend afval en rommel opruimen."} ]},
+      { time:"09:45", name:"Schoonmaak", tasks:[ {t:"Glazen deuren van de receptie schoonmaken", d:"Vingerafdrukken en vlekken van de glazen deuren bij de receptie verwijderen."} ]},
+      { time:"10:00", name:"Schoonmaak", tasks:[ {t:"Receptie afstoffen, stofzuigen en dweilen", d:"Balie en meubilair afstoffen, vloer stofzuigen en dweilen."} ]},
+      { time:"10:30", name:"Schoonmaak", tasks:[ {t:"WC -1 schoonmaken", d:"Toilet op -1 reinigen: sanitair, spiegels en vloer."} ]},
+      { time:"10:45", name:"Controle", tasks:[ {t:"Vuilnisruimte controleren / wasruimte controleren / task controle", d:"Vuilnisruimte en wasruimte op orde controleren; openstaande taken in MEWS nalopen."} ]},
+      { time:"11:00", name:"Schoonmaak", tasks:[
+        {t:"P1 en P2 schoonmaken bij personenliften", d:"Vloer en omgeving rond de personenliften op parkeerdek P1 en P2 schoonmaken."},
+        {t:"Vuilnisbakken legen op parkeerdekken", d:"Vuilnisbakken op de parkeerdekken legen en van nieuwe zak voorzien."},
+        {t:"Autolift controleren op vervuiling", d:"Autolift controleren op vervuiling en indien nodig schoonmaken."},
+      ]},
+      { time:"12:00", name:"Pauze", tasks:[ {t:"Pauze (30 min)", d:""} ]},
+      { time:"12:30", name:"Voorraad", tasks:[ {t:"Linnen controleren en bijvullen", d:"Voorraad linnen controleren en aanvullen waar nodig."} ]},
+      { time:"13:45", name:"Schoonmaak", tasks:[ {t:"Receptie stofzuigen en dweilen", d:"Vloer van de receptie stofzuigen en dweilen."} ]},
+      { time:"14:15", name:"MEWS", tasks:[ {t:"Task bijwerken", d:"Openstaande taken in MEWS nalopen en bijwerken."} ]},
+      { time:"14:45", name:"Schoonmaak", tasks:[ {t:"WC -1 schoonmaken", d:"Toilet op -1 reinigen: sanitair, spiegels en vloer."} ]},
+      { time:"15:00", name:"Schoonmaak", tasks:[ {t:"Etages van 19e t/m 5e verdieping dweilen", d:"Gangen op de etages van de 19e tot en met de 5e verdieping dweilen."} ]},
+      { time:"16:00", name:"Controle", tasks:[ {t:"Controleronde P1 en P2", d:"Parkeerdekken P1 en P2 controleren op netheid en bijzonderheden."} ]},
+      { time:"16:15", name:"Pauze", tasks:[ {t:"Pauze (30 min)", d:""} ]},
+      { time:"16:45", name:"Schoonmaak", tasks:[ {t:"Kantoor op de 5e verdieping schoonmaken", d:"Kantoorruimte op de 5e verdieping afstoffen, stofzuigen/dweilen en opruimen."} ]},
+      { time:"17:30", name:"Schoonmaak", tasks:[ {t:"Vuilnisruimte en -1 dweilen", d:"Vuilnisruimte en verdieping -1 dweilen."} ]},
+      { time:"18:15", name:"Schoonmaak", tasks:[ {t:"Kantoor op -1 schoonmaken", d:"Kantoorruimte op -1 afstoffen, stofzuigen/dweilen en opruimen."} ]},
+      { time:"18:30", name:"Voorraad", tasks:[ {t:"Receptie bijvullen met handdoeken, wascapsules, wc-papier enz.", d:"Voorraad bij de receptie aanvullen: handdoeken, wascapsules, wc-papier en overige benodigdheden."} ]},
+      { time:"18:45", name:"Controle", tasks:[ {t:"Controleronde rond het hotel", d:"Ronde rond het hotel lopen en controleren op bijzonderheden."} ]},
+      { time:"19:00", name:"Schoonmaak", tasks:[ {t:"Receptie stofzuigen, dweilen en glazen deuren schoonmaken", d:"Vloer van de receptie stofzuigen en dweilen; glazen deuren schoonmaken voor het einde van de dienst."} ]},
+      { time:"19:30", name:"MEWS", tasks:[ {t:"Etages controleren en task bijwerken", d:"Etages controleren op bijzonderheden en openstaande taken in MEWS bijwerken."} ]},
+    ]
+  },
+
+  duty: {
+    rev: 3,
+    dept: "fo",
+    label: "Duty Rapport",
+    time: "21:45 – 08:00 uur",
+    notice: "Bron: interne SOP Urban Residences Rotterdam (update 27-03-2026).",
+    roleLabel: "Onderdeel",
+    blocks: [
+      { time:"VOOR 21:45", name:"Start dienst", tasks:[
+        {t:"Inklokken Dyflexis", d:"Belangrijk: voordat je het hotel binnengaat inklokken bij Dyflexis — dit is dus altijd vóór 21:45 uur."},
+      ]},
+      { time:"21:45", name:"Overdracht", tasks:[
+        {t:"Overdracht met de avonddienst", d:"Sleutels en de Duty & Host at Night-telefoon ophalen, FO-telefoon overnemen. Inloggen op MEWS. Doorlopen: aankomsten, wake-up calls, taxi's, bijzonderheden/taken in MEWS."},
+      ]},
+      { time:"21:55", name:"Overdracht", tasks:[
+        {t:"Controleren van de Duty", d:"Duty van dezelfde dag en de 2 dagen ervoor controleren: bijzonderheden van de afgelopen dagen, hoeveel vrije kamers, hoogte van de borgen voor check-ins, algemene bijzonderheden van vandaag."},
+      ]},
+      { time:"22:00", name:"Administratie", tasks:[
+        {t:"Brandweerlijst printen", d:"Print de brandweerlijst: gasten in huis op kamernummer én op alfabetische volgorde. Print twee exemplaren: één voor de Duty/Host, één op een vaste plek, direct bereikbaar voor de brandweer, achter de balie."},
+      ]},
+      { time:"22:05", name:"Schoonmaak", tasks:[
+        {t:"Balie opruimen", d:"Doekje over de balie halen; vuilnis verwijderen in de lobby."},
+      ]},
+      { time:"22:15", name:"Reserveringen", tasks:[
+        {t:"Controleren op nieuwe reserveringen", d:"Controleer de aankomsten op nieuwe reserveringen die nog geen kamer toegewezen hebben gekregen."},
+      ]},
+      { time:"22:30", name:"Controleronde", tasks:[
+        {t:"1e controleronde", d:"Gebruik je telefoon om ALLE tags te scannen. Controleer of je de sleutels en telefoon bij je hebt. Sluit de voordeur. Controleer of alle nooddeuren dicht zitten. Controleer op overlast vanuit de kamers — bij overlast direct actie ondernemen volgens het geluidsprotocol. Controleer of de trappenhuizen leeg zijn."},
+      ]},
+      { time:"23:00", name:"Administratie", tasks:[
+        {t:"Registratieformulieren & borgvoorwaarden inscannen", d:"Scan de registratiekaarten en borgvoorwaarden afzonderlijk in en voeg toe aan het kamerprofiel in MEWS (bestand 1: registratiekaart, bestand 2: borgvoorwaarden — beide met aankomstdatum gast). Na het inscannen de documenten samenvoegen en voorzien van een post-it 'ingescand (datum begin dienst)'."},
+      ]},
+      { time:"00:30", name:"Controleronde", tasks:[
+        {t:"2e controleronde", d:"Scan ALLE tags. Controleer of je de sleutels en telefoon bij je hebt. Loop een volledige controleronde. Vuilnisbakken in de parking direct vervangen en controleer of de toegangsdeuren naar het gebouw volledig gesloten en vrij zijn als brandgang."},
+      ]},
+      { time:"02:00", name:"Controleronde", tasks:[
+        {t:"3e controleronde", d:"Scan ALLE tags. Controleer of je de sleutels en telefoon bij je hebt. Loop een volledige controleronde. Vuilnisbakken in de parking direct vervangen."},
+      ]},
+      { time:"02:45", name:"Huishouding", tasks:[
+        {t:"Vaatwassers aanzetten", d:"Vaatwassers in kamer/ruimte 102 aanzetten als de vaat vuil is. Uitruimen en opruimen in de kasten als de vaat schoon is."},
+      ]},
+      { time:"03:15", name:"Schoonmaak", tasks:[
+        {t:"Schoonmaken lobby en algemene ruimtes", d:"Lobby en receptie stofzuigen. Liftposten en binnenkant liftdeuren schoonmaken. Elke zondag ook de vloerkleden van P1 en P2 stofzuigen."},
+      ]},
+      { time:"03:30", name:"Controleronde", tasks:[
+        {t:"4e controleronde", d:"Scan ALLE tags. Controleer of je de sleutels en telefoon bij je hebt. Loop een volledige controleronde. Vuilnisbakken in de parking direct vervangen en controleer of de toegangsdeuren volledig gesloten en vrij zijn als brandgang."},
+      ]},
+      { time:"04:15", name:"Schoonmaak", tasks:[
+        {t:"Vuilcontainers naar buiten brengen", d:"Restafval: wordt elke dinsdag- en vrijdagochtend opgehaald. Papier: wordt elke even week op donderdagochtend opgehaald."},
+      ]},
+      { time:"04:30", name:"Reserveringen", tasks:[
+        {t:"Controleren op nieuwe reserveringen", d:"Controleer de aankomsten opnieuw op nieuwe reserveringen die nog geen kamer toegewezen hebben gekregen."},
+      ]},
+      { time:"04:45", name:"Administratie", tasks:[
+        {t:"Registratiekaarten voorbereiden", d:"Registratiekaarten voor de volgende dag uitprinten. Kamersleutels voor de volgende dag maken."},
+      ]},
+      { time:"05:00", name:"Controleronde", tasks:[
+        {t:"5e controleronde", d:"Scan ALLE tags. Controleer of je de sleutels en telefoon bij je hebt. Loop een volledige controleronde. Vuilnisbakken in de parking direct vervangen en controleer of de toegangsdeuren volledig gesloten en vrij zijn als brandgang."},
+      ]},
+      { time:"05:45", name:"Rapportage", tasks:[
+        {t:"Nachtrapportage TAGS versturen", d:"Versturen naar Directie@HOSTatNight.nl en Martin Snijders (ms@urbanresidences.com)."},
+      ]},
+      { time:"07:45", name:"Rapportage", tasks:[
+        {t:"Checklijst opsturen", d:"Foto's van de Duty en checklijst via de WhatsApp-groep sturen. Checklijst als bijlage met datum aanvang dienst mailen naar: John (Directie@HOSTatNight.nl), Joey (generalmanager@hostatnight.nl), Martin (ms@urbanresidences.com), Housekeeping management (hkm@urbanresidences.com)."},
+      ]},
+      { time:"08:00", name:"Overdracht", tasks:[
+        {t:"Overdracht met ochtenddienst", d:"Mondeling alle bijzonderheden van het nachtverslag doorspreken. Controleer of alle taken voor HSK en TD in MEWS genoteerd staan. Host at Night telefoon teruggelegd op kantoor. Sleutelbos teruggelegd. Brandweerlijsten weggooien."},
+        {t:"Einde dienst", d:"Bedankt voor je positieve inzet. Veilig naar huis en slaap lekker!"},
+      ]},
+      { time:"Algemene bijzonderheden (hele dienst)", name:"Algemeen", tasks:[
+        {t:"Nachtrapport & MOD-rapport bijhouden", d:"Noteer alle zaken die anders zijn dan normaal in het nachtrapport & MOD-rapport van het hotel. Noteer wat je hebt geconstateerd, maar vooral wat je eraan hebt gedaan — schrijf het zo op dat het thuis te begrijpen is. Alles wat 's ochtends besproken wordt, moet in het nachtverslag staan."},
+        {t:"Escalatie bij problemen", d:"Bij problemen of onduidelijkheden eerst contact opnemen met General Manager Joey. Niet bereikbaar? Bel Martin (06-41400961). Als verantwoordelijke van het hotel is Martins beslissing de eindbeslissing."},
+        {t:"Op tijd en correct gekleed", d:"Kom netjes op tijd — uiterlijk om 21:45 uur omgekleed en al achter de receptie. Kleding: zwarte pantalon & colbert, zwart overhemd, nette donkere schoenen."},
+        {t:"Gedrag & professionaliteit", d:"Wees altijd vriendelijk, gastvrij, behulpzaam en professioneel richting gasten en collega's. Spreek iedereen netjes en beleefd aan en behandel gasten zoals je zelf ook graag behandeld wilt worden."},
+        {t:"Werkplek tijdens de dienst", d:"Zit de gehele dienst — buiten de controlerondes en werkzaamheden om — beneden achter de receptie bij de camerabeelden."},
+        {t:"Toegang tot het hotel", d:"Er mogen nooit mensen het hotel betreden die geen kamer hebben — dit geldt zowel voor onbevoegden als voor mensen uit de privésfeer. Ook collega's mogen 's nachts niet langskomen."},
+        {t:"Gebruik van apparatuur", d:"Apparatuur van het hotel mag niet voor privédoeleinden worden gebruikt. Gebruik je eigen mobiele telefoon."},
+        {t:"Te laat komen", d:"Kom je zelf te laat, of komt de ochtendreceptie te laat: noteer tijd en reden in het nachtverslag en mail dit desnoods opnieuw. Mail tijd + reden dezelfde dag ook naar administratie@HOSTatNight.nl."},
+        {t:"Parkeren", d:"Gebruik van het parkeerterrein van het hotel is toegestaan."},
+      ]},
+    ]
+  }
+};
+
+// ---------- State & persistence ----------
+let state = null;
+let currentShift = "ochtend";
+const STORAGE_KEY = "ur-front-office-checklist-v1";
+const USER_KEY = "ur-checklist-current-user";
+
+function cloneDefault(){
+  return JSON.parse(JSON.stringify(SHIFTS));
+}
+
+async function loadUser(){
+  try{
+    if(window.storage){
+      const res = await window.storage.get(USER_KEY, false); // persoonlijk, per apparaat/browser
+      if(res && res.value){
+        let parsed;
+        try{ parsed = JSON.parse(res.value); }catch(e){ parsed = {name: res.value, at: Date.now()}; }
+        if(parsed && parsed.name){
+          const idleMin = (Date.now() - (parsed.at || 0)) / 60000;
+          if(idleMin < AUTO_LOGOUT_MINUTES) return parsed.name;
+        }
+      }
+    }
+  }catch(e){ /* nog niemand ingelogd op dit apparaat */ }
+  return null;
+}
+
+async function saveUser(name){
+  currentUser = name;
+  try{
+    if(window.storage){
+      await window.storage.set(USER_KEY, JSON.stringify({name, at: Date.now()}), false);
+    }
+  }catch(e){ /* negeren, blijft in elk geval in deze sessie bewaard */ }
+}
+
+async function touchUser(){
+  if(!currentUser) return;
+  try{
+    if(window.storage){
+      await window.storage.set(USER_KEY, JSON.stringify({name: currentUser, at: Date.now()}), false);
+    }
+  }catch(e){ /* negeren */ }
+}
+
+function startAutoLogout(){
+  let lastActivity = Date.now();
+  ["click","keydown","touchstart"].forEach(ev=>{
+    document.addEventListener(ev, ()=>{ lastActivity = Date.now(); touchUser(); }, true);
+  });
+  setInterval(()=>{
+    if(!currentUser) return;
+    const idleMin = (Date.now() - lastActivity) / 60000;
+    if(idleMin >= AUTO_LOGOUT_MINUTES){
+      currentUser = null;
+      try{ if(window.storage) window.storage.delete(USER_KEY, false); }catch(e){}
+      render();
+    }
+  }, 60000);
+}
+
+async function loadState(){
+  const fresh = cloneDefault();
+  try{
+    if(window.storage){
+      const res = await window.storage.get(STORAGE_KEY, true); // gedeeld: iedereen ziet dezelfde checklist
+      if(res && res.value){
+        const saved = JSON.parse(res.value);
+        Object.keys(fresh).forEach(key=>{
+          const freshRev = fresh[key].rev || 1;
+          const savedRev = saved[key] ? (saved[key].rev || 1) : null;
+          // Nieuw tabblad, of tabblad met een nieuwere revisie: gebruik altijd de actuele data.
+          if(!(key in saved) || savedRev !== freshRev){
+            saved[key] = fresh[key];
+          }
+        });
+        return saved;
+      }
+    }
+  }catch(e){ /* nog niets opgeslagen */ }
+  return fresh;
+}
+
+let saveTimeout = null;
+function scheduleSave(){
+  const ind = document.getElementById("save-indicator");
+  if(ind) ind.textContent = "Opslaan…";
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(async ()=>{
+    try{
+      if(window.storage){
+        await window.storage.set(STORAGE_KEY, JSON.stringify(state), true); // gedeeld opslaan
+      }
+      if(ind) ind.textContent = "Opgeslagen — zichtbaar voor iedereen";
+    }catch(e){
+      if(ind) ind.textContent = "Opslaan mislukt (lokaal onthouden)";
+    }
+  }, 500);
+}
+
+// ---------- Dag-log: status/opmerkingen per kalenderdag, los van de taak-tekst ----------
+function dateKey(d){
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,"0");
+  const day = String(d.getDate()).padStart(2,"0");
+  return `${y}-${m}-${day}`;
+}
+const TODAY_KEY = dateKey(new Date());
+// Voor nachtdiensten telt de werkdag door tot 07:00: wie om 02:00 werkt,
+// vinkt af op de dag waarop de dienst begon.
+function shiftDayKey(shiftKey){
+  const now = new Date();
+  if(shiftKey === "nacht" || shiftKey === "duty"){
+    if(now.getHours() < 7){
+      const d = new Date(now);
+      d.setDate(d.getDate() - 1);
+      return dateKey(d);
+    }
+  }
+  return dateKey(now);
+}
+let selectedDate = TODAY_KEY;
+let windowStart = (()=>{ const d=new Date(); d.setDate(d.getDate()-6); return d; })();
+
+const dayLogCache = {}; // "date:shift" -> { taskId: {s,n,sBy,sAt} }
+function dayLogKey(date, shift){ return `log:${date}:${shift}`; }
+
+async function loadDayLog(date, shift){
+  const cacheKey = date + ":" + shift;
+  if(dayLogCache[cacheKey]) return dayLogCache[cacheKey];
+  let data = {};
+  try{
+    if(window.storage){
+      const res = await window.storage.get(dayLogKey(date, shift), true);
+      if(res && res.value) data = JSON.parse(res.value);
+    }
+  }catch(e){ /* nog geen data voor deze dag */ }
+  dayLogCache[cacheKey] = data;
+  return data;
+}
+
+let logSaveTimeout = null;
+function scheduleLogSave(date, shift){
+  const ind = document.getElementById("save-indicator");
+  if(ind) ind.textContent = "Opslaan…";
+  clearTimeout(logSaveTimeout);
+  logSaveTimeout = setTimeout(async ()=>{
+    try{
+      const cacheKey = date + ":" + shift;
+      if(window.storage){
+        await window.storage.set(dayLogKey(date, shift), JSON.stringify(dayLogCache[cacheKey] || {}), true);
+      }
+      if(ind) ind.textContent = "Opgeslagen — " + formatDateLong(date);
+    }catch(e){
+      if(ind) ind.textContent = "Opslaan mislukt (lokaal onthouden)";
+    }
+  }, 500);
+}
+
+const WEEKDAYS = ["zo","ma","di","wo","do","vr","za"];
+const MONTHS = ["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"];
+function formatDateLong(key){
+  const [y,m,d] = key.split("-").map(Number);
+  const dt = new Date(y, m-1, d);
+  return `${WEEKDAYS[dt.getDay()]} ${d} ${MONTHS[m-1]}`;
+}
+
+// ---------- Stabiele taak-sleutels ----------
+// Sleutel op inhoud (tijdblok + taaknaam), zodat afvinkhistorie niet verschuift
+// wanneer taken worden toegevoegd, verwijderd of verplaatst.
+function taskKey(blockTime, taskTitle, fallbackIdx){
+  const clean = s => String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const t = clean(taskTitle);
+  if(!t) return `${clean(blockTime)}~idx${fallbackIdx}`;
+  return `${clean(blockTime)}~${t}`;
+}
+
+// ---------- Tijdblok-vergrendeling: taken mogen niet te vroeg afgevinkt worden ----------
+function extractTimes(str){
+  if(!str) return [];
+  return [...str.matchAll(/(\d{1,2}):(\d{2})/g)].map(m => parseInt(m[1],10)*60 + parseInt(m[2],10));
+}
+function parseShiftBounds(shiftTimeStr){
+  const t = extractTimes(shiftTimeStr);
+  if(t.length < 2) return null;
+  let [start, end] = t;
+  if(end <= start) end += 1440; // dienst loopt door middernacht
+  return {start, end};
+}
+function parseBlockWindow(shiftBounds, blockTimeStr, nextBlockTimeStr){
+  if(!shiftBounds) return null;
+  const t = extractTimes(blockTimeStr);
+  if(t.length === 0) return null; // niet-tijd-label (bv. "Algemene bijzonderheden") -> nooit vergrendeld
+  const norm = v => v >= shiftBounds.start ? v : v + 1440;
+  const start = norm(t[0]);
+  let end;
+  if(t.length >= 2){
+    end = norm(t[1]);
+    if(end < start) end += 1440;
+  } else {
+    const nt = extractTimes(nextBlockTimeStr);
+    end = nt.length ? norm(nt[0]) : shiftBounds.end;
+  }
+  return {start, end};
+}
+function nowNormalized(shiftBounds){
+  const now = new Date();
+  const mins = now.getHours()*60 + now.getMinutes();
+  return mins >= shiftBounds.start ? mins : mins + 1440;
+}
+
+// ---------- Overdrachtslog: vrije-tekst belangrijke punten, per dag ----------
+function handoverKey(date){ return "handover:" + date; }
+const handoverCache = {};
+async function loadHandover(date){
+  if(handoverCache[date]) return handoverCache[date];
+  let data = [];
+  try{
+    if(window.storage){
+      const res = await window.storage.get(handoverKey(date), true);
+      if(res && res.value) data = JSON.parse(res.value);
+    }
+  }catch(e){ /* nog geen punten voor deze dag */ }
+  handoverCache[date] = data;
+  return data;
+}
+async function saveHandover(date){
+  const ind = document.getElementById("save-indicator");
+  try{
+    if(window.storage){
+      await window.storage.set(handoverKey(date), JSON.stringify(handoverCache[date] || []), true);
+    }
+    if(ind) ind.textContent = "Opgeslagen — " + formatDateLong(date);
+  }catch(e){
+    if(ind) ind.textContent = "Opslaan mislukt (lokaal onthouden)";
+  }
+}
+
+// ---------- Rendering ----------
+function renderTabs(){
+  const nav = document.getElementById("tabs");
+  nav.innerHTML = "";
+  Object.keys(state).forEach(key=>{
+    const s = state[key];
+    const btn = document.createElement("button");
+    btn.className = "tab" + (key===currentShift ? " active" : "");
+    btn.innerHTML = s.label + "<small>" + s.time + "</small>";
+    btn.onclick = () => { currentShift = key; render(); };
+    nav.appendChild(btn);
+  });
+  const hbtn = document.getElementById("handover-tab-btn");
+  hbtn.classList.toggle("active", currentShift === "handover");
+  hbtn.onclick = ()=>{ currentShift = "handover"; render(); };
+
+  const sbtn = document.getElementById("sop-tab-btn");
+  sbtn.classList.toggle("active", currentShift === "sop");
+  sbtn.onclick = ()=>{ pendingSopId = null; currentShift = "sop"; render(); };
+
+  const adminWrap = document.getElementById("admin-wrap");
+  if(currentUser === ADMIN_NAME){
+    adminWrap.style.display = "block";
+    const rbtn = document.getElementById("admin-tab-btn");
+    rbtn.classList.toggle("active", currentShift === "report");
+    rbtn.onclick = ()=>{ currentShift = "report"; render(); };
+  } else {
+    adminWrap.style.display = "none";
+  }
+}
+
+async function renderContent(){
+  if(currentShift === "handover"){
+    await renderHandover();
+    return;
+  }
+  const shift = state[currentShift];
+  document.getElementById("page-title").textContent = shift.label;
+  document.getElementById("page-sub").textContent = "Front Office checklist — " + shift.time;
+  document.getElementById("page-notice").textContent = shift.notice;
+
+  const content = document.getElementById("content");
+  content.innerHTML = "";
+
+  const isAdminNow = currentUser === ADMIN_NAME;
+  document.getElementById("page-hint").textContent = isAdminNow
+    ? "Klik op een taak, omschrijving of opmerking om te bewerken. Klik op de status-knop om te wisselen tussen Open → Bezig → Gereed. Als beheerder kun jij de volgorde altijd doorbreken."
+    : "Taak en omschrijving zijn alleen door Martin te bewerken. Klik op de status-knop om af te vinken, of voeg een opmerking toe. Een taak ontgrendelt pas zodra de taak erboven op Gereed staat.";
+
+  const dayLog = await loadDayLog(selectedDate, currentShift);
+  let prevDone = true; // eerste taak van de dienst is nooit vergrendeld
+  const shiftBounds = parseShiftBounds(shift.time);
+  const isToday = selectedDate === shiftDayKey(currentShift);
+  const effNow = (isToday && shiftBounds) ? nowNormalized(shiftBounds) : null;
+
+  shift.blocks.forEach((block, bi)=>{
+    const wrap = document.createElement("div");
+    wrap.className = "block";
+
+    const head = document.createElement("div");
+    head.className = "block-head";
+    const time = document.createElement("div");
+    time.className = "block-time";
+    time.textContent = block.time;
+    head.appendChild(time);
+    if(block.name){
+      const name = document.createElement("div");
+      name.className = "block-name";
+      name.textContent = block.name;
+      head.appendChild(name);
+    }
+    wrap.appendChild(head);
+    wrap.appendChild(document.createElement("hr"));
+
+    const nextBlockTime = shift.blocks[bi+1] ? shift.blocks[bi+1].time : null;
+    const timeWindow = parseBlockWindow(shiftBounds, block.time, nextBlockTime);
+    const tooEarly = (effNow !== null && timeWindow !== null && effNow < timeWindow.start);
+    if(tooEarly){
+      const early = document.createElement("div");
+      early.className = "block-early";
+      early.textContent = "Nog niet aan de beurt — dit blok start later vandaag.";
+      wrap.appendChild(early);
+    }
+
+    block.tasks.forEach((task, ti)=>{
+      // Stabiel ID op basis van inhoud, niet positie: historie blijft kloppen
+      // ook als er taken tussengevoegd of verplaatst worden.
+      const taskId = taskKey(block.time, task.t, ti);
+      const entry = dayLog[taskId] || {};
+      const row = document.createElement("div");
+      row.className = "task";
+
+      const mainCol = document.createElement("div");
+      mainCol.className = "task-main";
+      const isAdmin = currentUser === ADMIN_NAME;
+
+      const title = document.createElement("div");
+      title.className = "task-title";
+      title.contentEditable = isAdmin ? "true" : "false";
+      if(!isAdmin) title.classList.add("locked");
+      title.textContent = task.t;
+      title.oninput = ()=>{ if(isAdmin){ task.t = title.textContent; scheduleSave(); } };
+
+      const desc = document.createElement("div");
+      desc.className = "task-desc";
+      desc.contentEditable = isAdmin ? "true" : "false";
+      if(!isAdmin) desc.classList.add("locked");
+      desc.textContent = task.d || "";
+      desc.oninput = ()=>{ if(isAdmin){ task.d = desc.textContent; scheduleSave(); } };
+
+      const notes = document.createElement("div");
+      notes.className = "task-notes";
+      notes.contentEditable = "true";
+      notes.textContent = entry.n || "";
+      notes.onfocus = ()=>{ if(!currentUser) showUserOverlay(shift.dept); };
+      notes.oninput = ()=>{
+        entry.n = notes.textContent;
+        if(entry.n.trim()){
+          entry.nBy = currentUser || "Onbekend";
+          entry.nAt = new Date().toLocaleString("nl-NL", {day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+        } else {
+          entry.nBy = null; entry.nAt = null;
+        }
+        dayLog[taskId] = entry;
+        noteMeta.textContent = entry.n.trim() ? `— ${entry.nBy}, ${entry.nAt}` : "";
+        scheduleLogSave(selectedDate, currentShift);
+      };
+
+      const noteMeta = document.createElement("div");
+      noteMeta.className = "note-meta";
+      noteMeta.textContent = (entry.n && entry.n.trim() && entry.nBy) ? `— ${entry.nBy}, ${entry.nAt || ""}` : "";
+
+      mainCol.appendChild(title);
+      mainCol.appendChild(desc);
+      mainCol.appendChild(notes);
+      mainCol.appendChild(noteMeta);
+
+      if(task.checklist){
+        if(!entry.cl) entry.cl = {};
+        const clWrap = document.createElement("div");
+        clWrap.className = "task-cl";
+
+        const total = task.checklist.length * 2;
+        const countChecked = ()=> task.checklist.reduce((sum, _, i)=>{
+          const c = entry.cl[i] || {};
+          return sum + (c.ota ? 1 : 0) + (c.pms ? 1 : 0);
+        }, 0);
+
+        const toggle = document.createElement("button");
+        toggle.className = "task-cl-toggle";
+        toggle.type = "button";
+        const setToggleLabel = ()=>{
+          toggle.textContent = `${clWrap.classList.contains("open") ? "▾" : "▸"} Controlepunten OTA/PMS (${countChecked()}/${total})`;
+        };
+
+        const table = document.createElement("div");
+        table.className = "task-cl-table";
+        const headRow = document.createElement("div");
+        headRow.className = "task-cl-row task-cl-head";
+        headRow.innerHTML = `<div>Controlepunt</div><div>OTA</div><div>PMS</div>`;
+        table.appendChild(headRow);
+
+        task.checklist.forEach((label, i)=>{
+          if(!entry.cl[i]) entry.cl[i] = {ota:false, pms:false};
+          const row = document.createElement("div");
+          row.className = "task-cl-row";
+          const nameCell = document.createElement("div");
+          nameCell.textContent = label;
+          row.appendChild(nameCell);
+          ["ota","pms"].forEach(col=>{
+            const cell = document.createElement("div");
+            const cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.checked = !!entry.cl[i][col];
+            cb.disabled = tooEarly && !isAdmin;
+            cb.onchange = ()=>{
+              entry.cl[i][col] = cb.checked;
+              dayLog[taskId] = entry;
+              scheduleLogSave(selectedDate, currentShift);
+              setToggleLabel();
+            };
+            cell.appendChild(cb);
+            row.appendChild(cell);
+          });
+          table.appendChild(row);
+        });
+
+        setToggleLabel();
+        toggle.onclick = ()=>{
+          clWrap.classList.toggle("open");
+          table.style.display = clWrap.classList.contains("open") ? "block" : "none";
+          setToggleLabel();
+        };
+        table.style.display = "none";
+
+        clWrap.appendChild(toggle);
+        clWrap.appendChild(table);
+        mainCol.appendChild(clWrap);
+      }
+
+      if(task.sopId){
+        const sopLink = document.createElement("button");
+        sopLink.className = "sop-link";
+        sopLink.type = "button";
+        sopLink.textContent = "📄 SOP openen";
+        sopLink.title = "Opent de bijbehorende procedure in de SOP Bibliotheek.";
+        sopLink.onclick = ()=> openSop(task.sopId);
+        mainCol.appendChild(sopLink);
+      }
+
+      const statusBtn = document.createElement("button");
+      statusBtn.className = "status-btn";
+      const st = entry.s || "Open";
+      statusBtn.dataset.status = st;
+      statusBtn.textContent = st;
+      const isFo = (employeesFor(shift.dept).length > 0);
+      const isNvt = entry.s === "N.v.t.";
+      const seqLocked = !prevDone && !isAdmin;
+      const timeLocked = tooEarly && !isAdmin;
+      const locked = seqLocked || timeLocked;
+      if(isNvt){
+        statusBtn.classList.add("status-nvt");
+        statusBtn.textContent = "N.v.t.";
+      } else if(locked){
+        statusBtn.classList.add("status-locked");
+        statusBtn.textContent = "🔒 " + st;
+      }
+      statusBtn.onclick = ()=>{
+        if(isNvt){
+          stampEl.textContent = "Maak eerst N.v.t. ongedaan via de N.v.t.-knop.";
+          setTimeout(()=>{ renderContent(); }, 1800);
+          return;
+        }
+        if(locked){
+          stampEl.textContent = timeLocked ? "Dit tijdblok is nog niet begonnen." : "Voltooi eerst de taak hierboven.";
+          setTimeout(()=>{
+            stampEl.textContent = (entry.s && entry.s !== "Open" && entry.sAt)
+              ? (entry.sBy ? `${entry.sBy} · ${entry.sAt}` : `Afgevinkt · ${entry.sAt}`)
+              : "";
+          }, 1800);
+          return;
+        }
+        if(isFo && !currentUser){
+          showUserOverlay(shift.dept);
+          return;
+        }
+        const idx = STATUS_CYCLE.indexOf(entry.s || "Open");
+        const next = STATUS_CYCLE[(idx+1) % STATUS_CYCLE.length];
+        entry.s = next;
+        entry.sAt = new Date().toLocaleString("nl-NL", {day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+        entry.sBy = isFo ? currentUser : null;
+        dayLog[taskId] = entry;
+        scheduleLogSave(selectedDate, currentShift);
+        renderContent(); // herteken zodat de volgende taak eventueel ontgrendelt
+      };
+
+      // volgende taak mag alleen ontgrendelen als deze taak Gereed of N.v.t. is
+      // volgende taak ontgrendelt bij Gereed of onderbouwde N.v.t.
+      prevDone = (entry.s === "Gereed" || entry.s === "N.v.t.");
+
+      const statusCol = document.createElement("div");
+      statusCol.style.display = "flex";
+      statusCol.style.flexDirection = "column";
+      statusCol.style.alignItems = "flex-end";
+      statusCol.style.gap = "3px";
+
+      // "Niet van toepassing" — aparte knop, reden verplicht
+      const nvtBtn = document.createElement("button");
+      nvtBtn.className = "nvt-btn" + (entry.s === "N.v.t." ? " nvt-active" : "");
+      nvtBtn.textContent = entry.s === "N.v.t." ? "N.v.t. ✎" : "N.v.t.";
+      nvtBtn.title = entry.s === "N.v.t." ? "Reden aanpassen of ongedaan maken" : "Markeer als niet van toepassing (reden verplicht)";
+      nvtBtn.onclick = ()=>{
+        if(timeLocked){
+          stampEl.textContent = "Dit tijdblok is nog niet begonnen.";
+          setTimeout(()=>{ renderContent(); }, 1800);
+          return;
+        }
+        if(!currentUser){ showUserOverlay(shift.dept); return; }
+        if(entry.s === "N.v.t."){
+          const keep = prompt("Reden aanpassen (leeg laten = N.v.t. ongedaan maken):", entry.nvtReason || "");
+          if(keep === null) return;
+          if(keep.trim() === ""){
+            entry.s = "Open"; entry.nvtReason = null; entry.sBy = null; entry.sAt = null;
+          } else {
+            entry.nvtReason = keep.trim();
+            entry.sBy = currentUser;
+            entry.sAt = new Date().toLocaleString("nl-NL", {day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+          }
+        } else {
+          const reason = prompt("Waarom is deze taak vandaag niet van toepassing?\n(Verplicht — bijv. 'geen groepsaankomsten vandaag')");
+          if(reason === null) return;
+          if(reason.trim() === ""){
+            alert("Een reden is verplicht om een taak op N.v.t. te zetten.");
+            return;
+          }
+          entry.s = "N.v.t.";
+          entry.nvtReason = reason.trim();
+          entry.sBy = currentUser;
+          entry.sAt = new Date().toLocaleString("nl-NL", {day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+        }
+        dayLog[taskId] = entry;
+        scheduleLogSave(selectedDate, currentShift);
+        renderContent();
+      };
+      const stampEl = document.createElement("div");
+      stampEl.style.fontSize = "10.5px";
+      stampEl.style.color = "#A79C8C";
+      stampEl.style.textAlign = "right";
+      stampEl.style.maxWidth = "180px";
+      if(entry.s === "N.v.t." && entry.nvtReason){
+        stampEl.textContent = `${entry.sBy || "Onbekend"} · ${entry.sAt || ""} — ${entry.nvtReason}`;
+      } else if(entry.s && entry.s !== "Open" && entry.sAt){
+        stampEl.textContent = entry.sBy ? `${entry.sBy} · ${entry.sAt}` : `Afgevinkt · ${entry.sAt}`;
+      }
+      const btnRow = document.createElement("div");
+      btnRow.style.display = "flex";
+      btnRow.style.gap = "5px";
+      btnRow.style.alignItems = "center";
+      btnRow.appendChild(nvtBtn);
+      btnRow.appendChild(statusBtn);
+      statusCol.appendChild(btnRow);
+      statusCol.appendChild(stampEl);
+
+      row.appendChild(mainCol);
+      row.appendChild(statusCol);
+      wrap.appendChild(row);
+    });
+
+    content.appendChild(wrap);
+  });
+}
+
+// ---------- Dagoverzicht (beheer) ----------
+async function loadReport(date){
+  const report = {date, shifts: {}};
+  for(const shiftKey in state){
+    const log = await loadDayLog(date, shiftKey);
+    const open = Object.values(log).filter(e => !e.s || e.s === "Open" || e.s === "Bezig").length;
+    const done = Object.values(log).filter(e => e.s === "Gereed").length;
+    const nvt = Object.values(log).filter(e => e.s === "N.v.t.").length;
+    const notes = Object.values(log).filter(e => e.n && e.n.trim()).length;
+    report.shifts[shiftKey] = {open, done, nvt, notes, log};
+  }
+  return report;
+}
+
+function findTaskTitle(shiftKey, taskId){
+  const prefix = taskId.split("~")[0];
+  for(const block of state[shiftKey].blocks){
+    for(const task of block.tasks){
+      if(taskKey(block.time, task.t, 0).startsWith(prefix)) return task.t;
+    }
+  }
+  return "";
+}
+
+async function renderReport(report){
+  document.getElementById("page-title").textContent = "Dagoverzicht";
+  document.getElementById("page-sub").textContent = formatDateLong(report.date);
+  document.getElementById("page-notice").textContent = "";
+  document.getElementById("page-hint").textContent = "Alleen zichtbaar voor jou als beheerder.";
+
+  const content = document.getElementById("content");
+  content.innerHTML = "";
+
+  for(const shiftKey in report.shifts){
+    const shift = state[shiftKey];
+    const {open, done, nvt, notes, log} = report.shifts[shiftKey];
+    const total = open + done + nvt;
+    const pctDone = total ? Math.round((done + nvt) / total * 100) : 0;
+    const wrap = document.createElement("div");
+    wrap.className = "report-shift";
+
+    const head = document.createElement("div");
+    head.className = "report-shift-head";
+    head.innerHTML = `
+      <h3>${shift.label}</h3>
+      <div class="report-shift-stat"><span class="dot done"></span> ${done} Gereed &nbsp; <span class="dot nvt"></span> ${nvt} N.v.t.</div>
+      <div class="report-shift-stat"><span class="dot open"></span> ${open} Open &nbsp; <span class="dot notes"></span> ${notes} ${notes === 1 ? "opmerking" : "opmerkingen"}</div>
+      <div class="report-pct ${pctDone === 100 ? "pct-100" : ""}">${pctDone}<small>%</small></div>
+    `;
+    wrap.appendChild(head);
+
+    const taskList = document.createElement("div");
+    taskList.className = "report-task-list";
+    for(const taskId in log){
+      const entry = log[taskId];
+      const task = document.createElement("div");
+      task.className = "report-task";
+      const icon = document.createElement("div");
+      icon.className = "report-task-icon";
+      icon.innerHTML = entry.s === "N.v.t." ? `<span class="dot nvt"></span>` : entry.s === "Gereed" ? `<span class="dot done"></span>` : `<span class="dot open"></span>`;
+      const title = document.createElement("div");
+      title.className = "report-task-title";
+      title.textContent = findTaskTitle(shiftKey, taskId);
+      task.appendChild(icon);
+      task.appendChild(title);
+      if(entry.s === "N.v.t." && entry.nvtReason){
+        task.classList.add("has-notes");
+        const reason = document.createElement("div");
+        reason.className = "report-task-notes";
+        reason.textContent = `N.v.t. — ${entry.nvtReason} (${entry.sBy || ""})`;
+        task.appendChild(reason);
+      }
+      if(entry.n && entry.n.trim()){
+        task.classList.add("has-notes");
+        const noteEl = document.createElement("div");
+        noteEl.className = "report-task-notes";
+        noteEl.textContent = `${entry.n.trim()} (${entry.nBy || "onbekend"})`;
+        task.appendChild(noteEl);
+      }
+      taskList.appendChild(task);
+    }
+    if(Object.keys(log).length === 0){
+      const empty = document.createElement("div");
+      empty.className = "report-task-notes";
+      empty.style.padding = "10px 18px";
+      empty.textContent = "Nog geen taken bijgewerkt op deze dag.";
+      taskList.appendChild(empty);
+    }
+    wrap.appendChild(taskList);
+    content.appendChild(wrap);
+  }
+}
+
+function sendReportMail(){
+  const shiftKey = currentShift;
+  const shift = state[shiftKey];
+  const log = dayLogCache[selectedDate + ":" + shiftKey] || {};
+  const open = Object.values(log).filter(e => !e.s || e.s === "Open" || e.s === "Bezig").length;
+  const done = Object.values(log).filter(e => e.s === "Gereed").length;
+  const nvt = Object.values(log).filter(e => e.s === "N.v.t.").length;
+  const total = open + done + nvt;
+  const pctDone = total ? Math.round((done + nvt) / total * 100) : 0;
+
+  const noteLines = Object.entries(log)
+    .filter(([_, e]) => e.n && e.n.trim())
+    .map(([taskId, e]) => `- ${findTaskTitle(shiftKey, taskId)}: ${e.n.trim()} (${e.nBy || "onbekend"}, ${e.nAt || ""})`)
+    .join("\n");
+  const nvtLines = Object.entries(log)
+    .filter(([_, e]) => e.s === "N.v.t." && e.nvtReason)
+    .map(([taskId, e]) => `- ${findTaskTitle(shiftKey, taskId)}: ${e.nvtReason} (${e.sBy || "onbekend"}, ${e.sAt || ""})`)
+    .join("\n");
+
+  const body =
+`${shift.label} — ${formatDateLong(selectedDate)}
+
+Gereed: ${done}/${total} (${pctDone}%)
+N.v.t.: ${nvt}
+Nog open: ${open}
+${noteLines ? "\nOpmerkingen:\n" + noteLines : ""}${nvtLines ? "\n\nN.v.t.-redenen:\n" + nvtLines : ""}
+
+Verzonden door: ${currentUser || "onbekend"}`;
+
+  const subject = `${shift.label} overzicht — ${formatDateLong(selectedDate)}`;
+  window.location.href = `mailto:ms@urbanresidences.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+// ---------- SOP Bibliotheek ----------
+const SOPS = [
+  {
+    id: "sop-72uur-controle-reserveringen",
+    title: "Controle reserveringen — 72 uur",
+    category: "Reservations",
+    html: `
+      <h2>1. Doel</h2>
+      <p>Deze SOP zorgt ervoor dat alle reserveringen die binnen de komende 72 uur aankomen volledig, correct en actueel in het PMS staan en dat alle openstaande verzoeken tijdig zijn opgevolgd. Hiermee worden fouten bij aankomst en operationele verrassingen voorkomen.</p>
+
+      <h2>2. Wanneer uitvoeren?</h2>
+      <p>Voer deze controle iedere dag uit vóór de arrivals van de aankomende 3 dagen. Controleer altijd de aankomsten van:</p>
+      <ul>
+        <li>Morgen</li>
+        <li>Overmorgen</li>
+        <li>De dag daarna</li>
+      </ul>
+
+      <h2>3. Alle OTA-extranetten controleren</h2>
+      <p>Open ieder OTA-extranet waarop het hotel reserveringen ontvangt. Ga naar het reserveringsoverzicht en selecteer de aankomsten van morgen, overmorgen en de dag daarna. Controleer iedere reservering afzonderlijk op:</p>
+      <ul>
+        <li>Naam van de gast</li>
+        <li>Aantal gasten</li>
+        <li>Incheckdatum</li>
+        <li>Uitcheckdatum</li>
+        <li>Kamertype</li>
+        <li>Aantal kamers</li>
+        <li>Prijs en totaalbedrag</li>
+        <li>Tariefplan / rate plan</li>
+        <li>Eventuele toeslagen en extra's</li>
+        <li>Betaalwijze en betalingsgarantie</li>
+        <li>Speciale verzoeken en opmerkingen</li>
+        <li>Annuleringsvoorwaarden en bijzonderheden</li>
+        <li>Status van de reservering</li>
+      </ul>
+
+      <h2>4. OTA vergelijken met het PMS</h2>
+      <p>Controleer iedere reservering uit de OTA opnieuw in het PMS. De gegevens moeten volledig met elkaar overeenkomen.</p>
+      <table class="sop-table">
+        <tr><th>Controlepunt</th><th>OTA</th><th>PMS</th></tr>
+        <tr><td>Gastnaam</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Aantal gasten</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Incheckdatum</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Uitcheckdatum</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Kamertype</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Aantal kamers</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Prijs / totaalbedrag</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Tariefplan</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Betaalwijze / garantie</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td><strong>Speciale verzoeken</strong></td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Status</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+      </table>
+
+      <h2>5. Alle verzoeken en communicatie controleren</h2>
+      <p>Controleer of alle vragen, verzoeken en berichten van gasten voor de komende 72 uur zijn behandeld.</p>
+      <ul>
+        <li>E-mail</li>
+        <li>Berichten en verzoeken via alle OTA's</li>
+        <li>Speciale verzoeken bij de reservering</li>
+        <li>Vragen over aankomsttijd, parkeren, bedden, extra's, early check-in en late check-out</li>
+        <li>Alle verzoeken waarbij nog een reactie of actie van het hotel nodig is</li>
+      </ul>
+      <div class="sop-callout">Bij ieder verzoek moet duidelijk zijn wat de gast vraagt, of er is gereageerd, wat is afgesproken en of er nog een actie openstaat.</div>
+
+      <h2>6. Bijzonderheden voor aankomst</h2>
+      <ul>
+        <li>VIP-gasten of bijzondere gasten</li>
+        <li>Speciale gelegenheden</li>
+        <li>Early check-in / late check-out</li>
+        <li><strong>Parkeerafspraken (!)</strong></li>
+        <li>Extra bedden, babybedjes of andere voorzieningen</li>
+        <li>Betalingen of betalingsproblemen</li>
+        <li>Technische of operationele bijzonderheden</li>
+        <li>Overboekingen of afwijkende kamertypes</li>
+      </ul>
+
+      <h2>7. Actie bij een afwijking</h2>
+      <ul>
+        <li>Corrigeer de fout direct wanneer je hiervoor bevoegd bent.</li>
+        <li>Kan de fout niet direct worden opgelost? Zet een actie uit bij de verantwoordelijke medewerker.</li>
+        <li>Controleer na correctie opnieuw of OTA en PMS overeenkomen.</li>
+        <li>Informeer relevante collega's wanneer de afwijking invloed heeft op de aankomst van de gast.</li>
+      </ul>
+
+      <h2>8. Eindcontrole</h2>
+      <ul class="sop-checklist">
+        <li>Alle OTA-aankomsten voor de komende 72 uur zijn gecontroleerd.</li>
+        <li>Alle reserveringen zijn vergeleken met het PMS.</li>
+        <li>Prijzen en reserveringsgegevens zijn correct.</li>
+        <li>Alle speciale verzoeken zijn bekeken.</li>
+        <li>Directe reserveringen en e-mails zijn gecontroleerd.</li>
+        <li>Alle OTA-berichten en verzoeken zijn gecontroleerd.</li>
+        <li>Openstaande acties zijn uitgezet bij de juiste verantwoordelijke.</li>
+        <li>Bijzonderheden voor de komende aankomsten zijn bekend bij het team.</li>
+      </ul>
+
+      <h2>9. Aftekenen</h2>
+      <div class="sop-signoff">
+        <div><label>Datum</label><div class="sop-line"></div></div>
+        <div><label>Uitgevoerd door</label><div class="sop-line"></div></div>
+        <div style="grid-column:1/-1;"><label>Bijzonderheden / acties</label><div class="sop-line"></div><div class="sop-line" style="margin-top:8px;"></div></div>
+      </div>
+    `
+  },
+  {
+    id: "openen-overdracht-nachtdienst",
+    title: "Openen — Overdracht met nachtdienst",
+    category: "Front Office",
+    html: `
+  <h2>Overdracht met nachtdienst</h2>
+  <ul>
+    <li>Overdracht van de nachtdienst lezen in het Duty Report in de Google Drive.</li>
+    <li>Aandachtspunten zoals overlast van kamers of opmerkingen voor receptie, HK, TD verwerken in de notities van de reserveringen in Mews en doorgeven aan de betreffende afdeling.</li>
+    <li>Betalingen van check-ins verwerken van de beveiliger (indien nodig).</li>
+    <li>Overdrachten van de afgelopen dagen globaal doorlezen (weet wat er speelt!).</li>
+  </ul>
+`
+  },
+  {
+    id: "no-shows-verwerken",
+    title: "No-shows verwerken",
+    category: "Reservations",
+    html: `
+  <h2>Wat is een no-show?</h2>
+  <ul>
+    <li>Het is mogelijk dat een gast niet op komt dagen en dus ook niet incheckt, dit is een no-show.</li>
+    <li>Check altijd eerst heel goed of de reservering écht een no-show is! Kijk o.a. of er een registration card is in de map of een notitie in de reservering.</li>
+    <li>Is dit niet het geval en is de reservering dus een no-show, controleer dan of er al betaald is en hoe het is geboekt.</li>
+  </ul>
+
+  <h2>No Show — Mews/Synxis</h2>
+  <p>Is de reservering gemaakt via onze eigen website, verwerk de no-show dan via Mews.</p>
+  <p>Open de reservering in Mews → Tabblad Status → Cancellation → Kies bij Reason 'No-show' en vul je eigen initialen in → Vink 'Apply Cancellation Fee' → Klik op OK.</p>
+
+  <h2>No Show — Booking.com</h2>
+  <p>Is de reservering gemaakt via Booking.com, verwerk de no-show dan via Extranet.</p>
+  <p>Open de reservering via het Extranet van Booking.com → Selecteer rechts in het profiel 'Mark as a no show'. Vervolgens popt het volgende scherm op:</p>
+  <ul>
+    <li>Als de gast online de boeking al heeft betaald kan je klikken op "nee, kosten in rekening brengen". Dit geldt ook voor als de gast bij aankomst moet betalen en de kaart geverifieerd is.</li>
+    <li>Als de gast bij aankomst moest betalen en de kaart is <strong>niet</strong> geverifieerd, dan moet je de optie "ja, kosten kwijtschelden" aanklikken. Dit is omdat we geen garantie hebben.</li>
+    <li>Vervolgens ga je naar Mews en annuleer je de reservering ook via Mews. Hier moet je de optie "apply cancellation fee" aanklikken. Vervolgens ga je naar de billing, hier zal het totale bedrag in de min staan en opgeboekt als "cancellation fee". Dit kan je dan doorschuiven naar de paymaster van Booking.com.</li>
+  </ul>
+  <div class="sop-callout">Mocht de billing niet uit zichzelf de min in gaan, of ben je vergeten om "apply cancellation fee" aan te zetten? Dat is geen ramp — je kan dan in de billing de totale nachten van de gast opboeken als "cancellation fee" en doorschuiven naar de paymaster van Booking.com.</div>
+
+  <h2>No Show — Expedia</h2>
+  <p>Is de reservering gemaakt via Expedia, verwerk de no-show dan via het extranet.</p>
+  <p>Open de reservering via het extranet van Expedia → Zoek het profiel van de gast op rechtsboven bij het vergrootglas → Selecteer links in het profiel "Markeren als no-show". Vervolgens popt het volgende scherm op:</p>
+  <ul>
+    <li>Mocht de gast alles betaald hebben online, dan kan je klikken op "volledige annuleringskosten in rekening brengen". Ook als de gast alles bij aankomst moest betalen is dit het geval.</li>
+  </ul>
+  <div class="sop-callout">Zorg dat je al deze stappen doorloopt, anders betalen we commissie erover! Kijk daarna in Mews of de reservering ook geannuleerd is (dit kan enkele minuten duren). Zo niet: Tabblad Status → Cancellation → Reason: No-show → Vink "Apply cancellation fee" aan (alleen als de reservering betaald is) → OK. Klaar.</div>
+`
+  },
+  {
+    id: "housekeepinglijst-controleren",
+    title: "Housekeepinglijst controleren",
+    category: "Housekeeping",
+    html: `
+  <h2>Het housekeeping boek controleren</h2>
+  <ul>
+    <li>Bij de receptie ligt een zwart boek, ook wel het housekeeping boek genoemd. Hier noteren we alle longstay-verblijven. Gasten die langer dan 28 nachten bij ons verblijven (longstayers) krijgen vaste schoonmaakdagen per week: 1 regulier en 1 opfris per week. Check het housekeeping boek op voorkeursdagen en het longstay-schoonmaakschema.</li>
+    <li>In het boek vind je ook op welke dagen gasten zonder vaste dagen een schoonmaak krijgen. Kleurcodes: <strong>Opfris = groen</strong>, <strong>Regulier = blauw</strong>, <strong>Eind = roze</strong>. Opfris houdt in dat de gast handdoeken, shampoo en bodywash bijgevuld krijgt en eventueel de prullenbakken vervangen + wc-papier ontvangt. Bij een regulier wordt het gehele appartement schoongemaakt.</li>
+  </ul>
+
+  <h2>Housekeepinglijst uitprinten</h2>
+  <p>Ga naar Dashboard → Space status. Bij "Options" staat "Display assignees" altijd aan — dit mag je weghalen. Klik vervolgens op het printer-icoontje → To PDF → en print het uit.</p>
+
+  <h2>Cijfertjes op de HSK-lijst aflezen</h2>
+  <p>Zodra de HSK-lijst is uitgeprint, staan er cijfertjes op. Dit kan je aflezen door op het schema (housekeeping boek) te kijken: bijvoorbeeld een gast met een opfris markeer je groen op de HSK-lijst.</p>
+`
+  },
+  {
+    id: "departures-checken",
+    title: "Departures checken",
+    category: "Front Office",
+    html: `
+  <h2>Departures openen</h2>
+  <p>Open de lijst met departures via <em>Remaining departures</em> op je Mews dashboard.</p>
+
+  <h2>Openstaande betalingen controleren</h2>
+  <ul>
+    <li>Mocht de gast nog niet betaald hebben dan zie je dat terug in het lijstje. Als de kamer komt uitchecken, geef je het kamerpasje mee.</li>
+    <li>Lees in de notitie van de gast wat er met een openstaand bedrag moet gebeuren. Mocht daar staan dat de nachten en de city tax naar de paymaster van Booking.com moeten, verplaats dit dan in de billing. Als dit niet gebeurt, kan je de gast niet uitchecken.</li>
+  </ul>
+  <div class="sop-callout">Klap de billing <strong>altijd open</strong> bij het uitchecken en kijk of alles écht is betaald — ook als er niets in de notes staat.</div>
+  <ul>
+    <li>Staat er bijvoorbeeld nog parking of chromecast open? Laat dit betalen aan de balie, of haal het van de borg af.</li>
+    <li>Als alles betaald is, klik je op check-out. Het is belangrijk dat "close balanced bills" aanstaat. Je mag <strong>niet</strong> het vakje "check out with unbalanced bill" aanvinken zonder toestemming.</li>
+  </ul>
+
+  <h2>Borg annuleren</h2>
+  <p>Ga naar de profiel van de gast → payments → preauthorizations → 3 puntjes → cancel.</p>
+  <div class="sop-callout">Je kan de borg pas annuleren als de kamer is goedgekeurd voor borg. Annuleer de borg pas <strong>nadat</strong> de TD alle kamers heeft gecontroleerd.</div>
+`
+  },
+  {
+    id: "mails-beantwoorden",
+    title: "Mails beantwoorden",
+    category: "Front Office",
+    html: `
+  <p>E-mail beantwoorden is meestal simpel maar af en toe ingewikkeld. We krijgen vaak dezelfde vragen, zoals over parkeren, late check-out en early check-in. Het is de bedoeling dat je je e-mail zo professioneel mogelijk opstelt.</p>
+
+  <h2>Opbouw van een reactie</h2>
+  <ul>
+    <li>Begin met een zakelijke aanhef: "Dear [Naam],"</li>
+    <li>Begin een nieuwe alinea met je aanleiding, bijvoorbeeld "Thank you for your message regarding..." of "Thank you for your response" — afhankelijk van het type mail.</li>
+    <li>Gebruik daarna weer een alinea om antwoord te geven op de vraag van de gast. Leg concreet uit in plaats van kort te bevestigen (bijv. niet alleen "I have reserved parking for you", maar leg de parkeerprocedure uit).</li>
+    <li>Sluit af met bijvoorbeeld "If you have any further questions, please let us know." — iedereen mag dit op zijn eigen manier verwoorden.</li>
+    <li>Voeg je eigen handtekening toe met je naam en functie.</li>
+  </ul>
+`
+  },
+  {
+    id: "registratiekaarten-uitprinten",
+    title: "Registratiekaarten uitprinten",
+    category: "Front Office",
+    html: `
+  <h2>Per gast uitprinten</h2>
+  <p>Ga naar de aankomsten van vandaag. Bij de betreffende gast kan je de registration card uitprinten.</p>
+
+  <h2>Alle registratiekaarten in één keer</h2>
+  <p>Ga naar "Reservation Overview" en kies daar "Registration cards".</p>
+
+  <div class="sop-callout">Tip! Je kan twee registratiekaarten per pagina uitprinten (in te stellen vlak voor het printen) — dat scheelt papier. Gebruik de snijmachine om ze netjes te snijden en plaats ze achter de bijbehorende sleutelkaart.</div>
+`
+  },
+  {
+    id: "morning-meeting",
+    title: "Morning meeting",
+    category: "Front Office",
+    html: `
+  <ul>
+    <li>De morning meeting is elke dag in de ochtend om 10:00 uur.</li>
+    <li>Degene die de ochtenddienst heeft, leidt de meeting.</li>
+    <li>Als er een tweede persoon bij de receptie is, <strong>MOET</strong> de morning meeting boven gehouden worden. Is dit niet het geval, dan mag de meeting beneden gehouden worden.</li>
+    <li>Wat wordt er besproken: je vult de eventuele LCO, early CI, HSK- en TD-tasks en eventuele extra's op de kamer in.</li>
+  </ul>
+`
+  },
+  {
+    id: "voorraden-aanvullen-fo",
+    title: "Voorraden aanvullen (Front Office)",
+    category: "Front Office",
+    html: `
+  <ul>
+    <li>Op -1 hebben wij een FO-hok (46) en een wijnenhok (40). Het is belangrijk dat de voorraden aangevuld zijn.</li>
+    <li>Elke dinsdag en zondag vullen wij de receptie aan — dit kan wijn/cava zijn, of printerinkt die op is bij de kasten.</li>
+    <li>Mocht er niets op voorraad zijn, dan maken we een bestellijst. Er staat een bestand hiervoor op de computers bij de receptie: <em>Bestellijst FRONT-OFFICE.docx</em>.</li>
+  </ul>
+`
+  },
+  {
+    id: "betalingen-verwerken-aankomsten",
+    title: "Betalingen verwerken & aankomsten doornemen",
+    category: "Reservations",
+    html: `
+  <h2>Synxis — reserveringen van onze eigen website</h2>
+  <p>Je ontvangt 2 e-mails per boeking: 1x GlobRes-bevestiging en 1x van Cubilis (onze connectie tussen de website en Mews). Vervolgens verwerk je de betaling in MEWS.</p>
+
+  <h2>Booking.com — Prepaid</h2>
+  <p>In de reservering van de gast staat hoe er geboekt is:</p>
+  <ul>
+    <li>Staat er in de notities <strong>"this reservation has been pre-paid"</strong>, dan is de boeking al online betaald. Zet dan in de notities: "Nachten + CT bij co verplaatsen naar paymaster Booking.com + borg bij aankomst".</li>
+    <li>Weet je niet zeker of de reservering is betaald? Check dit in het Extranet: kopieer het reserveringsnummer en zoek het op bij Booking.com. Bij status betaling zie je of de gast online heeft betaald.</li>
+    <li>Staat er in de notities <strong>"U int de betaling van gasten bij uw accommodatie"</strong>, dan heeft de gast nog niets online betaald en betaalt bij aankomst. Zet dan in de notities: "Gasten betalen alles bij aankomst + borg".</li>
+    <li>In het Extranet kan ook staan "U bent verantwoordelijk voor het innen van betaling" — de gast moet dan alles bij check-in betalen.</li>
+  </ul>
+  <div class="sop-callout">Als gasten ervoor kiezen alles te betalen bij het inchecken, hebben we hiervoor een garantie nodig (creditcardgegevens), zodat we een houvast hebben mocht de gast niet komen opdagen. Staat er "ongeldige credit card gegevens", dan hebben we géén garantie/houvast aan de reservering.</div>
+`
+  },
+  {
+    id: "check-in-procedure",
+    title: "Check-in procedure",
+    category: "Front Office",
+    html: `
+  <h2>1. Vraag de gast op welke naam de reservering staat</h2>
+  <ul>
+    <li>Ga naar "remaining arrivals".</li>
+    <li>Klik bij de juiste gast op "Check in".</li>
+  </ul>
+  <div class="sop-callout">Let op: alleen als "inspected" in het groen staat, is de kamer geïnspecteerd en kan je hem inchecken in het systeem. Staat dit niet in het groen, dan nog niet inchecken.</div>
+
+  <h2>2. Vraag om alle ID's van de gasten</h2>
+  <p>Vul de namen en geboortedata van alle gasten in, en het kaartnummer van de hoofdpersoon.</p>
+  <ul>
+    <li><strong>Hoofdpersoon:</strong> klik op het poppetje naast de naam → "identity documents" → plusteken → vul "number" (paspoort/ID-nummer) in → selecteer "type" en de vervaldatum → klik op "create".</li>
+    <li>Vul daarna bij "profile" de geboortedatum in (typen via het toetsenbord gaat sneller dan de muis).</li>
+  </ul>
+  <div class="sop-callout"><strong>Let op:</strong> alle gasten moeten 21+ zijn. Controleer de geboortedatum hierop.</div>
+  <ul>
+    <li>Klik op "SAVE" en dan op het kruisje linksboven.</li>
+    <li><strong>Overige gasten:</strong> ga naar tabblad "group", scroll naar beneden en vul onder "add new customer" titel, voornaam, achternaam en geboortedatum in, klik op "create". Herhaal dit voor iedereen. Lukt het niet? Controleer bij tabblad "properties" of het aantal "adults" klopt met het daadwerkelijke aantal gasten.</li>
+  </ul>
+
+  <h2>3. Registratiekaart en borgvoorwaarden</h2>
+  <p>Geef de gast tijdens het registreren de uitgeprinte registration card en borgvoorwaarden. Nog niet uitgeprint? Ga naar tabblad "status" → registration card → print alléén de eerste pagina (alleen nodig voor de hoofdgast). Laat de gast de registratiekaart ondertekenen; hiermee gaat de gast akkoord dat de gegevens kloppen.</p>
+
+  <h2>4. Deposit / Borg</h2>
+  <table class="sop-table">
+    <tr><th>Kamertype</th><th>Borgbedrag</th></tr>
+    <tr><td>Studio – hoek-studio</td><td>€300,-</td></tr>
+    <tr><td>Family studio</td><td>€300,-</td></tr>
+    <tr><td>Appartement & groot appartement</td><td>€500,-</td></tr>
+    <tr><td>Penthouse & I-Penthouse</td><td>€500,-</td></tr>
+  </table>
+
+  <h2>5. Wat moet er nog betaald worden?</h2>
+  <p>Ga naar "billing" en check goed wat er openstaat. Het systeem maakt 1 billing en 1 "preview" billing aan — zorg dat alles onder 1 kopje staat zodat je precies ziet wat de gast nog moet betalen. Rechtsboven bij "to be paid" zie je het openstaande bedrag.</p>
+  <div class="sop-callout"><strong>Benoem niet</strong> rozenblaadjes of een fles cava e.d. — dit kan een verrassing zijn voor andere gasten die erbij staan. Zeg in plaats daarvan: "de toeristenbelasting en extra's en parking staan nog open om te betalen, een bedrag van €xx,xx."</div>
+
+  <h2>6. Borg innen</h2>
+  <p>De gast mag met creditcard of pinpas via de terminal betalen.</p>
+  <ul>
+    <li>Staat er "virtual credit card"? Ga naar billing en zorg dat kamer + city tax in 1 billing-scherm staan; charge deze twee kosten op de virtual card. Selecteer de items → "move to" → maak een nieuwe bill aan. Van een virtuele kaart kan alléén de nacht + city tax betaald worden, <strong>niet</strong> de borg.</li>
+    <li><strong>Liefst borg met credit card</strong> — dit kan alleen als de gast de kaart bij zich heeft en op eigen naam. De borg mag ook door iemand anders (vriend, partner, familie) betaald worden, op eigen verantwoordelijkheid.</li>
+  </ul>
+  <div class="sop-callout"><strong>Let op:</strong> deze manier kan alléén als iemand korter dan 7 nachten verblijft — MEWS kan de borg niet langer dan 7 dagen "vasthouden"; daarna wordt deze automatisch losgelaten.</div>
+  <ul>
+    <li><strong>MEWS:</strong> ga naar "payments" → "preauthorization". Staat er al een creditcard van de gast op hun eigen naam in het systeem? Klik op online preauthorization → payment card → vul het borgbedrag in → type bij "notes": Borg → klik op "create".</li>
+    <li><strong>Borg met pin of cc via de terminal:</strong> ga naar "payments" → preauthorization → kies "terminal" i.p.v. "online preauthorization". Kies de terminal, vul het borgbedrag in bij "amount", vul bij "notes": borg.</li>
+  </ul>
+  <div class="sop-callout"><strong>BELANGRIJK!</strong> Schrijf in de boeking in MEWS: (1) hoeveel borg is betaald, (2) hoe de borg is betaald, (3) je initialen — zodat we bij check-out precies weten hoe het zit. Noteer ook eventuele bijzonderheden.</div>
+
+  <h2>7. Borg/geen borg</h2>
+  <p><strong>Alle gasten</strong> dienen de borg te betalen, tenzij dit een longstay-gast is — dit staat dan in hun notities vermeld.</p>
+  <p>Leg de borgvoorwaarden uit: niet roken in het pand (alleen op het balkon met dichte balkondeur), niet frituren, etc. De hoofdboeker ondertekent dit met naam en handtekening.</p>
+
+  <h2>8. Laatste stap</h2>
+  <ul>
+    <li>Geef de kamersleutels en benoem <strong>alléén</strong> de verdieping — vanwege privacyregels mag je het kamernummer niet benoemen.</li>
+    <li>Is de gast hier voor het eerst? Leg dan uit: appartementen mogen 4 bezoekers ontvangen, studio's minder (i.v.m. brandveiligheid); WiFi-login staat op de achterkant van de voordeur; er ligt een welkomstpakketje koffie/thee ter vrij gebruik; de balie is bereikbaar tot 22:00 uur, daarna is er altijd een beveiliger aanwezig; we verhuren ook fietsen; de supermarkt is dichtbij en wij verkopen zelf ook koffie, wasmiddel, wijn en bier; check-out is om 11:00 uur.</li>
+  </ul>
+`
+  },
+  {
+    id: "booking-com-reservering-terugbetaling",
+    title: "Booking.com — nieuwe reservering & terugbetaling",
+    category: "Reservations",
+    html: `
+  <h2>Annulering — eigen website (Synxis)</h2>
+  <p>Wanneer iemand een reservering annuleert via www.urbanresidences.com komen er twee e-mails binnen: (1) help@globres.com "GlobRes Cancelled-GUEST", en (2) Urban Residences Rotterdam "Cancelled reservation via SynXis".</p>
+  <ul>
+    <li>Verwerk e-mail 1: zoek de reservering op in Mews via het reserveringsnummer ('Confirmation Number').</li>
+    <li>Check of de gast mocht annuleren (Fully Flexible rate en minstens 7 dagen voor aankomstdatum).</li>
+    <li>Mocht annuleren + betaald via iDeal → dit moet de Manager of Supervisor terugstorten via de bank; stuur de annulering door naar een leidinggevende.</li>
+    <li>Mocht annuleren + betaald via Creditcard → wordt automatisch gerefund, maar de betaling moet nog naar €0 gebracht worden in de Billing van Mews (External Payment – Prepayment tegenboeken, dan de bill sluiten).</li>
+  </ul>
+  <p>Als alles verwerkt is: sleep e-mail 1 en 2 naar de map 'A-verwerkt' → 02. OTA/Boekingen → Globres/Hoteliers.</p>
+
+  <h2>Terugbetaling — eigen website (Synxis)</h2>
+  <p>Boekingen via onze website zijn altijd al betaald, behalve de toeristenbelasting. Check bij een annulering altijd eerst of de gast mocht annuleren (Early Bird is non-refundable).</p>
+  <ul>
+    <li>iDeal-betalingen: worden teruggestort door Brigitte via de bank. Stuur de annulering door naar Mildred zodat zij het rekeningnummer kunnen opzoeken en doorsturen naar Brigitte. Vermeld in de mail ook wáárom de gast geld terugkrijgt en het reserveringsnummer.</li>
+    <li>Creditcardbetalingen: worden automatisch teruggestort als het een fully flexible boeking is en buiten de 7-dagen-cancellation-policy valt. Verwerk de refund daarna in Mews als Payment → External Payment → Pre-payment (net als een gewone betaling, maar dan als refund). Close en stuur de rekening naar de gast, en annuleer de reservering in Mews.</li>
+  </ul>
+
+  <h2>Nieuwe reservering — Booking.com</h2>
+  <ul>
+    <li>Notities van de gast worden automatisch in de notes in Mews verwerkt. Vragen beantwoord je via het Booking.com Extranet.</li>
+    <li>Sleep de e-mail na verwerking naar 'A-verwerkt' → 02. OTA/Boekingen → Booking.com.</li>
+  </ul>
+
+  <h2>Terugbetaling — Booking.com</h2>
+  <div class="sop-callout">Fully Flexible-annuleringen doen gasten, buiten de annuleerperiode, <strong>altijd zelf</strong> via het Extranet van Booking.com. Wij ontvangen dan een mail "Cancelled reservation via Booking.com". Mocht de gast gewoon mogen annuleren: sleep de mail naar de verwerkt-map, verder niets te doen. Staat er in de mail een "Cancellation fee"? Dan heeft de gast buiten de toegestane periode geannuleerd (of non-refundable). Probeer dan de kaart van de gast te belasten via MEWS (tabblad Billing) als er nog niet betaald is. Lukt dit niet, dan zien Brigitte en Mildred de reservering vanzelf in de accounting ledger en lossen zij het op.</div>
+`
+  },
+  {
+    id: "check-out-procedure",
+    title: "Check-out procedure",
+    category: "Front Office",
+    html: `
+  <h2>Basis</h2>
+  <ul>
+    <li>Begroet de gast en vraag zijn/haar kamernummer.</li>
+    <li>Vraag altijd of alles naar wens was tijdens het verblijf.</li>
+    <li>Heeft de gast iets op te merken? Noteer dit en geef het altijd door aan de desbetreffende afdeling (bijv. TD voor mankementen).</li>
+    <li>Heeft de gast een goede ervaring gehad? Vraag of de gast een review wil achterlaten (Booking, Expedia, Tripadvisor, Google etc.).</li>
+  </ul>
+
+  <h2>Borg terugbetalen</h2>
+  <p>Heeft men een borg betaald, dan hoort dit in de notes te staan.</p>
+  <ul>
+    <li><strong>Pin of CC:</strong> gasten hoeven niet te wachten. Bij pin: vraag IBAN-gegevens; wordt binnen 5 dagen teruggestort.</li>
+  </ul>
+  <p><strong>Borg annuleren:</strong> tabblad payments → 3 puntjes rechts → cancel. Het bedrag is dan vrijwel direct weer beschikbaar op de CC. Doe je dit niet, dan duurt het circa 7 dagen voor MEWS het vrijgeeft, waarna de CC-maatschappij het nog moet verwerken.</p>
+
+  <h2>Kamer niet goed voor de borg (schade)</h2>
+  <ul>
+    <li>PIN en CC: ga naar billing → sla aan op accommodation → property damage. Zet in de notes waarom de borg wordt ingehouden.</li>
+    <li>Pin: sla af op unbalanced bill; wordt binnen 14 dagen teruggestort.</li>
+    <li>CC: maak de betaling in billing via payments → pre-authorisation. Check in het tabblad payments of de rest automatisch is vrijgegeven.</li>
+  </ul>
+
+  <h2>Iemand uitchecken in Mews</h2>
+  <ul>
+    <li>Open de reservering en controleer in de notities en/of Billing/Payments of de gast borg heeft betaald. Is dat zo? Vraag TD om de kamer te checken.</li>
+    <li>Kijk of de betalingsbalans in 'Billing' op €0 staat. Zo niet: zoek uit welk bedrag nog openstaat en waarom (bijv. parkeergeld, toeristenbelasting, of de terug te storten borg).</li>
+    <li>Staat alles op €0 (geen + of - in Billing)? Klik rechtsonder op 'Close' → op de volgende pagina nogmaals rechts op 'Close'.</li>
+    <li>Klik op het mail-icoon om de factuur naar de gast te sturen.</li>
+    <li>Bedank de gast voor zijn/haar komst en wens een fijne dag.</li>
+  </ul>
+`
+  },
+  {
+    id: "late-check-out-beleid",
+    title: "Late check-out — beleid",
+    category: "Front Office",
+    html: `
+  <ol>
+    <li>Late check-outs kunnen nooit vooraf geboekt worden — dit mag de gast pas bij aankomst vragen, op basis van beschikbaarheid.</li>
+    <li>De kosten voor een late check-out bedragen €50; uitchecken kan dan uiterlijk tot 15:00 uur.</li>
+    <li>We boeken geen late check-out als de occupancy van de kamer 80% of hoger is — dan proberen we de kamer liever te verkopen.</li>
+    <li>Boekt iemand een late check-out? Zet de kamer dan OOO in Mews met de tekst 'late check-out hsk morgen'. Zo ziet de collega die de volgende ochtend werkt duidelijk dat de kamer op de schoonmaaklijst als Eind gemarkeerd moet worden.</li>
+  </ol>
+`
+  },
+  {
+    id: "oaky-upselling",
+    title: "OAKY — upselling tool",
+    category: "Front Office",
+    html: `
+  <p>Oaky is onze upselling-tool. Gasten ontvangen na hun reservering een e-mail met opties om hun verblijf te personaliseren, zoals een room upgrade, parkeren, rose petals en Nespresso koffiecups.</p>
+  <ul>
+    <li>Elke dag ontvangen we in de mailbox een Oaky Pre-arrival Report met de producten die zijn bijgeboekt door gasten die die dag arriveren.</li>
+    <li>In Mews staan deze extra geboekte opties bij iedere reservering onder "Products".</li>
+    <li>De meeste requests worden automatisch verwerkt, maar soms moet je ze zelf accepteren of afwijzen — hiervan ontvang je dan een e-mail. Bekijk deze via <a href="https://dashboard.getoaky.com/" target="_blank" rel="noopener">dashboard.getoaky.com</a>.</li>
+  </ul>
+  <div class="sop-callout">Kijk vóórdat je een request accepteert altijd goed of er beschikbaarheid is — bijvoorbeeld: bij een room upgrade eerst checken of het gewenste kamertype beschikbaar is.</div>
+`
+  },
+  {
+    id: "sleutelkaarten-aanmaken",
+    title: "Sleutelkaarten aanmaken (Hotek Keycards)",
+    category: "Front Office",
+    html: `
+  <ol>
+    <li>Pak de kaarthouders.</li>
+    <li>Gebruik je check-in lijst voor een overzicht van alle gastnamen.</li>
+    <li>Open het programma 'DYMO Label'.</li>
+    <li>Vervang de naam en het kamernummer en klik op 'Afdrukken'.</li>
+    <li>Open het programma 'Hotek Keycards'.</li>
+    <li>Dubbelklik op het kamernummer in het blauwe vlak.</li>
+    <li>Klik op 'Check-out without card' en klik op 'OK'.</li>
+    <li>Het vlak kleurt nu groen — dubbelklik nogmaals op het kamernummer.</li>
+    <li>Zorg dat 2x 'Copy card' aangevinkt is.</li>
+    <li>Vul de check-out van de gast in.</li>
+    <li>Zorg dat het vakje 'Entrees' aangevinkt is.</li>
+    <li>Klik op 'Make card'.</li>
+    <li>Maak per kamer 2 sleutelkaarten.</li>
+  </ol>
+`
+  },
+  {
+    id: "einde-van-je-dienst",
+    title: "Einde van je dienst — overdracht & afsluiten",
+    category: "Front Office",
+    html: `
+  <h2>Overdracht ochtend/tussendienst</h2>
+  <ul>
+    <li>Aandachtspunten noteren, waar nodig oppakken en zorgen dat het opgepakt wordt tijdens je shift.</li>
+    <li>Overdrachten van de afgelopen dagen globaal doorlezen (weet wat er speelt!).</li>
+  </ul>
+
+  <h2>Mails beantwoorden</h2>
+  <p>Zie de SOP 'Mails beantwoorden'.</p>
+
+  <h2>Overdracht TD</h2>
+  <p>Wanneer TD naar huis gaat: even overleggen of er een kamer OOO moet.</p>
+
+  <h2>Ronde lopen</h2>
+  <ul>
+    <li>Begin bij de entree — is het vies? Zet dit dan in het duty rapport voor de nacht als extra taak.</li>
+    <li>Harde muziek, rooklucht of te veel mensen in 1 kamer? Waarschuwingen uitdelen!</li>
+    <li>Bevindingen van de ronde verwerken in MEWS én noteren in het duty rapport.</li>
+  </ul>
+
+  <h2>Voorraden checken</h2>
+  <ul>
+    <li>Zorg dat alle voorraden bij de receptie zijn aangevuld.</li>
+    <li>Zorg dat de receptie er netjes bij ligt — geen overbodige papiertjes, dozen of troep.</li>
+  </ul>
+
+  <h2>Sleutels maken</h2>
+  <ul>
+    <li>E-mails verwerken — zorg dat alle mails gedaan zijn tot 21:00 uur.</li>
+    <li>E-mails waarvan je niet weet hoe je ze moet verwerken: flaggen.</li>
+  </ul>
+
+  <h2>Kassa tellen</h2>
+  <ul>
+    <li>Tel de kassa.</li>
+    <li>Controleer of de kassa overeenkomt met de Balance in Mews (te vinden via Cashier op het dashboard).</li>
+    <li>Verwerk de kassa-inhoud (en eventuele overschotten/tekorten) via interne berichten bij 'Kassa' (Messages rechtsboven op het dashboard).</li>
+  </ul>
+
+  <h2>Opruimen</h2>
+  <p>Doe alle vuile vaat in de vaatwasser en zet deze aan. Zorg dat het netjes is in 102 en 104.</p>
+
+  <h2>Overdracht nachtportier</h2>
+  <ul>
+    <li>Zijn er check-ins geboekt met een virtuele card? Charge deze via het systeem.</li>
+    <li>Bespreek met de beveiliger welke kamers aandacht nodig hebben en of er eventuele check-ins zijn.</li>
+  </ul>
+  <div class="sop-callout">Tip! Is het rustig met aankomsten morgen? Kijk dan of je de kamers alvast op de hoogst mogelijke verdiepingen kan plaatsen voordat je de sleutels maakt, zodat gasten van het uitzicht kunnen genieten.</div>
+`
+  },
+  {
+    id: "verwarming-verkoeling-uitleg",
+    title: "Technische problemen — verwarming/verkoeling",
+    category: "Technische Dienst",
+    html: `
+  <p>Alle kamers hebben vloerverwarming. In zowel de badkamer als de woonkamer (en slaapkamers bij een appartement/penthouse) zitten thermostaten.</p>
+  <ul>
+    <li>Wanneer het lampje brandt (het ijs-tekentje), vraag je koud water aan.</li>
+    <li>Om het koud óf warm te hebben, moet de thermostaat in alle kamers op dezelfde stand staan. Staat het lampje bijvoorbeeld aan in de woonkamer maar niet in de badkamer, dan vraag je dus koud water in de woonkamer en warm in de badkamer.</li>
+    <li>Warm en koud gemengd = lauw, er gebeurt dan vrij weinig.</li>
+    <li>Het zijn grote buizen die onder de vloer lopen met water — het duurt ongeveer 1,5 tot 4 uur tot de gevraagde temperatuur echt bereikt is.</li>
+  </ul>
+  <div class="sop-callout"><strong>SPEEL ER DUS NIET MEE!</strong> Adviseer de gast in de winter alles op 22 graden te zetten — dan wordt het in ongeveer 3 uur echt warm. Adviseer de gast in de zomer alles op het ijs-tekentje (lampje aan) en 0 graden te zetten — het wordt dan ongeveer 8 graden koeler.</div>
+  <p><strong>Het is GEEN airco!</strong> Alle gasten hebben in hun kledingkast of gangkast een ventilator staan die ze kunnen gebruiken.</p>
+  <p>Werkt de verwarming niet en heeft de gast het koud? Geef een klein kacheltje uit de kast van 102 (met een nummer erop). Noteer in de notes van de gast in MEWS welk kachelnummer je hebt gegeven, zodat we het weer kunnen terugvragen/halen.</p>
+`
+  },
+  {
+    id: "fietsverhuur",
+    title: "Fietsverhuur (Myhotelbike)",
+    category: "Front Office",
+    html: `
+  <h2>Prijzen</h2>
+  <ul>
+    <li>3 uur: €10,50</li>
+    <li>1 dag: €12,50</li>
+  </ul>
+
+  <h2>Een fiets verhuren</h2>
+  <p>We verhuren fietsen via het programma van Myhotelbike: <a href="https://login.myhotelbike.com" target="_blank" rel="noopener">login.myhotelbike.com</a> — inloggegevens: urbanresidences@myhotelbike.com / Urbanr123!</p>
+  <ul>
+    <li>Ga naar 'Rentals' bovenaan de pagina → 'Add rental' → vul het formulier in en klik op 'Submit'.</li>
+    <li>Print het formulier uit en laat de gast het ondertekenen. Het formulier mag in de map 'Fietsverhuur' bij de receptie.</li>
+    <li>Laat de gast het bedrag betalen dat in het scherm staat.</li>
+    <li>Verwerk de betaling altijd in Mews via Billing → Hotel Service → Facilities → Bicycle rent.</li>
+  </ul>
+
+  <h2>Wijzigen van een verhuurde fiets</h2>
+  <p>Klik op 'Edit' — je kan dagen toevoegen/verwijderen, een fietsnummer wijzigen, of een fiets van een groep alvast uitchecken. Klik op 'Save'.</p>
+
+  <h2>Fiets inleveren & reparaties</h2>
+  <ul>
+    <li>Worden fiets en sleutels ingeleverd? Klik op 'End now'.</li>
+    <li>Reparatie noteren: ga naar 'Repairs' → 'Add repair' → kies het fietsnummer → 'Submit'. Geeft het systeem aan dat er bijbetaald moet worden? Laat de gast betalen en verwerk dit ook altijd in Mews.</li>
+  </ul>
+`
+  },
+  {
+    id: "chromecast-verhuur",
+    title: "Chromecast verhuur",
+    category: "Front Office",
+    html: `
+  <p>We verhuren 5 chromecasts (genummerd 1 t/m 5) voor €5 per dag. Gasten betalen een borg van €40, terug te krijgen als de chromecast in exact dezelfde staat wordt geretourneerd: juiste doos, onbeschadigd, en alle bijbehorende snoeren aanwezig.</p>
+  <ul>
+    <li>De €40 borg kan gepreautoriseerd worden op de creditcard van de gast, of contant afgehandeld worden.</li>
+    <li>Contante borg: in een envelop in de borgkluis doen, inclusief het blaadje met de handtekening van de gast.</li>
+    <li>Maak altijd ook een notitie in de reservering dat de gast een chromecast heeft gehuurd, zodat dit ook bij check-out zichtbaar is.</li>
+  </ul>
+
+  <h2>Gebruik uitleggen aan de gast</h2>
+  <p>Sluit de chromecast aan op de HDMI-poort van de Loewe TV, verbind de stroomkabel met de chromecast en het stopcontact. Selecteer de HDMI-poort als bron met de "OK"-knop op de afstandsbediening. Zorg dat de gast verbonden is met de WiFi in de kamer en de app 'Google Home' downloadt om de chromecast te koppelen.</p>
+  <div class="sop-callout">De chromecast moet in originele staat terugkomen bij de receptie (doos, snoeren, alle onderdelen). Ontbreekt er iets of is er schade, dan wordt de volledige borg niet terugbetaald.</div>
+`
+  },
+  {
+    id: "paybylink",
+    title: "PayByLink — betaallink versturen",
+    category: "Reservations",
+    html: `
+  <p>Het kan voorkomen dat een gast telefonisch een reservering maakt of verlengt, en niet langs de receptie kan komen om te betalen. In dat geval versturen we een betaallink via PayByLink.</p>
+
+  <h2>Betaallink maken</h2>
+  <ul>
+    <li>Open <a href="https://secure.paybylink.com/" target="_blank" rel="noopener">secure.paybylink.com</a> en log in (staan de gegevens niet correct, kijk dan in het wachtwoordenbestand).</li>
+    <li>Klik bovenin op 'Actions' → 'Create Payment'.</li>
+    <li>Vul in: Order ID (reserveringsnummer uit Mews, 5 cijfers), Amount (totaalbedrag), Client name, Mail address.</li>
+    <li>Description: 'Betaling nodig voor uw boeking bij Urban Residences' (NL) of 'Payment required for your reservation at Urban Residences Rotterdam' (EN).</li>
+    <li>Language: naar keuze Nederlands of Engels.</li>
+    <li>Klik op 'Create'. De gast ontvangt nu een e-mail met de betaallink.</li>
+  </ul>
+
+  <h2>Betaling verwerken</h2>
+  <p>Zodra de gast heeft betaald, ontvangen wij een e-mail van PayByLink met "The payment is successfully paid" en de betalingsgegevens. Verwerk de betaling zoals bij een betaling op onze eigen website (External Payment), en noteer dat de betaling via PayByLink is gedaan inclusief betaalmethode (iDeal, creditcard, etc.).</p>
+`
+  },
+  {
+    id: "creditcard-autorisatie-terminal",
+    title: "Creditcard autorisatie op de terminal",
+    category: "Front Office",
+    html: `
+  <h2>Stap 1: CC-autorisatie via de terminal</h2>
+  <ol>
+    <li>Kies 'Andere TRX'.</li>
+    <li>Kies 'Reservering'.</li>
+    <li>Selecteer het bedrag, druk op 'OK' en geef de terminal aan de gast.</li>
+  </ol>
+  <div class="sop-callout">Bewaar het bonnetje goed door het aan de registratiekaart te nieten! De autorisatiecode op de bon en de bijbehorende kaart zijn nodig om later de (terug)betaling te verwerken.</div>
+
+  <h2>Stap 2: CC-autorisatie chargen (boete)</h2>
+  <ol>
+    <li>Kies 'Andere TRX'.</li>
+    <li>Kies 'Betaling na RSV'.</li>
+    <li>Selecteer het boetebedrag dat moet worden ingehouden, bevestig met 'OK'.</li>
+    <li>Vul de autorisatiecode van het bonnetje in, bevestig met 'OK'.</li>
+  </ol>
+  <p>Is er nog een bedrag over nadat de boete is gecharged? Ga door naar Stap 3 om de rest van de autorisatie vrij te geven.</p>
+
+  <h2>Stap 3: CC-autorisatie releasen</h2>
+  <p>Ga eerst na of de gast een boete moet betalen voor het schenden van huis- en borgregels. Is dit het geval, volg dan eerst Stap 2. Let op: je hebt dezelfde CC nodig voor de terugbetaling.</p>
+  <ol>
+    <li>Kies 'Andere TRX'.</li>
+    <li>Kies 'Annulering'.</li>
+    <li>Vul het Manager Wachtwoord in — code: <strong>99999</strong>.</li>
+    <li>Vul het bedrag in dat de gast terugkrijgt, bevestig met 'OK'.</li>
+    <li>Kies annuleringstype: 'Reservering'.</li>
+    <li>Vul de autorisatiecode van het bonnetje in, bevestig met 'OK'.</li>
+  </ol>
+`
+  },
+  {
+    id: "faciliteitcodes-kpn",
+    title: "Faciliteitcodes KPN ÉÉN",
+    category: "Front Office",
+    html: `
+  <p>Overzicht van de faciliteitcodes voor de KPN ÉÉN telefooncentrale.</p>
+  <table class="sop-table">
+    <tr><th>Functie</th><th>Code</th></tr>
+    <tr><td>Weigeren van anonieme gesprekken activeren</td><td>*77</td></tr>
+    <tr><td>Weigeren van anonieme gesprekken deactiveren</td><td>*87</td></tr>
+    <tr><td>Opvragen status anonieme gesprekken</td><td>*52*</td></tr>
+    <tr><td>Automatisch terugbellen annuleren</td><td>#8</td></tr>
+    <tr><td>Spraakgestuurd menu automatisch terugbellen</td><td>#9</td></tr>
+    <tr><td>Doorschakelen altijd activeren</td><td>*72</td></tr>
+    <tr><td>Doorschakelen altijd deactiveren</td><td>*73</td></tr>
+    <tr><td>Opvragen status doorschakelen altijd</td><td>*21*</td></tr>
+    <tr><td>Altijd doorschakelen naar voicemail activeren</td><td>*21</td></tr>
+    <tr><td>Altijd doorschakelen naar voicemail deactiveren</td><td>#21</td></tr>
+    <tr><td>Doorschakeling bij bezet activeren</td><td>*90</td></tr>
+    <tr><td>Doorschakeling bij bezet deactiveren</td><td>*91</td></tr>
+    <tr><td>Opvragen status doorschakelen bij bezet</td><td>*67*</td></tr>
+    <tr><td>Doorschakelen bij bezet naar voicemail activeren</td><td>*40</td></tr>
+    <tr><td>Doorschakelen bij bezet naar voicemail deactiveren</td><td>#40</td></tr>
+    <tr><td>Gespreksdoorschakeling bij niet beantwoorden activeren</td><td>*92</td></tr>
+    <tr><td>Gespreksdoorschakeling bij niet beantwoorden deactiveren</td><td>*93</td></tr>
+    <tr><td>Opvragen status doorschakelen bij niet beantwoorden</td><td>*61*</td></tr>
+    <tr><td>Doorschakelen bij geen antwoord naar voicemail activeren</td><td>*41</td></tr>
+    <tr><td>Doorschakelen bij geen antwoord naar voicemail deactiveren</td><td>#41</td></tr>
+    <tr><td>Doorschakelen bij niet beschikbaar activeren</td><td>*94</td></tr>
+    <tr><td>Doorschakelen bij niet beschikbaar deactiveren</td><td>*95</td></tr>
+    <tr><td>Opvragen status doorschakelen bij niet beschikbaar</td><td>*63*</td></tr>
+    <tr><td>Selectief doorschakelen activeren</td><td>#76</td></tr>
+    <tr><td>Selectief doorschakelen deactiveren</td><td>#77</td></tr>
+    <tr><td>Opvragen status blokkering nummerweergave</td><td>*54*</td></tr>
+    <tr><td>Blokkering nummerweergave per gesprek</td><td>*67</td></tr>
+    <tr><td>Blokkering nummerweergave inschakelen (persistent)</td><td>*31</td></tr>
+    <tr><td>Blokkering nummerweergave uitschakelen (persistent)</td><td>#31</td></tr>
+    <tr><td>Opheffen blokkering nummerweergave per gesprek</td><td>*65</td></tr>
+    <tr><td>Gesprek parkeren (wachtstand)</td><td>*68</td></tr>
+    <tr><td>Geparkeerd gesprek terugnemen</td><td>*88</td></tr>
+    <tr><td>Gesprek overnemen</td><td>*98</td></tr>
+    <tr><td>Overnemen gesprek op ander toestel</td><td>*11</td></tr>
+    <tr><td>Terugbellen laatst ingekomen nummer</td><td>*69</td></tr>
+    <tr><td>Wissen laatst ingekomen nummer</td><td>#92#</td></tr>
+    <tr><td>Status opvragen blokkering 2de oproep</td><td>*53*</td></tr>
+    <tr><td>Blokkeren 2de oproep activeren</td><td>*43</td></tr>
+    <tr><td>Blokkeren 2de oproep deactiveren</td><td>#43</td></tr>
+    <tr><td>Opheffen blokkering 2de oproep voor eerst volgende gesprek</td><td>*70</td></tr>
+    <tr><td>Wissen voicemail-led</td><td>*99</td></tr>
+    <tr><td>Opvragen status nummerweergave</td><td>*56*</td></tr>
+    <tr><td>Individuele gesprek overname</td><td>*97</td></tr>
+    <tr><td>Inbreken in bestaand gesprek</td><td>*33</td></tr>
+    <tr><td>Direct doorverbinden naar voicemail</td><td>*55</td></tr>
+    <tr><td>Doorschakelblokkeren van gebeld nummer</td><td>*80</td></tr>
+    <tr><td>Niet storen activeren</td><td>*78</td></tr>
+    <tr><td>Niet storen deactiveren</td><td>*79</td></tr>
+    <tr><td>Nummerherhaling</td><td>*66</td></tr>
+    <tr><td>Nachtstand activeren</td><td>#70</td></tr>
+    <tr><td>Nachtstand deactiveren</td><td>#71</td></tr>
+    <tr><td>Verkort kiezen 100 (code 00 t/m 99)</td><td>*75</td></tr>
+    <tr><td>Verkort kiezen 8 (code 2 t/m 9)</td><td>*74</td></tr>
+    <tr><td>Toestel van slot halen</td><td>*47</td></tr>
+    <tr><td>Toestel op slot zetten</td><td>*37</td></tr>
+    <tr><td>Ophalen voicemail berichten (externe server)</td><td>*86</td></tr>
+    <tr><td>Toegang tot de voicemail (zelfde als bellen naar 1233)</td><td>*62</td></tr>
+  </table>
+`
+  },
+  {
+    id: "parking-systeem-intratone",
+    title: "Parkeersysteem Intratone",
+    category: "Front Office",
+    html: `
+  <div class="sop-callout">Let op: er kan alleen worden ingebeld met de nieuwe telefoonnummers. Uitrijden gaat altijd met de knop aan de zijkant bij de rechterlift.</div>
+
+  <h2>Telefoonnummers</h2>
+  <ul>
+    <li>Personeel parkeert op P1: 00337000034559018</li>
+    <li>Gasten parkeren op P2: 00337000034535998</li>
+  </ul>
+  <p>Wanneer level P2 vol is, mogen gasten ook op P1 parkeren.</p>
+  <p>Website: <a href="https://intratone.info/nl/" target="_blank" rel="noopener">intratone.info/nl</a> — login: admin@urbanresidences / ww: Welkom2021!</p>
+
+  <h2>1. Nieuw nummer toevoegen</h2>
+  <ol>
+    <li>Klik op 'Residenties' in de linkerkolom.</li>
+    <li>Klik op 'Urban Residences Rotterdam' bovenin de grijze balk.</li>
+    <li>Klik op 'Aanmaken'.</li>
+    <li>Klik bij 'Een MOBILE KEY aanmaken' op 'Aanmaken' rechts in het scherm.</li>
+    <li>Vul 'Telefoonnummer' in — buitenlandse nummers <strong>zonder</strong> landcode (0049-123456789 wordt 0-123456789).</li>
+    <li>Vul bij 'Commentaar' de naam van de gast in.</li>
+    <li>Vink 'Datum deactivering badge' aan en selecteer de check-out dag van de gast.</li>
+    <li>Selecteer bij 'Autorisatie': 'Lift 4e verdieping'. Heeft de gast een elektrische auto die hij/zij wil opladen? Kies dan 'Lift 3e verdieping'.</li>
+    <li>Klik op de blauwe knop 'Registreren'.</li>
+    <li>Ga terug naar 'Residenties' → klik op 'Alles bijwerken' → klik op 'Bijwerken'.</li>
+    <li>De gast is nu toegevoegd en kan met het telefoonnummer naar binnen rijden.</li>
+  </ol>
+
+  <h2>2. Een terugkerende gast</h2>
+  <p>Een telefoonnummer kan niet nogmaals toegevoegd worden zoals bij een nieuwe gast. Gebruik in plaats daarvan:</p>
+  <ol>
+    <li>Klik op 'Beheren/Zoeken' in de linkerkolom.</li>
+    <li>Selecteer het tabje 'Badges en afstandsbedieningen'.</li>
+    <li>Zoek op naam of telefoonnummer (buitenlandse nummers zonder landcode).</li>
+    <li>Klik op de gevonden gegevens van de gast.</li>
+    <li>Klik op 'Klik hier' achter 'De informatie wijzigen'.</li>
+    <li>Wijzig bij 'Datum deactivering badge' de check-out dag naar de nieuwe datum.</li>
+    <li>Volg daarna dezelfde afrondende stappen als bij een nieuwe gast (Registreren → Alles bijwerken → Bijwerken).</li>
+  </ol>
+`
+  },
+  {
+    id: "hotel-employee-rate",
+    title: "Hotel Employee Rate — beleid & verwerking",
+    category: "Reservations",
+    html: `
+  <p>Urban Residences is aangemeld bij het Hotel Employee Rate-programma: personeel kan met korting kamers boeken bij aangesloten hotels, en zij kunnen dat ook bij ons.</p>
+  <div class="sop-callout"><strong>Jij mag NIET</strong> zelf een kamer boeken onder deze rate — dit mag alleen via <a href="https://www.hotelemployeerate.com" target="_blank" rel="noopener">www.hotelemployeerate.com</a>. Vraag uitleg op bij je leidinggevende.</div>
+  <ul>
+    <li>De boeking komt direct in MEWS — je hoeft er niets voor te doen.</li>
+    <li>Gasten betalen alles bij aankomst.</li>
+    <li>Dit zijn altijd fully flex-boekingen.</li>
+  </ul>
+  <p>Maak je zelf een boeking in het systeem, dan zie je ook 'Hotel Employee Rate' als Flex-korting staan — <strong>deze mag je NIET gebruiken</strong>. Gebruik afhankelijk van het gekozen rate-type alleen: <strong>Fully Flex</strong> of <strong>NRF (Non Refundable)</strong>.</p>
+  <div class="sop-callout">Hotel Employee Rate-boekingen hoef je dus niet te verwerken! Sleep de mail naar verwerkt → Hotel Employee Rate.</div>
+
+  <h2>CXL / No-show Hotel Employee Rate</h2>
+  <p>Bij een te late annulering of no-show sturen wij de gast zelf een Pay link. Geef de gast 2 dagen om te betalen en vermeld dit in de mail. Gebeurt dit niet, dan wordt de gast uit het programma gezet.</p>
+  <ul>
+    <li>Geen betaling ontvangen? Stuur een mail naar service@hotelemployeerate.com met vermelding dat de gast te laat was en niet heeft betaald.</li>
+    <li>Ontvang je een annuleringsmail? Controleer goed of de gast wel mocht annuleren. Mag het? Sleep de mail naar Verwerkt → Hotel Employee Rate. Mag het niet? Stuur een Pay link.</li>
+  </ul>
+
+  <h2>Returning guests</h2>
+  <p>Zoek bij een terugkerende gast op naam en kijk in oude boekingen naar twee dingen: (1) returning guests ontvangen extra's na elke 5 boekingen, en (2) in de notes van vorige boekingen zie je of er trouble was of klachten waren.</p>
+  <table class="sop-table">
+    <tr><th>Bezoek</th><th>Attentie</th></tr>
+    <tr><td>5e bezoek</td><td>Reep chocolade met kaartje van ons</td></tr>
+    <tr><td>10e bezoek</td><td>Fles cava in ice bucket met glazen en kaartje</td></tr>
+    <tr><td>15e bezoek</td><td>Gratis upgrade indien mogelijk, anders flesje witte wijn met kaartje</td></tr>
+    <tr><td>20e bezoek</td><td>Room spray met kaartje</td></tr>
+  </table>
+  <p>Daarna start de cyclus opnieuw (25e = chocolade, 30e = cava, enz.).</p>
+  <div class="sop-callout">Let goed op notities bij eerdere boekingen — sommige gasten mogen we bijvoorbeeld niet meer aannemen (bijv. bij fraude of geblacklist). Bij eerdere klachten: breng TD en HSK op de hoogte zodat we het deze keer extra goed kunnen doen.</div>
+  <p><strong>Snel bij alle boekingen van een gast komen:</strong> MEWS → boeking van de gast → klik op "Manage" → klik op de naam/profiel van de gast → tabblad "Dashboard". Bovenin staan toekomstige boekingen; onder alle invoices/bills staan verleden boekingen (scroll naar beneden).</p>
+`
+  },
+  {
+    id: "foute-mews-merchant-charge",
+    title: "Foute MEWS merchant charge herkennen",
+    category: "Front Office",
+    html: `
+  <p>Als je een virtuele kaart of een Mastercard in het systeem moet belasten, herken je een correcte betaling als volgt:</p>
+  <div class="sop-callout"><strong>GOED:</strong> bij "Identifier" staat een lang nummer (een technische referentie, bijv. beginnend met "ch_..."). Dit geldt zowel voor CC-betalingen via MEWS/merchant als voor virtuele kaarten via MEWS/merchant.</div>
+  <div class="sop-callout"><strong>FOUT:</strong> staat er géén lang nummer bij "Identifier"? Dan hebben de gasten in werkelijkheid niets betaald! Dit gebeurt meestal doordat je per ongeluk op het tabblad "Terminal" hebt geklikt in plaats van "Merchant" bij het aanmaken van de card payment.</div>
+  <p><strong>Let op:</strong> kies bij het aanmaken van een card payment altijd het tabblad "Merchant", niet "Terminal" — anders hebben de gasten €0,- betaald zonder dat je het doorhebt.</p>
+`
+  },
+  {
+    id: "telefoon-instructies",
+    title: "Telefoon instructies & noodnummers",
+    category: "Front Office",
+    html: `
+  <h2>Doorschakelen</h2>
+  <table class="sop-table">
+    <tr><th>Actie</th><th>Code</th></tr>
+    <tr><td>Doorschakelen InterSwitch</td><td>*72 0205160899#</td></tr>
+    <tr><td>Doorschakelen mobiel portier</td><td>*72 0648482450#</td></tr>
+    <tr><td>Doorschakelen naar telefoonnummer</td><td>*72 [telefoonnummer]#</td></tr>
+    <tr><td>Terugschakelen naar receptie</td><td>*72 501#</td></tr>
+  </table>
+  <div class="sop-callout">De receptietelefoon wordt automatisch doorgeschakeld naar Interswitch om 21:00 uur en teruggeschakeld naar de receptie om 08:00 uur.</div>
+
+  <h2>Noodnummers</h2>
+  <table class="sop-table">
+    <tr><th>Instantie</th><th>Nummer</th></tr>
+    <tr><td>Hulpdiensten</td><td>112</td></tr>
+    <tr><td>Wijkagent (Adrie)</td><td>06 51423462</td></tr>
+    <tr><td>Politie Rotterdam</td><td>0900 8844</td></tr>
+    <tr><td>Meldkamer</td><td>088 8779000</td></tr>
+  </table>
+`
+  },
+];
+let pendingSopId = null;
+
+function renderSop(){
+  document.getElementById("page-title").textContent = "SOP Bibliotheek";
+  document.getElementById("page-sub").textContent = "Standaardprocedures — Urban Residences Rotterdam";
+  document.getElementById("page-notice").textContent = "";
+  document.getElementById("page-hint").textContent = "Kies een procedure hieronder, of open 'm direct vanaf een taak in de checklist.";
+
+  const content = document.getElementById("content");
+  content.innerHTML = "";
+
+  const list = document.createElement("div");
+  list.className = "sop-list";
+  SOPS.forEach(sop=>{
+    const item = document.createElement("button");
+    item.className = "sop-list-item";
+    item.innerHTML = `<span>${sop.title}</span><small>${sop.category}</small>`;
+    item.onclick = ()=>{ document.getElementById("sop-" + sop.id).scrollIntoView({behavior:"smooth", block:"start"}); };
+    list.appendChild(item);
+  });
+  content.appendChild(list);
+
+  SOPS.forEach(sop=>{
+    const doc = document.createElement("article");
+    doc.className = "sop-doc";
+    doc.id = "sop-" + sop.id;
+    doc.innerHTML = `<div class="sop-banner">${sop.title}</div><div class="sop-sub">Urban Residences Rotterdam · ${sop.category}</div>${sop.html}`;
+    content.appendChild(doc);
+  });
+
+  if(pendingSopId){
+    const target = document.getElementById("sop-" + pendingSopId);
+    if(target) setTimeout(()=> target.scrollIntoView({behavior:"smooth", block:"start"}), 50);
+    pendingSopId = null;
+  }
+}
+
+function openSop(sopId){
+  pendingSopId = sopId;
+  currentShift = "sop";
+  render();
+}
+
+const HANDOVER_DEPTS = [
+  { key:"FO", label:"Front Office" },
+  { key:"AD", label:"AD (Algemene Dienst)" },
+  { key:"HK", label:"Housekeeping" },
+  { key:"TD", label:"Technische Dienst" },
+  { key:"Reservations", label:"Reservations" },
+];
+
+async function renderHandover(){
+  document.getElementById("page-title").textContent = "Overdrachtslog";
+  document.getElementById("page-sub").textContent = "Belangrijke punten — " + formatDateLong(selectedDate);
+  document.getElementById("page-notice").textContent = "Gedeeld tussen alle afdelingen. Zet hier bijzonderheden, openstaande taken en aandachtspunten neer voor de volgende dienst.";
+  document.getElementById("page-hint").textContent = "Punten zijn zichtbaar voor iedereen en blijven gekoppeld aan deze dag.";
+
+  const content = document.getElementById("content");
+  content.innerHTML = "";
+
+  const entries = await loadHandover(selectedDate);
+  const isAdmin = currentUser === ADMIN_NAME;
+  const allKnownStaff = [...new Set([].concat(...Object.values(EMPLOYEE_LISTS)))];
+  const canPost = isAdmin || allKnownStaff.includes(currentUser);
+
+  HANDOVER_DEPTS.forEach(dept=>{
+    const wrap = document.createElement("div");
+    wrap.className = "block";
+
+    const head = document.createElement("div");
+    head.className = "block-head";
+    const name = document.createElement("div");
+    name.className = "block-name";
+    name.textContent = dept.label;
+    head.appendChild(name);
+    wrap.appendChild(head);
+    wrap.appendChild(document.createElement("hr"));
+
+    const composer = document.createElement("div");
+    composer.className = "handover-composer";
+    const textarea = document.createElement("textarea");
+    textarea.placeholder = canPost
+      ? `Punt toevoegen voor ${dept.label}…`
+      : "Kies eerst je naam (linksboven) om een punt toe te voegen.";
+    textarea.disabled = !canPost;
+    const postBtn = document.createElement("button");
+    postBtn.textContent = "Toevoegen";
+    postBtn.disabled = !canPost;
+    postBtn.onclick = async ()=>{
+      const text = textarea.value.trim();
+      if(!text) return;
+      if(!currentUser){ showUserOverlay("fo"); return; }
+      entries.push({
+        text,
+        dept: dept.key,
+        by: currentUser,
+        at: new Date().toLocaleTimeString("nl-NL", {hour:"2-digit",minute:"2-digit"}),
+      });
+      handoverCache[selectedDate] = entries;
+      textarea.value = "";
+      await saveHandover(selectedDate);
+      renderContent();
+    };
+    composer.appendChild(textarea);
+    composer.appendChild(postBtn);
+    wrap.appendChild(composer);
+
+    const deptEntries = entries
+      .map((e, i)=>({...e, _idx:i}))
+      .filter(e => (e.dept || "FO") === dept.key)
+      .reverse();
+
+    const list = document.createElement("div");
+    list.className = "handover-list";
+    if(deptEntries.length === 0){
+      const empty = document.createElement("div");
+      empty.className = "handover-empty";
+      empty.textContent = "Nog geen punten voor " + dept.label + ".";
+      list.appendChild(empty);
+    } else {
+      deptEntries.forEach(entry=>{
+        const item = document.createElement("div");
+        item.className = "handover-item";
+        const meta = document.createElement("div");
+        meta.className = "handover-meta";
+        meta.innerHTML = `<strong>${entry.by}</strong><span>${entry.at}</span>`;
+        const txt = document.createElement("div");
+        txt.className = "handover-text";
+        txt.textContent = entry.text;
+        item.appendChild(meta);
+        item.appendChild(txt);
+        if(isAdmin){
+          const del = document.createElement("button");
+          del.className = "handover-del";
+          del.textContent = "✕";
+          del.title = "Verwijderen";
+          del.onclick = async ()=>{
+            entries.splice(entry._idx, 1);
+            handoverCache[selectedDate] = entries;
+            await saveHandover(selectedDate);
+            renderContent();
+          };
+          item.appendChild(del);
+        }
+        list.appendChild(item);
+      });
+    }
+    wrap.appendChild(list);
+    content.appendChild(wrap);
+  });
+}
+
+function renderUserBadge(){
+  const el = document.getElementById("user-badge");
+  const dept = currentShift === "handover" ? "fo" : state[currentShift].dept;
+  const list = employeesFor(dept);
+  if(list.length === 0){
+    el.innerHTML = `<span class="lbl">Naamregistratie</span><span class="name" style="color:#8B8477;font-weight:400;">n.v.t. voor deze afdeling</span>`;
+    el.onclick = null;
+    return;
+  }
+  const deptLabel = dept === "fo" ? "Front Office" : (dept === "ad" ? "Algemene Dienst" : "Housekeeping");
+  if(currentUser && list.includes(currentUser)){
+    el.innerHTML = `<span class="lbl">Ingelogd als</span><span class="name">${currentUser}</span><span class="switch">wisselen</span>`;
+  } else {
+    el.innerHTML = `<span class="lbl">${deptLabel}</span><span class="name">Kies je naam…</span>`;
+  }
+  el.onclick = ()=> showUserOverlay(dept);
+}
+
+function showUserOverlay(dept){
+  dept = dept || (state[currentShift] && state[currentShift].dept) || "fo";
+  const list = employeesFor(dept);
+  const selected = list.includes(currentUser) ? currentUser : null;
+  const overlay = document.createElement("div");
+  overlay.className = "overlay";
+  overlay.innerHTML = `
+    <div class="overlay-card">
+      <h2>Wie ben jij?</h2>
+      <p>Kies je naam en voer je pincode in. Afgevinkte taken worden aan jou gekoppeld.</p>
+      <select id="user-select">
+        <option value="" disabled ${!selected ? "selected" : ""}>Kies je naam…</option>
+        ${list.map(n => `<option value="${n}" ${n===selected ? "selected" : ""}>${n}</option>`).join("")}
+      </select>
+      <div id="pin-wrap" style="display:none;">
+        <div id="pin-label" style="font-size:12px;color:#77705F;margin-bottom:6px;">Voer je pincode in:</div>
+        <input type="password" id="pin-input" inputmode="numeric" maxlength="4" placeholder="Pincode (4 cijfers)" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--line);border-radius:5px;margin-bottom:6px;font-family:inherit;letter-spacing:.2em;box-sizing:border-box;">
+        <div id="pin-confirm-wrap" style="display:none;">
+          <input type="password" id="pin-confirm" inputmode="numeric" maxlength="4" placeholder="Herhaal pincode" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--line);border-radius:5px;margin-bottom:6px;font-family:inherit;letter-spacing:.2em;box-sizing:border-box;">
+        </div>
+        <div id="pin-error" style="display:none;color:#B04545;font-size:12px;margin-bottom:10px;"></div>
+      </div>
+      <button id="user-confirm" ${selected ? "" : "disabled"}>Doorgaan</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  const select = overlay.querySelector("#user-select");
+  const btn = overlay.querySelector("#user-confirm");
+  const pinWrap = overlay.querySelector("#pin-wrap");
+  const pinLabel = overlay.querySelector("#pin-label");
+  const pinInput = overlay.querySelector("#pin-input");
+  const pinConfirmWrap = overlay.querySelector("#pin-confirm-wrap");
+  const pinConfirm = overlay.querySelector("#pin-confirm");
+  const pinError = overlay.querySelector("#pin-error");
+
+  function syncPinVisibility(){
+    if(select.value){
+      pinWrap.style.display = "block";
+      btn.disabled = pinInput.value.length !== 4;
+    } else {
+      pinWrap.style.display = "none";
+      pinError.style.display = "none";
+      btn.disabled = true;
+    }
+  }
+  select.onchange = async ()=>{
+    pinInput.value = ""; pinError.style.display = "none";
+    if(select.value){
+      const existingPin = await getPin(select.value);
+      if(!existingPin && select.value !== ADMIN_NAME){
+        pinLabel.textContent = "Kies een pincode van 4 cijfers (jouw eigen code):";
+        pinConfirmWrap.style.display = "block";
+      } else {
+        pinLabel.textContent = "Voer je pincode in:";
+        pinConfirmWrap.style.display = "none";
+      }
+      pinWrap.style.display = "block";
+      btn.disabled = pinInput.value.length !== 4;
+    } else {
+      pinWrap.style.display = "none";
+      btn.disabled = true;
+    }
+  };
+  pinInput?.addEventListener("input", ()=>{
+    pinError.style.display = "none";
+    const confirmVisible = pinConfirmWrap.style.display !== "none";
+    btn.disabled = confirmVisible
+      ? (pinInput.value.length !== 4 || pinConfirm.value.length !== 4)
+      : pinInput.value.length !== 4;
+  });
+  pinConfirm?.addEventListener("input", ()=>{
+    pinError.style.display = "none";
+    btn.disabled = pinInput.value.length !== 4 || pinConfirm.value.length !== 4;
+  });
+  pinInput?.addEventListener("keydown", (e)=>{ if(e.key === "Enter" && !btn.disabled) btn.click(); });
+  syncPinVisibility();
+
+  btn.onclick = async ()=>{
+    if(!select.value) return;
+    const existingPin = await getPin(select.value);
+    if(!existingPin && select.value !== ADMIN_NAME){
+      // Eerste keer: pincode aanmaken
+      if(pinInput.value.length !== 4){
+        pinError.textContent = "Kies een pincode van precies 4 cijfers.";
+        pinError.style.display = "block"; return;
+      }
+      if(pinInput.value !== pinConfirm.value){
+        pinError.textContent = "Pincodes komen niet overeen. Probeer opnieuw.";
+        pinError.style.display = "block";
+        pinInput.value = ""; pinConfirm.value = ""; pinInput.focus(); return;
+      }
+      await savePin(select.value, pinInput.value);
+    } else {
+      // Verificatie
+      const expected = existingPin;
+      if(!expected || pinInput.value !== expected){
+        pinError.textContent = "Onjuiste pincode.";
+        pinError.style.display = "block";
+        pinInput.value = ""; pinInput.focus(); btn.disabled = true; return;
+      }
+    }
+    await saveUser(select.value);
+    document.body.removeChild(overlay);
+    render();
+  };
+}
+
+function renderDateBar(){
+  const strip = document.getElementById("date-strip");
+  strip.innerHTML = "";
+  const days = [];
+  for(let i=0; i<14; i++){
+    const d = new Date(windowStart);
+    d.setDate(d.getDate() + i);
+    days.push(d);
+  }
+  document.getElementById("date-month").textContent =
+    MONTHS[days[0].getMonth()] + " " + days[0].getFullYear();
+
+  days.forEach(d=>{
+    const key = dateKey(d);
+    const pill = document.createElement("button");
+    pill.className = "day-pill" + (key===TODAY_KEY ? " is-today" : "") + (key===selectedDate ? " is-selected" : "");
+    pill.innerHTML = `<span class="wd">${WEEKDAYS[d.getDay()]}</span><span class="num">${d.getDate()}</span>`;
+    pill.onclick = ()=>{ selectedDate = key; renderDateBar(); if(currentShift === "report"){ loadReport(selectedDate).then(renderReport); } else { renderContent(); } };
+    strip.appendChild(pill);
+  });
+}
+
+document.getElementById("date-prev").onclick = ()=>{
+  windowStart.setDate(windowStart.getDate() - 7);
+  renderDateBar();
+};
+document.getElementById("date-next").onclick = ()=>{
+  windowStart.setDate(windowStart.getDate() + 7);
+  renderDateBar();
+};
+document.getElementById("date-today").onclick = ()=>{
+  selectedDate = TODAY_KEY;
+  const d = new Date(); d.setDate(d.getDate()-6);
+  windowStart = d;
+  renderDateBar();
+  renderContent();
+};
+
+function render(){
+  renderTabs();
+  renderContent();
+  renderUserBadge();
+  renderDateBar();
+}
+
+function render(){
+  if(currentShift === "handover"){
+    renderHandover();
+  } else if(currentShift === "report") {
+    loadReport(selectedDate).then(renderReport);
+  } else if(currentShift === "sop") {
+    renderSop();
+    renderTabs();
+  } else {
+    renderTabs();
+    renderContent();
+    renderUserBadge();
+    renderDateBar();
+    renderSendBar();
+  }
+}
+
+function renderSendBar(){
+  const wrap = document.getElementById("send-bar-wrap");
+  if(currentShift === "report"){
+    wrap.style.display = "none";
+    return;
+  }
+  wrap.style.display = "block";
+  const btn = document.getElementById("send-report-btn");
+  btn.textContent = `Verstuur ${state[currentShift].label.toLowerCase()}-overzicht`;
+  btn.href = "#";
+  btn.onclick = sendReportMail;
+}
+
+(async ()=>{
+  currentUser = await loadUser();
+  state = await loadState();
+  render();
+  startAutoLogout();
+  setInterval(()=>{
+    if(currentShift !== "handover") renderContent();
+  }, 60000);
+})();
+</script>
+
+</body>
+</html>
