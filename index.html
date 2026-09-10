@@ -1836,23 +1836,23 @@ function renderTabs(){
     const btn = document.createElement("button");
     btn.className = "tab" + (key===currentShift ? " active" : "");
     btn.innerHTML = s.label + "<small>" + s.time + "</small>";
-    btn.onklik = () => { currentShift = key; render(); };
+    btn.onclick = () => { currentShift = key; render(); };
     nav.appendChild(btn);
   });
   const hbtn = document.getElementById("handover-tab-btn");
   hbtn.classList.toggle("active", currentShift === "handover");
-  hbtn.onklik = ()=>{ currentShift = "handover"; render(); };
+  hbtn.onclick = ()=>{ currentShift = "handover"; render(); };
 
   const sbtn = document.getElementById("sop-tab-btn");
   sbtn.classList.toggle("active", currentShift === "sop");
-  sbtn.onklik = ()=>{ pendingSopId = null; currentShift = "sop"; render(); };
+  sbtn.onclick = ()=>{ pendingSopId = null; currentShift = "sop"; render(); };
 
   const adminWrap = document.getElementById("admin-wrap");
   if(currentUser === ADMIN_NAME){
     adminWrap.style.display = "block";
     const rbtn = document.getElementById("admin-tab-btn");
     rbtn.classList.toggle("active", currentShift === "report");
-    rbtn.onklik = ()=>{ currentShift = "report"; render(); };
+    rbtn.onclick = ()=>{ currentShift = "report"; render(); };
   } else {
     adminWrap.style.display = "none";
   }
@@ -2015,7 +2015,7 @@ async function renderContent(){
         });
 
         setToggleLabel();
-        toggle.onklik = ()=>{
+        toggle.onclick = ()=>{
           clWrap.classList.toggle("open");
           table.style.display = clWrap.classList.contains("open") ? "block" : "none";
           setToggleLabel();
@@ -2033,7 +2033,7 @@ async function renderContent(){
         sopLink.type = "button";
         sopLink.textContent = "📄 SOP openen";
         sopLink.title = "Opent de bijbehorende procedure in de SOP Bibliotheek.";
-        sopLink.onklik = ()=> openSop(task.sopId);
+        sopLink.onclick = ()=> openSop(task.sopId);
         mainCol.appendChild(sopLink);
       }
 
@@ -2054,7 +2054,7 @@ async function renderContent(){
         statusBtn.classList.add("status-locked");
         statusBtn.textContent = "🔒 " + st;
       }
-      statusBtn.onklik = ()=>{
+      statusBtn.onclick = ()=>{
         if(isNvt){
           stampEl.textContent = "Maak eerst N.v.t. ongedaan via de N.v.t.-knop.";
           setTimeout(()=>{ renderContent(); }, 1800);
@@ -2098,7 +2098,7 @@ async function renderContent(){
       nvtBtn.className = "nvt-btn" + (entry.s === "N.v.t." ? " nvt-active" : "");
       nvtBtn.textContent = entry.s === "N.v.t." ? "N.v.t. ✎" : "N.v.t.";
       nvtBtn.title = entry.s === "N.v.t." ? "Reden aanpassen of ongedaan maken" : "Markeer als niet van toepassing (reden verplicht)";
-      nvtBtn.onklik = ()=>{
+      nvtBtn.onclick = ()=>{
         if(timeLocked){
           stampEl.textContent = "Dit tijdblok is nog niet begonnen.";
           setTimeout(()=>{ renderContent(); }, 1800);
@@ -3111,7 +3111,7 @@ function renderSop(){
     const item = document.createElement("button");
     item.className = "sop-list-item";
     item.innerHTML = `<span>${sop.title}</span><small>${sop.category}</small>`;
-    item.onklik = ()=>{ document.getElementById("sop-" + sop.id).scrollIntoView({behavior:"smooth", block:"start"}); };
+    item.onclick = ()=>{ document.getElementById("sop-" + sop.id).scrollIntoView({behavior:"smooth", block:"start"}); };
     list.appendChild(item);
   });
   content.appendChild(list);
@@ -3182,7 +3182,7 @@ async function renderHandover(){
     const postBtn = document.createElement("button");
     postBtn.textContent = "Toevoegen";
     postBtn.disabled = !canPost;
-    postBtn.onklik = async ()=>{
+    postBtn.onclick = async ()=>{
       const text = textarea.value.trim();
       if(!text) return;
       if(!currentUser){ showUserOverlay("fo"); return; }
@@ -3230,7 +3230,7 @@ async function renderHandover(){
           del.className = "handover-del";
           del.textContent = "✕";
           del.title = "Verwijderen";
-          del.onklik = async ()=>{
+          del.onclick = async ()=>{
             entries.splice(entry._idx, 1);
             handoverCache[selectedDate] = entries;
             await saveHandover(selectedDate);
@@ -3252,7 +3252,7 @@ function renderUserBadge(){
   const list = employeesFor(dept);
   if(list.length === 0){
     el.innerHTML = `<span class="lbl">Naamregistratie</span><span class="name" style="color:#8B8477;font-weight:400;">n.v.t. voor deze afdeling</span>`;
-    el.onklik = null;
+    el.onclick = null;
     return;
   }
   const deptLabel = dept === "fo" ? "Front Office" : (dept === "ad" ? "Algemene Dienst" : "Housekeeping");
@@ -3261,7 +3261,7 @@ function renderUserBadge(){
   } else {
     el.innerHTML = `<span class="lbl">${deptLabel}</span><span class="name">Kies je naam…</span>`;
   }
-  el.onklik = ()=> showUserOverlay(dept);
+  el.onclick = ()=> showUserOverlay(dept);
 }
 
 function showUserOverlay(dept){
@@ -3353,10 +3353,10 @@ function showUserOverlay(dept){
     pinError.style.display = "none";
     btn.disabled = pinInput.value.length !== 4 || pinConfirm.value.length !== 4;
   });
-  pinInput?.addEventListener("keydown", (e)=>{ if(e.key === "Enter" && !btn.disabled) btn.klik(); });
+  pinInput?.addEventListener("keydown", (e)=>{ if(e.key === "Enter" && !btn.disabled) btn.click(); });
   syncPinVisibility();
 
-  btn.onklik = async ()=>{
+  btn.onclick = async ()=>{
     if(!select.value) return;
     // Beheerder kan direct overschakelen
     if(currentUser === ADMIN_NAME && select.value !== ADMIN_NAME){
@@ -3406,20 +3406,20 @@ function renderDateBar(){
     const pill = document.createElement("button");
     pill.className = "day-pill" + (key===TODAY_KEY ? " is-today" : "") + (key===selectedDate ? " is-selected" : "");
     pill.innerHTML = `<span class="wd">${WEEKDAYS[d.getDay()]}</span><span class="num">${d.getDate()}</span>`;
-    pill.onklik = ()=>{ selectedDate = key; renderDateBar(); if(currentShift === "report"){ loadReport(selectedDate).then(renderReport); } else { renderContent(); } };
+    pill.onclick = ()=>{ selectedDate = key; renderDateBar(); if(currentShift === "report"){ loadReport(selectedDate).then(renderReport); } else { renderContent(); } };
     strip.appendChild(pill);
   });
 }
 
-document.getElementById("date-prev").onklik = ()=>{
+document.getElementById("date-prev").onclick = ()=>{
   windowStart.setDate(windowStart.getDate() - 7);
   renderDateBar();
 };
-document.getElementById("date-next").onklik = ()=>{
+document.getElementById("date-next").onclick = ()=>{
   windowStart.setDate(windowStart.getDate() + 7);
   renderDateBar();
 };
-document.getElementById("date-today").onklik = ()=>{
+document.getElementById("date-today").onclick = ()=>{
   selectedDate = TODAY_KEY;
   const d = new Date(); d.setDate(d.getDate()-6);
   windowStart = d;
@@ -3461,7 +3461,7 @@ function renderSendBar(){
   const btn = document.getElementById("send-report-btn");
   btn.textContent = `Verstuur ${state[currentShift].label.toLowerCase()}-overzicht`;
   btn.href = "#";
-  btn.onklik = sendReportMail;
+  btn.onclick = sendReportMail;
 }
 
 // ---------- Landingspagina ----------
@@ -3591,7 +3591,7 @@ function showDeptPicker(name){
         <span class="dept-btn-name">${d.name}${d.key===ownDept?" <small style='color:var(--gold);font-size:10px;font-weight:400;'>Jouw afdeling</small>":""}</span>
         <span class="dept-btn-sub">${d.sub}</span>
       </span>`;
-    btn.onklik = ()=>{
+    btn.onclick = ()=>{
       document.getElementById("dept-picker").style.display = "none";
       showApp(d.key);
     };
