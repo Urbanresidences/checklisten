@@ -980,6 +980,30 @@
     .status-btn{justify-self:start;}
   }
 </style>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAI-7LB9xeQ0qPaYeGW2_fMk7N0ArrYNas",
+    authDomain: "urban-residences-checklisten.firebaseapp.com",
+    projectId: "urban-residences-checklisten",
+    storageBucket: "urban-residences-checklisten.firebasestorage.app",
+    messagingSenderId: "925839293834",
+    appId: "1:925839293834:web:320b21a3e6bbc644d39c73"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Maak Firebase globaal beschikbaar voor de checklist
+  window.urDB = db;
+  window.urFirestore = { doc, setDoc, getDoc, onSnapshot };
+  window.urFirebaseReady = true;
+  window.dispatchEvent(new Event('firebase-ready'));
+</script>
 </head>
 <body>
 
@@ -1198,12 +1222,9 @@ const PIN_LOCKOUT_MINUTES = 5;
 
 async function getPinAttempts(name){
   try{
-    if(window.storage){
-      const res = await window.storage.get(PIN_ATTEMPTS_PREFIX + name, false);
-      if(res && res.value) return JSON.parse(res.value);
-    }
-  }catch(e){}
-  return { count: 0, lockedUntil: null };
+    const v = localStorage.getItem(PIN_ATTEMPTS_PREFIX + name);
+    return v ? JSON.parse(v) : { count: 0, lockedUntil: null };
+  }catch(e){ return { count: 0, lockedUntil: null }; }
 }
 
 async function recordFailedAttempt(name){
@@ -1213,12 +1234,12 @@ async function recordFailedAttempt(name){
     data.lockedUntil = Date.now() + PIN_LOCKOUT_MINUTES * 60 * 1000;
     data.count = 0;
   }
-  try{ if(window.storage) await window.storage.set(PIN_ATTEMPTS_PREFIX + name, JSON.stringify(data), false); }catch(e){}
+  try{ localStorage.setItem(PIN_ATTEMPTS_PREFIX + name, JSON.stringify(data)); }catch(e){}
   return data;
 }
 
 async function resetAttempts(name){
-  try{ if(window.storage) await window.storage.delete(PIN_ATTEMPTS_PREFIX + name, false); }catch(e){}
+  try{ localStorage.removeItem(PIN_ATTEMPTS_PREFIX + name); }catch(e){}
 }
 
 function lockoutRemaining(lockedUntil){
@@ -1229,19 +1250,13 @@ function lockoutRemaining(lockedUntil){
 async function getPin(name){
   if(PINS[name]) return PINS[name]; // vaste pin (beheerder)
   try{
-    if(window.storage){
-      const res = await window.storage.get(PIN_STORAGE_PREFIX + name, false);
-      if(res && res.value) return res.value;
-    }
-  }catch(e){}
-  return null; // nog geen pin aangemaakt
+    return localStorage.getItem(PIN_STORAGE_PREFIX + name) || null;
+  }catch(e){ return null; }
 }
 
 async function savePin(name, pin){
   try{
-    if(window.storage){
-      await window.storage.set(PIN_STORAGE_PREFIX + name, pin, false);
-    }
+    localStorage.setItem(PIN_STORAGE_PREFIX + name, pin);
   }catch(e){}
 }
 
@@ -1601,37 +1616,30 @@ function cloneDefault(){
 
 async function loadUser(){
   try{
-    if(window.storage){
-      const res = await window.storage.get(USER_KEY, false); // persoonlijk, per apparaat/browser
-      if(res && res.value){
-        let parsed;
-        try{ parsed = JSON.parse(res.value); }catch(e){ parsed = {name: res.value, at: Date.now()}; }
-        if(parsed && parsed.name){
-          const idleMin = (Date.now() - (parsed.at || 0)) / 60000;
-          if(idleMin < AUTO_LOGOUT_MINUTES) return parsed.name;
-        }
+    const saved = localStorage.getItem(USER_KEY);
+    if(saved){
+      const parsed = JSON.parse(saved);
+      if(parsed && parsed.name){
+        const idleMin = (Date.now() - (parsed.at || 0)) / 60000;
+        if(idleMin < AUTO_LOGOUT_MINUTES) return parsed.name;
       }
     }
-  }catch(e){ /* nog niemand ingelogd op dit apparaat */ }
+  }catch(e){}
   return null;
 }
 
 async function saveUser(name){
   currentUser = name;
   try{
-    if(window.storage){
-      await window.storage.set(USER_KEY, JSON.stringify({name, at: Date.now()}), false);
-    }
-  }catch(e){ /* negeren, blijft in elk geval in deze sessie bewaard */ }
+    localStorage.setItem(USER_KEY, JSON.stringify({name, at: Date.now()}));
+  }catch(e){}
 }
 
 async function touchUser(){
   if(!currentUser) return;
   try{
-    if(window.storage){
-      await window.storage.set(USER_KEY, JSON.stringify({name: currentUser, at: Date.now()}), false);
-    }
-  }catch(e){ /* negeren */ }
+    localStorage.setItem(USER_KEY, JSON.stringify({name: currentUser, at: Date.now()}));
+  }catch(e){}
 }
 
 function startAutoLogout(){
@@ -1644,32 +1652,14 @@ function startAutoLogout(){
     const idleMin = (Date.now() - lastActivity) / 60000;
     if(idleMin >= AUTO_LOGOUT_MINUTES){
       currentUser = null;
-      try{ if(window.storage) window.storage.delete(USER_KEY, false); }catch(e){}
+      try{ localStorage.removeItem(USER_KEY); }catch(e){}
       showLanding();
     }
   }, 60000);
 }
 
 async function loadState(){
-  const fresh = cloneDefault();
-  try{
-    if(window.storage){
-      const res = await window.storage.get(STORAGE_KEY, true); // gedeeld: iedereen ziet dezelfde checklist
-      if(res && res.value){
-        const saved = JSON.parse(res.value);
-        Object.keys(fresh).forEach(key=>{
-          const freshRev = fresh[key].rev || 1;
-          const savedRev = saved[key] ? (saved[key].rev || 1) : null;
-          // Nieuw tabblad, of tabblad met een nieuwere revisie: gebruik altijd de actuele data.
-          if(!(key in saved) || savedRev !== freshRev){
-            saved[key] = fresh[key];
-          }
-        });
-        return saved;
-      }
-    }
-  }catch(e){ /* nog niets opgeslagen */ }
-  return fresh;
+  return cloneDefault(); // Taken komen altijd uit de broncode; dagdata via Firebase
 }
 
 let saveTimeout = null;
@@ -1678,14 +1668,8 @@ function scheduleSave(){
   if(ind) ind.textContent = "Opslaan…";
   clearTimeout(saveTimeout);
   saveTimeout = setTimeout(async ()=>{
-    try{
-      if(window.storage){
-        await window.storage.set(STORAGE_KEY, JSON.stringify(state), true); // gedeeld opslaan
-      }
-      if(ind) ind.textContent = "Opgeslagen — zichtbaar voor iedereen";
-    }catch(e){
-      if(ind) ind.textContent = "Opslaan mislukt (lokaal onthouden)";
-    }
+    // State (taaknamen/structuur) hoeft niet opgeslagen — komt uit broncode
+    if(ind) ind.textContent = "Klaar";
   }, 500);
 }
 
@@ -1721,11 +1705,13 @@ async function loadDayLog(date, shift){
   if(dayLogCache[cacheKey]) return dayLogCache[cacheKey];
   let data = {};
   try{
-    if(window.storage){
-      const res = await window.storage.get(dayLogKey(date, shift), true);
-      if(res && res.value) data = JSON.parse(res.value);
+    if(window.urDB){
+      const { doc, getDoc } = window.urFirestore;
+      const ref = doc(window.urDB, "checklisten", dayLogKey(date, shift));
+      const snap = await getDoc(ref);
+      if(snap.exists()) data = snap.data().log || {};
     }
-  }catch(e){ /* nog geen data voor deze dag */ }
+  }catch(e){ /* nog geen data */ }
   dayLogCache[cacheKey] = data;
   return data;
 }
@@ -1738,8 +1724,10 @@ function scheduleLogSave(date, shift){
   logSaveTimeout = setTimeout(async ()=>{
     try{
       const cacheKey = date + ":" + shift;
-      if(window.storage){
-        await window.storage.set(dayLogKey(date, shift), JSON.stringify(dayLogCache[cacheKey] || {}), true);
+      if(window.urDB){
+        const { doc, setDoc } = window.urFirestore;
+        const ref = doc(window.urDB, "checklisten", dayLogKey(date, shift));
+        await setDoc(ref, { log: dayLogCache[cacheKey] || {} });
       }
       if(ind) ind.textContent = "Opgeslagen — " + formatDateLong(date);
     }catch(e){
@@ -3618,7 +3606,7 @@ function showApp(dept){
 
 function logout(){
   currentUser = null;
-  try{ if(window.storage) window.storage.delete(USER_KEY, false); }catch(e){}
+  try{ localStorage.removeItem(USER_KEY); }catch(e){}
   showLanding();
 }
 
