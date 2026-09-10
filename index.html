@@ -3530,9 +3530,9 @@ function showLanding(){
     errorEl.style.display = "none";
     btn.disabled = pinInput.value.length !== 4 || confirmInput.value.length !== 4;
   });
-  pinInput?.addEventListener("keydown", (e)=>{ if(e.key==="Enter" && !btn.disabled) btn.klik(); });
+  pinInput?.addEventListener("keydown", (e)=>{ if(e.key==="Enter" && !btn.disabled) btn.click(); });
 
-  btn.onklik = async ()=>{
+  btn.onclick = async ()=>{
     const name = sel.value;
     if(!name) return;
     // Beheerder kan direct overschakelen
