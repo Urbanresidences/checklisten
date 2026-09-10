@@ -3472,11 +3472,13 @@ function showLanding(){
   document.getElementById("dept-picker").style.display = "none";
   document.querySelector(".sidebar").style.display = "none";
   document.querySelector("main").style.display = "none";
-  document.querySelector(".date-bar")?.style && (document.querySelector(".date-bar").style.display = "none");
+  const datebar = document.querySelector(".date-bar");
+  if(datebar) datebar.style.display = "none";
 
+  // Naam-dropdown vullen
   const sel = document.getElementById("landing-name");
   sel.innerHTML = '<option value="" disabled selected>Kies je naam…</option>';
-  ALL_EMPLOYEES.forEach(n=>{
+  ALL_EMPLOYEES.forEach(function(n){
     const opt = document.createElement("option");
     opt.value = n; opt.textContent = n;
     sel.appendChild(opt);
@@ -3489,26 +3491,39 @@ function showLanding(){
   const pinLabel = document.getElementById("landing-pin-label");
   const errorEl = document.getElementById("landing-error");
   const btn = document.getElementById("landing-btn");
-  const newHint = document.getElementById("landing-new-hint");
 
+  // Reset staat
   pinWrap.style.display = "none";
+  confirmWrap.style.display = "none";
   btn.disabled = true;
   errorEl.style.display = "none";
-  newHint.style.display = "none";
 
-  sel.onchange = async ()=>{
-    pinInput.value = ""; confirmInput.value = "";
+  function updateBtn(){
+    var isNew = (confirmWrap.style.display !== "none");
+    btn.disabled = isNew
+      ? (pinInput.value.length !== 4 || confirmInput.value.length !== 4)
+      : pinInput.value.length !== 4;
+  }
+
+  function showError(msg){
+    errorEl.textContent = msg;
+    errorEl.style.display = "block";
+  }
+
+  sel.addEventListener("change", async function(){
+    pinInput.value = "";
+    confirmInput.value = "";
     errorEl.style.display = "none";
     btn.disabled = true;
     if(!sel.value){ pinWrap.style.display = "none"; return; }
-    // Beheerder kan andere gebruikers overnemen zonder pincode
+    // Admin-bypass
     if(currentUser === ADMIN_NAME && sel.value !== ADMIN_NAME){
       pinWrap.style.display = "none";
       btn.disabled = false;
       return;
     }
     pinWrap.style.display = "block";
-    const existing = await getPin(sel.value);
+    var existing = await getPin(sel.value);
     if(!existing){
       pinLabel.textContent = "Kies een pincode (4 cijfers)";
       confirmWrap.style.display = "block";
@@ -3516,55 +3531,45 @@ function showLanding(){
       pinLabel.textContent = "Pincode";
       confirmWrap.style.display = "none";
     }
-    btn.disabled = pinInput.value.length !== 4;
+    updateBtn();
     pinInput.focus();
-  };
-
-  pinInput?.addEventListener("input", ()=>{
-    errorEl.style.display = "none";
-    const confirmVisible = confirmWrap.style.display !== "none";
-    btn.disabled = confirmVisible
-      ? (pinInput.value.length !== 4 || confirmInput.value.length !== 4)
-      : pinInput.value.length !== 4;
   });
-  confirmInput?.addEventListener("input", ()=>{
-    errorEl.style.display = "none";
-    btn.disabled = pinInput.value.length !== 4 || confirmInput.value.length !== 4;
-  });
-  pinInput?.addEventListener("keydown", (e)=>{ if(e.key==="Enter" && !btn.disabled) btn.click(); });
 
-  btn.onclick = async ()=>{
-    const name = sel.value;
+  pinInput.addEventListener("input", function(){ errorEl.style.display="none"; updateBtn(); });
+  confirmInput.addEventListener("input", function(){ errorEl.style.display="none"; updateBtn(); });
+  pinInput.addEventListener("keydown", function(e){ if(e.key==="Enter" && !btn.disabled) btn.click(); });
+
+  btn.addEventListener("click", async function(){
+    var name = sel.value;
     if(!name) return;
-    // Beheerder kan direct overschakelen
+    // Admin-bypass
     if(currentUser === ADMIN_NAME && name !== ADMIN_NAME){
       await saveUser(name);
       showDeptPicker(name);
       return;
     }
-    const existing = await getPin(name);
+    var existing = await getPin(name);
     if(!existing){
       if(pinInput.value.length !== 4){ showError("Kies een pincode van 4 cijfers."); return; }
       if(pinInput.value !== confirmInput.value){ showError("Pincodes komen niet overeen."); pinInput.value=""; confirmInput.value=""; pinInput.focus(); return; }
       await savePin(name, pinInput.value);
     } else {
-      const attempts = await getPinAttempts(name);
-      const remaining = lockoutRemaining(attempts.lockedUntil);
-      if(remaining > 0){ showError(`Te veel pogingen. Wacht nog ${remaining} seconden.`); pinInput.value=""; btn.disabled=true; return; }
+      var attempts = await getPinAttempts(name);
+      var rem = lockoutRemaining(attempts.lockedUntil);
+      if(rem > 0){ showError("Te veel pogingen. Wacht nog " + rem + " seconden."); pinInput.value=""; btn.disabled=true; return; }
       if(pinInput.value !== existing){
-        const updated = await recordFailedAttempt(name);
-        const rem = lockoutRemaining(updated.lockedUntil);
-        if(rem > 0) showError(`Te veel foute pogingen. Geblokkeerd voor ${PIN_LOCKOUT_MINUTES} minuten.`);
-        else showError(`Onjuiste pincode. Nog ${PIN_MAX_ATTEMPTS - updated.count} poging(en).`);
+        var updated = await recordFailedAttempt(name);
+        var rem2 = lockoutRemaining(updated.lockedUntil);
+        showError(rem2 > 0
+          ? "Te veel foute pogingen. Geblokkeerd voor " + PIN_LOCKOUT_MINUTES + " minuten."
+          : "Onjuiste pincode. Nog " + (PIN_MAX_ATTEMPTS - updated.count) + " poging(en).");
         pinInput.value=""; pinInput.focus(); btn.disabled=true; return;
       }
       await resetAttempts(name);
     }
     await saveUser(name);
     showDeptPicker(name);
-  };
-
-  function showError(msg){ errorEl.textContent = msg; errorEl.style.display = "block"; }
+  });
 }
 
 function showDeptPicker(name){
@@ -3591,10 +3596,12 @@ function showDeptPicker(name){
         <span class="dept-btn-name">${d.name}${d.key===ownDept?" <small style='color:var(--gold);font-size:10px;font-weight:400;'>Jouw afdeling</small>":""}</span>
         <span class="dept-btn-sub">${d.sub}</span>
       </span>`;
-    btn.onclick = ()=>{
-      document.getElementById("dept-picker").style.display = "none";
-      showApp(d.key);
-    };
+    btn.addEventListener("click", (function(key){
+      return function(){
+        document.getElementById("dept-picker").style.display = "none";
+        showApp(key);
+      };
+    })(d.key));
     grid.appendChild(btn);
   });
 }
