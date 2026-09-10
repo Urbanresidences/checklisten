@@ -2164,11 +2164,13 @@ async function loadReport(date){
   const report = {date, shifts: {}};
   for(const shiftKey in state){
     const log = await loadDayLog(date, shiftKey);
-    const open = Object.values(log).filter(e => !e.s || e.s === "Open" || e.s === "Bezig").length;
+    // Totaal aantal taken in deze dienst (niet alleen opgeslagen)
+    const totalTasks = state[shiftKey].blocks.reduce((sum, b) => sum + b.tasks.length, 0);
     const done = Object.values(log).filter(e => e.s === "Gereed").length;
     const nvt = Object.values(log).filter(e => e.s === "N.v.t.").length;
+    const open = totalTasks - done - nvt;
     const notes = Object.values(log).filter(e => e.n && e.n.trim()).length;
-    report.shifts[shiftKey] = {open, done, nvt, notes, log};
+    report.shifts[shiftKey] = {open, done, nvt, notes, log, totalTasks};
   }
   return report;
 }
@@ -2194,9 +2196,8 @@ async function renderReport(report){
 
   for(const shiftKey in report.shifts){
     const shift = state[shiftKey];
-    const {open, done, nvt, notes, log} = report.shifts[shiftKey];
-    const total = open + done + nvt;
-    const pctDone = total ? Math.round((done + nvt) / total * 100) : 0;
+    const {open, done, nvt, notes, log, totalTasks} = report.shifts[shiftKey];
+    const pctDone = totalTasks ? Math.round((done + nvt) / totalTasks * 100) : 0;
     const wrap = document.createElement("div");
     wrap.className = "report-shift";
 
