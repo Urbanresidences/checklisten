@@ -1363,6 +1363,7 @@ const SHIFTS = {
         {t:"Overdracht ochtenddienst", d:"Overdrachtslog ochtenddienst doornemen."},
         {t:"Dagverwachting doornemen", d:"Verwachte aankomsten, vertrekken en bijzonderheden van de avond doorlopen."},
         {t:"MEWS-taken verwerken", d:"Doorlopend gedurende de dienst: openstaande taken in MEWS nalopen en verwerken zodra ze zich aandienen."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"15:00 - 17:00", name:"Arrivals", tasks:[
         {t:"Check-in gasten", d:"Gasten inchecken, identiteit controleren en betaalgegevens vastleggen.", sopId:"check-in-procedure"},
@@ -1371,6 +1372,7 @@ const SHIFTS = {
         {t:"SOP: Gastnamen meerdere kamers controleren", d:"Bij check-in van reserveringen met 2+ kamers: controleren of namen per kamer al bekend zijn; zo niet alsnog opvragen bij de booker en invoeren in MEWS. Zie tab 'SOP Referentie'."},
         {t:"Groepsaankomsten begeleiden", d:"Groepen ontvangen, sleutels uitdelen en instructies geven."},
         {t:"Parkeren & bagage", d:"Parkeerverwijzing en bagageservice coördineren.", sopId:"parking-systeem-intratone"},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"17:00", name:"Communicatie", tasks:[
         {t:"Reserveringen verwerken", d:"Nieuwe boekingen, wijzigingen en annuleringen verwerken.", sopId:"betalingen-verwerken-aankomsten"},
@@ -1378,10 +1380,12 @@ const SHIFTS = {
         {t:"Booking.com Messages", d:"Berichten in het Extranet beantwoorden.", sopId:"booking-com-reservering-terugbetaling"},
         {t:"Expedia Messages", d:"Berichten in het Extranet beantwoorden."},
         {t:"Airbnb", d:"Berichten in het Extranet beantwoorden."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"17:30 - 19:00", name:"Afhandeling", tasks:[
         {t:"Desk schoonmaken en opruimen", d:"Balie en lobby schoonmaken: bureau afnemen, rommel en papieren opruimen, prullenbak legen, spullen op vaste plek terugleggen. Front desk netjes en presentabel houden."},
         {t:"Klachten afhandelen", d:"Vragen en klachten van gasten oppakken; klachten voor TD/HK vastleggen en verwerken in MEWS (Tasks) én in de Timeline."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"19:30", name:"Communicatie", tasks:[
         {t:"Reserveringen verwerken", d:"Nieuwe boekingen, wijzigingen en annuleringen verwerken.", sopId:"betalingen-verwerken-aankomsten"},
@@ -1389,9 +1393,11 @@ const SHIFTS = {
         {t:"Booking.com Messages", d:"Berichten in het Extranet beantwoorden.", sopId:"booking-com-reservering-terugbetaling"},
         {t:"Expedia Messages", d:"Berichten in het Extranet beantwoorden."},
         {t:"Airbnb", d:"Berichten in het Extranet beantwoorden."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"20:00", name:"Avond", tasks:[
         {t:"Late check-in (LCI) & no-show verwerken", d:"Late check-ins (LCI) verwerken en no-show beleid toepassen bij niet-verschenen gasten. Verwerken in MEWS (Tasks) én in de Timeline.", sopId:"no-shows-verwerken"},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"20:30 - 21:30", name:"Avond laat", tasks:[
         {t:"72-uur controle reserveringen", d:"", sopId:"72uur-controle-reserveringen", checklist:[
@@ -1405,6 +1411,7 @@ const SHIFTS = {
         {t:"Overdracht nachtdienst voorbereiden", d:"Overdrachtslog invullen: bijzonderheden, openstaande taken, aandachtspunten.", sopId:"einde-van-je-dienst"},
         {t:"Desk schoonmaken en opruimen", d:"Balie en lobby schoonmaken: bureau afnemen, rommel en papieren opruimen, prullenbak legen, spullen op vaste plek terugleggen. Front desk netjes en presentabel achterlaten voor de nachtdienst."},
         {t:"Uitklokken bij einde dienst", d:"Uitklokken bij einde van de dienst."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
     ]
   },
@@ -1422,11 +1429,13 @@ const SHIFTS = {
         {t:"Overdracht avonddienst", d:"Overdrachtslog avonddienst doornemen."},
         {t:"Deuren & toegang controleren", d:"Hoofdingang, nooduitgangen en toegangscontrole controleren volgens procedure."},
         {t:"MEWS-taken verwerken", d:"Doorlopend gedurende de dienst: openstaande taken in MEWS nalopen en verwerken zodra ze zich aandienen."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"23:00 - 01:00", name:"Nacht vroeg", tasks:[
         {t:"Late check-ins afhandelen", d:"Laatkomers inchecken en identiteit/betaling controleren."},
         {t:"Brandronde uitvoeren", d:"Ronde door het pand: nooduitgangen, brandblussers en algemene veiligheid controleren."},
         {t:"Openbare ruimtes controleren", d:"Lobby, gangen en parkeerplaats controleren op orde en veiligheid."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"01:00 - 03:00", name:"Nachtaudit", tasks:[
         {t:"Nachtaudit starten", d:"Dagafsluiting in PMS uitvoeren: omzet, kamerstatus en betalingen controleren."},
@@ -1434,22 +1443,26 @@ const SHIFTS = {
         {t:"SOP: BTW-correcties annuleringen/no-shows", d:"Controleren of BTW-correcties op annuleringen en no-shows van vandaag correct zijn verwerkt in de administratie. Zie tab 'SOP Referentie'."},
         {t:"SOP: Accounting ledger eindcontrole", d:"Controleren of alle bills met saldo €0 gesloten zijn (behalve paymaster Booking.com/Social Deal) en of openstaande bills een taak/reminder hebben voor opvolging. Zie tab 'SOP Referentie'."},
         {t:"Rapportages genereren", d:"Bezettingsrapport, omzetrapport en overige managementrapportages klaarzetten."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"03:00 - 05:00", name:"Midden nacht", tasks:[
         {t:"Tweede beveiligingsronde", d:"Controlerondes herhalen, bijzonderheden noteren in logboek."},
         {t:"Telefooncentrale bemannen", d:"Inkomende gesprekten en noodoproepen beantwoorden en correct afhandelen.", sopId:"telefoon-instructies"},
         {t:"OTA-vragen en opmerkingen beantwoorden", d:"Berichten/vragen via Booking.com, Expedia en overige OTA's (Extranet/inbox) beantwoorden en opmerkingen afhandelen."},
         {t:"Voorbereiding ontbijt", d:"Ontbijtruimte gereedmelden en ontbijtlijst doorgeven aan keuken/housekeeping."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"05:00 - 06:00", name:"Vroege ochtend", tasks:[
         {t:"Vroege vertrekken voorbereiden", d:"Facturen van vroege vertrekkers klaarzetten en expresscheck-out mogelijkheden gereedmaken."},
         {t:"Keycards aanmaken", d:"Keycards en registratiekaarten voor de check-ins van de volgende dag aanmaken.", sopId:"sleutelkaarten-aanmaken"},
         {t:"Wake-up calls uitvoeren", d:"Geplande wake-up calls uitvoeren en afvinken."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"06:00 - 07:00", name:"Overdracht", tasks:[
         {t:"Overdracht ochtenddienst voorbereiden", d:"Overdrachtslog invullen: nachtaudit-resultaten, bijzonderheden, openstaande taken."},
         {t:"Desk schoonmaken en opruimen", d:"Balie en achterkantoor schoonmaken: bureau afnemen, rommel en papieren opruimen, prullenbak legen, spullen op vaste plek terugleggen. Front desk netjes en presentabel achterlaten voor de ochtenddienst."},
         {t:"Uitklokken bij einde dienst", d:"Uitklokken volgens de geldende tijdregistratie (bijv. Dyflexis) bij einde van de dienst."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
     ]
   },
