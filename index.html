@@ -3499,7 +3499,7 @@ function showLanding(){
     errorEl.style.display = "block";
   }
 
-  sel.addEventListener("change", async function(){
+  sel.onchange = async function(){
     pinInput.value = "";
     confirmInput.value = "";
     errorEl.style.display = "none";
@@ -3524,11 +3524,11 @@ function showLanding(){
     pinInput.focus();
   });
 
-  pinInput.addEventListener("input", function(){ errorEl.style.display="none"; updateBtn(); });
-  confirmInput.addEventListener("input", function(){ errorEl.style.display="none"; updateBtn(); });
-  pinInput.addEventListener("keydown", function(e){ if(e.key==="Enter" && !btn.disabled) btn.click(); });
+  pinInput.oninput = function(){ errorEl.style.display="none"; updateBtn(); };
+  confirmInput.oninput = function(){ errorEl.style.display="none"; updateBtn(); };
+  pinInput.onkeydown = function(e){ if(e.key==="Enter" && !btn.disabled) btn.click(); };
 
-  btn.addEventListener("click", async function(){
+  btn.onclick = async function(){
     var name = sel.value;
     if(!name) return;
     // Admin-bypass
