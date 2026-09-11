@@ -1287,8 +1287,8 @@ const SHIFTS = {
       ]},
       { time:"08:10", name:"Voorbereiding dienst", tasks:[
         {t:"Nightaudit rapport", d:"Overdrachtslog nachtdienst doornemen: bijzonderheden, openstaande zaken.", sopId:"openen-overdracht-nachtdienst"},
+        {t:"Billing CO verwerken in MEWS", d:"Billing van alle check-outs van gisteren controleren en verwerken in MEWS: openstaande posten afhandelen, facturen sluiten.", sopId:"check-out-procedure"},
         {t:"Klachten afhandelen", d:"Geregistreerde klachten controleren; task aanmaken in MEWS (Tasks) voor de juiste afdeling (TD/HK) en verwerken in de Timeline."},
-        {t:"Voorraad front office", d:"Voorraad formulieren, sleutelkaarten en kantoorbenodigdheden controleren.", sopId:"voorraden-aanvullen-fo"},
         {t:"Late check-out (LCO) verwerken", d:"Verzoeken om late check-out (LCO) beoordelen/stayover en in PMS vastloggen; sleutel verlengen. Verwerken in MEWS (Tasks) én in de Timeline.", sopId:"late-check-out-beleid"},
         {t:"Early check-out verwerken", d:"Early check-outs controleren en verwerken in MEWS (Tasks) én in de Timeline.", sopId:"departures-checken"},
         {t:"Late check-in (LCI) verwerken", d:"Late check-ins (LCI) verwerken in MEWS (Tasks) én in de Timeline."},
@@ -1316,6 +1316,8 @@ const SHIFTS = {
         {t:"Check-out afhandelen", d:"Vertrekkende gasten uitchecken in MEWS: billing controleren, borg verwerken en factuur versturen.", sopId:"check-out-procedure"},
       ]},
       { time:"12:00 - 13:00", name:"Communicatie", tasks:[
+        {t:"Keycards aankomsten controleren", d:"Keycards voor de aankomsten van vandaag controleren op correctheid en eventuele wijzigingen in kamernummer of check-outdatum verwerken.", sopId:"sleutelkaarten-aanmaken"},
+        {t:"Desk schoonmaken en opruimen", d:"Balie opruimen: geen losse papieren, dozen of onnodige spullen op de balie."},
         {t:"Reserveringen verwerken", d:"Nieuwe boekingen, wijzigingen en annuleringen verwerken.", sopId:"betalingen-verwerken-aankomsten"},
         {t:"E-Mails", d:"Beantwoorden e-mails in Outlook.", sopId:"mails-beantwoorden"},
         {t:"Booking.com Messages", d:"Berichten in het Extranet beantwoorden.", sopId:"booking-com-reservering-terugbetaling"},
@@ -1328,8 +1330,7 @@ const SHIFTS = {
       { time:"14:00 - 15:00", name:"Administratie", tasks:[
         {t:"Accounting ledgers MEWS controleren en verwerken", d:"Accounting ledgers in MEWS controleren en openstaande posten verwerken (zie ook SOP 'Update Accounting Ledger')."},
         {t:"Gastnamen bij meerdere kamers opvragen", d:"Bij reserveringen met 2+ kamers: booker/hoofdgast bellen (of mailen) voor namen en kamerverdeling van alle gasten; namen correct invoeren in MEWS."},
-        {t:"Optionele boekingen bewaken", d:"Vervaldeadlines van optionele (direct) boekingen controleren."},
-        {t:"ZVK Reserveringen", d:"Reserveringen van zorgverzekeringskantoren controleren en verwerken: tarief, betalingswijze en eventuele bijzonderheden vastleggen in MEWS."},
+        {t:"CI/CO-datums controleren", d:"Check-in en check-out datums van aankomende reserveringen controleren en zo nodig aanpassen: controleer de reservering per OTA-extranet, vergelijk met MEWS, verwerk wijzigingen in de mail naar de gast én update de reservering in MEWS."},
         {t:"Borg (deposit) terugbetalen", d:"Na inspectie door HSK of front office: borg van vertrokken gasten terugbetalen (€300 studio's / €500 appartementen, minus eventuele inhoudingen).", sopId:"creditcard-autorisatie-terminal"},
       ]},
       { time:"15:00 - 16:00", name:"Afronden", tasks:[
