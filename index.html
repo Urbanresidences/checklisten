@@ -1296,8 +1296,7 @@ const SHIFTS = {
         {t:"No-show verwerken", d:"No-shows verwerken in MEWS (Tasks) én in de Timeline.", sopId:"no-shows-verwerken"},
       ]},
       { time:"08:30", name:"Presentatie", tasks:[
-        {t:"Receptie schoonmaken", d:"Doekje over de receptie halen."},
-        {t:"Representatief lobby", d:"Opruimen van zaken die niet thuis horen bij de lobby."},
+        {t:"Receptie & lobby schoonmaken", d:"Receptie en lobby schoonmaken en representatief houden.", checklist:["Prullenbak legen","Receptie desinfecteren","Opruimen lobby","Losse troepjes opruimen","Bank rechtzetten","Pin-apparaten schoonmaken","Bagage naar bagageopslag"]},
         {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"09:00", name:"Arrivals", tasks:[
@@ -1322,7 +1321,7 @@ const SHIFTS = {
       ]},
       { time:"12:00 - 13:00", name:"Communicatie", tasks:[
         {t:"Keycards aankomsten controleren", d:"Keycards voor de aankomsten van vandaag controleren op correctheid en eventuele wijzigingen in kamernummer of check-outdatum verwerken.", sopId:"sleutelkaarten-aanmaken"},
-        {t:"Desk schoonmaken en opruimen", d:"Balie opruimen: geen losse papieren, dozen of onnodige spullen op de balie."},
+        {t:"Receptie & lobby schoonmaken", d:"Receptie en lobby schoonmaken en representatief houden.", checklist:["Prullenbak legen","Receptie desinfecteren","Opruimen lobby","Losse troepjes opruimen","Bank rechtzetten","Pin-apparaten schoonmaken","Bagage naar bagageopslag"]},
         {t:"Reserveringen verwerken", d:"Nieuwe boekingen, wijzigingen en annuleringen verwerken.", sopId:"betalingen-verwerken-aankomsten"},
         {t:"E-Mails", d:"Beantwoorden e-mails in Outlook.", sopId:"mails-beantwoorden"},
         {t:"Booking.com Messages", d:"Berichten in het Extranet beantwoorden.", sopId:"booking-com-reservering-terugbetaling"},
@@ -1344,7 +1343,7 @@ const SHIFTS = {
       { time:"15:00 - 16:00", name:"Afronden", tasks:[
         {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
         {t:"Overdracht nachtdienst voorbereiden", d:"Overdrachtslog invullen: bijzonderheden, openstaande taken, aandachtspunten.", sopId:"einde-van-je-dienst"},
-        {t:"Desk schoonmaken en opruimen", d:"Balie en lobby schoonmaken: bureau afnemen, rommel en papieren opruimen, prullenbak legen, spullen op vaste plek terugleggen. Front desk netjes en presentabel achterlaten voor de nachtdienst."},
+        {t:"Receptie & lobby schoonmaken", d:"Receptie en lobby schoonmaken en representatief houden.", checklist:["Prullenbak legen","Receptie desinfecteren","Opruimen lobby","Losse troepjes opruimen","Bank rechtzetten","Pin-apparaten schoonmaken","Bagage naar bagageopslag"]},
         {t:"Uitklokken bij einde dienst", d:"Uitklokken bij einde van de dienst."},
       ]},
     ]
@@ -1383,7 +1382,7 @@ const SHIFTS = {
         {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"17:30 - 19:00", name:"Afhandeling", tasks:[
-        {t:"Desk schoonmaken en opruimen", d:"Balie en lobby schoonmaken: bureau afnemen, rommel en papieren opruimen, prullenbak legen, spullen op vaste plek terugleggen. Front desk netjes en presentabel houden."},
+        {t:"Receptie & lobby schoonmaken", d:"Receptie en lobby schoonmaken en representatief houden.", checklist:["Prullenbak legen","Receptie desinfecteren","Opruimen lobby","Losse troepjes opruimen","Bank rechtzetten","Pin-apparaten schoonmaken","Bagage naar bagageopslag"]},
         {t:"Klachten afhandelen", d:"Vragen en klachten van gasten oppakken; klachten voor TD/HK vastleggen en verwerken in MEWS (Tasks) én in de Timeline."},
         {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
@@ -1409,7 +1408,7 @@ const SHIFTS = {
       { time:"21:00 - 22:00", name:"Overdracht", tasks:[
         {t:"Accounting ledgers MEWS controleren en verwerken", d:"Accounting ledgers in MEWS controleren en openstaande posten verwerken (zie ook SOP 'Update Accounting Ledger')."},
         {t:"Overdracht nachtdienst voorbereiden", d:"Overdrachtslog invullen: bijzonderheden, openstaande taken, aandachtspunten.", sopId:"einde-van-je-dienst"},
-        {t:"Desk schoonmaken en opruimen", d:"Balie en lobby schoonmaken: bureau afnemen, rommel en papieren opruimen, prullenbak legen, spullen op vaste plek terugleggen. Front desk netjes en presentabel achterlaten voor de nachtdienst."},
+        {t:"Receptie & lobby schoonmaken", d:"Receptie en lobby schoonmaken en representatief houden.", checklist:["Prullenbak legen","Receptie desinfecteren","Opruimen lobby","Losse troepjes opruimen","Bank rechtzetten","Pin-apparaten schoonmaken","Bagage naar bagageopslag"]},
         {t:"Uitklokken bij einde dienst", d:"Uitklokken bij einde van de dienst."},
         {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
@@ -1460,7 +1459,7 @@ const SHIFTS = {
       ]},
       { time:"06:00 - 07:00", name:"Overdracht", tasks:[
         {t:"Overdracht ochtenddienst voorbereiden", d:"Overdrachtslog invullen: nachtaudit-resultaten, bijzonderheden, openstaande taken."},
-        {t:"Desk schoonmaken en opruimen", d:"Balie en achterkantoor schoonmaken: bureau afnemen, rommel en papieren opruimen, prullenbak legen, spullen op vaste plek terugleggen. Front desk netjes en presentabel achterlaten voor de ochtenddienst."},
+        {t:"Receptie & lobby schoonmaken", d:"Receptie en lobby schoonmaken en representatief houden.", checklist:["Prullenbak legen","Receptie desinfecteren","Opruimen lobby","Losse troepjes opruimen","Bank rechtzetten","Pin-apparaten schoonmaken","Bagage naar bagageopslag"]},
         {t:"Uitklokken bij einde dienst", d:"Uitklokken volgens de geldende tijdregistratie (bijv. Dyflexis) bij einde van de dienst."},
         {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
