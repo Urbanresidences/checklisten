@@ -1279,6 +1279,7 @@ const SHIFTS = {
     blocks: [
       { time:"08:00", name:"Starten", tasks:[
         {t:"Inklokken bij aanvang dienst", d:"Inklokken volgens de geldende tijdregistratie."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"08:05", name:"Systemen", tasks:[
         {t:"PMS", d:"Inloggen in MEWS en het systeem controleren op openstaande taken en meldingen."},
@@ -1297,6 +1298,7 @@ const SHIFTS = {
       { time:"08:30", name:"Presentatie", tasks:[
         {t:"Receptie schoonmaken", d:"Doekje over de receptie halen."},
         {t:"Representatief lobby", d:"Opruimen van zaken die niet thuis horen bij de lobby."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"09:00", name:"Arrivals", tasks:[
         {t:"Early check-in voorbereiden", d:"Kamers gereedmelden en pre-assignment controleren voor vroege aankomsten."},
@@ -1304,6 +1306,7 @@ const SHIFTS = {
         {t:"Bijzonderheden HSK", d:"MEWS-taken aanmaken: Extra's (babybed, twin, wijn etc.) en schoonmaakprioriteiten doorgeven aan HK.", sopId:"housekeepinglijst-controleren"},
         {t:"Groepsaankomsten voorbereiden", d:"Sleutelpakketten en registratieformulieren voor groepen klaarzetten."},
         {t:"Dagverwachting doornemen", d:"Aankomst- en vertrekverwachting van vandaag doorlopen (groepen, allergieën, bijzonderheden).", sopId:"betalingen-verwerken-aankomsten"},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"09:30", name:"Communicatie", tasks:[
         {t:"Reserveringen verwerken", d:"Nieuwe boekingen, wijzigingen en annuleringen verwerken.", sopId:"betalingen-verwerken-aankomsten"},
@@ -1311,9 +1314,11 @@ const SHIFTS = {
         {t:"Booking.com Messages", d:"Berichten in het Extranet beantwoorden.", sopId:"booking-com-reservering-terugbetaling"},
         {t:"Expedia Messages", d:"Berichten in het Extranet beantwoorden."},
         {t:"Airbnb", d:"Berichten in het Extranet beantwoorden."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"10:00 - 11:00", name:"Check-out", tasks:[
         {t:"Check-out afhandelen", d:"Vertrekkende gasten uitchecken in MEWS: billing controleren, borg verwerken en factuur versturen.", sopId:"check-out-procedure"},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"12:00 - 13:00", name:"Communicatie", tasks:[
         {t:"Keycards aankomsten controleren", d:"Keycards voor de aankomsten van vandaag controleren op correctheid en eventuele wijzigingen in kamernummer of check-outdatum verwerken.", sopId:"sleutelkaarten-aanmaken"},
@@ -1323,6 +1328,7 @@ const SHIFTS = {
         {t:"Booking.com Messages", d:"Berichten in het Extranet beantwoorden.", sopId:"booking-com-reservering-terugbetaling"},
         {t:"Expedia Messages", d:"Berichten in het Extranet beantwoorden."},
         {t:"Airbnb", d:"Berichten in het Extranet beantwoorden."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"13:00 - 14:00", name:"Lunch / rotatie", tasks:[
         {t:"Lunchpauze inplannen", d:"Bezetting balie borgen tijdens lunchpauzes (minimaal 1 medewerker aanwezig)."},
@@ -1331,9 +1337,12 @@ const SHIFTS = {
         {t:"Accounting ledgers MEWS controleren en verwerken", d:"Accounting ledgers in MEWS controleren en openstaande posten verwerken (zie ook SOP 'Update Accounting Ledger')."},
         {t:"Gastnamen bij meerdere kamers opvragen", d:"Bij reserveringen met 2+ kamers: booker/hoofdgast bellen (of mailen) voor namen en kamerverdeling van alle gasten; namen correct invoeren in MEWS."},
         {t:"CI/CO-datums controleren", d:"Check-in en check-out datums van aankomende reserveringen controleren en zo nodig aanpassen: controleer de reservering per OTA-extranet, vergelijk met MEWS, verwerk wijzigingen in de mail naar de gast én update de reservering in MEWS."},
+        {t:"ZVK Reserveringen", d:"Zorgverzekeringskantoor-reserveringen controleren en verwerken: controleer de check-in en check-out datum, betaalwijze en eventuele bijzonderheden; verwerk wijzigingen in de mail naar de gast én update de reservering in MEWS."},
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
         {t:"Borg (deposit) terugbetalen", d:"Na inspectie door HSK of front office: borg van vertrokken gasten terugbetalen (€300 studio's / €500 appartementen, minus eventuele inhoudingen).", sopId:"creditcard-autorisatie-terminal"},
       ]},
       { time:"15:00 - 16:00", name:"Afronden", tasks:[
+        {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
         {t:"Overdracht nachtdienst voorbereiden", d:"Overdrachtslog invullen: bijzonderheden, openstaande taken, aandachtspunten.", sopId:"einde-van-je-dienst"},
         {t:"Desk schoonmaken en opruimen", d:"Balie en lobby schoonmaken: bureau afnemen, rommel en papieren opruimen, prullenbak legen, spullen op vaste plek terugleggen. Front desk netjes en presentabel achterlaten voor de nachtdienst."},
         {t:"Uitklokken bij einde dienst", d:"Uitklokken bij einde van de dienst."},
