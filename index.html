@@ -1086,6 +1086,12 @@
       <small>Standaardprocedures</small>
     </button>
   </div>
+  <div class="handover-tab-wrap" id="deepclean-wrap" style="display:none;">
+    <a class="tab deepclean-tab" href="./deepclean.html" target="_blank" rel="noopener" style="text-decoration:none;display:block;">
+      🧹 Deepclean
+      <small>Kamer-voor-kamer checklist</small>
+    </a>
+  </div>
   <div class="sidebar-footer">
     Wijzigingen worden automatisch<br>bewaard in deze browser.
   </div>
@@ -1861,6 +1867,12 @@ function renderTabs(){
   sbtn.onclick = ()=>{ pendingSopId = null; currentShift = "sop"; render(); };
 
   const adminWrap = document.getElementById("admin-wrap");
+  const deepcleanWrap = document.getElementById("deepclean-wrap");
+  const dept = state[currentShift] ? state[currentShift].dept : null;
+  if(deepcleanWrap){
+    const showDeepclean = currentUser === ADMIN_NAME || dept === "hk" || dept === "ad";
+    deepcleanWrap.style.display = showDeepclean ? "block" : "none";
+  }
   if(currentUser === ADMIN_NAME){
     adminWrap.style.display = "block";
     const rbtn = document.getElementById("admin-tab-btn");
@@ -3624,6 +3636,9 @@ function showApp(dept){
   document.querySelector(".sidebar").style.display = "flex";
   document.querySelector("main").style.display = "block";
   if(document.querySelector(".date-bar")) document.querySelector(".date-bar").style.display = "flex";
+  // Deepclean knop tonen voor HK, AD en Martin
+  const dc = document.getElementById("deepclean-wrap");
+  if(dc) dc.style.display = (dept === "hk" || dept === "ad" || currentUser === ADMIN_NAME) ? "block" : "none";
   currentShift = deptDefaultShift(dept);
   render();
   startAutoLogout();
