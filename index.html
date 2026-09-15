@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- v1.1 -->
+<!-- v1.2 bilingual -->
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-<title>Urban Residences Checklisten — Alle Afdelingen</title>
+<title>Urban Residences Checklists — All Departments</title>
 <style>
   :root{
     --charcoal:#1A1A1A;
@@ -298,6 +298,44 @@
   .sop-signoff .sop-line{border-bottom:1px solid var(--line);height:22px;}
   @media (max-width:760px){
     .sop-signoff{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Language switcher ---------- */
+  .lang-switcher{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    margin:0 20px 14px 20px;
+    padding:8px 10px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:5px;
+  }
+  .lang-switcher span{
+    font-size:10px;
+    color:#8B8477;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    flex:1;
+  }
+  .lang-btn{
+    background:none;
+    border:1px solid rgba(255,255,255,.15);
+    color:#C9C2B4;
+    font-size:11.5px;
+    font-weight:600;
+    padding:3px 9px;
+    border-radius:3px;
+    cursor:pointer;
+    font-family:inherit;
+    letter-spacing:.04em;
+    transition:background .12s;
+  }
+  .lang-btn:hover{background:rgba(255,255,255,.08);color:#fff;}
+  .lang-btn.active{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:var(--charcoal);
   }
 
   .sidebar-footer{
@@ -803,7 +841,7 @@
     min-height:16px;
   }
   .task-notes:empty::before{
-    content:"+ opmerking toevoegen";
+    content:attr(data-placeholder);
     color:#C4BCAC;
   }
   [contenteditable="true"]:hover{
@@ -1018,10 +1056,10 @@
         <div class="brand-mark" style="width:48px;height:48px;font-size:18px;border:2px solid #B08D57;color:#B08D57;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-weight:700;">UR</div>
       </div>
       <h1 class="landing-title">Urban Residences</h1>
-      <p class="landing-sub">Checklisten — Alle Afdelingen</p>
+      <p class="landing-sub" id="landing-subtitle">Checklisten — Alle Afdelingen</p>
 
       <div class="landing-form">
-        <label class="landing-label">Naam</label>
+        <label class="landing-label" id="landing-name-label">Naam</label>
         <select id="landing-name">
           <option value="" disabled selected>Kies je naam…</option>
         </select>
@@ -1030,7 +1068,7 @@
           <label class="landing-label" id="landing-pin-label">Pincode</label>
           <input type="password" id="landing-pin" inputmode="numeric" maxlength="4" placeholder="4 cijfers" autocomplete="off">
           <div id="landing-confirm-wrap" style="display:none;">
-            <label class="landing-label">Herhaal pincode</label>
+            <label class="landing-label" id="landing-confirm-label">Herhaal pincode</label>
             <input type="password" id="landing-confirm" inputmode="numeric" maxlength="4" placeholder="Herhaal 4 cijfers" autocomplete="off">
           </div>
           <div id="landing-error" style="display:none;"></div>
@@ -1051,10 +1089,10 @@
       <div class="landing-logo">
         <div class="brand-mark" style="width:48px;height:48px;font-size:18px;border:2px solid #B08D57;color:#B08D57;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-weight:700;">UR</div>
       </div>
-      <h1 class="landing-title">Welkom, <span id="dept-welcome-name"></span></h1>
-      <p class="landing-sub">Kies je afdeling om te starten</p>
+      <h1 class="landing-title" id="dept-welcome-title">Welkom, <span id="dept-welcome-name"></span></h1>
+      <p class="landing-sub" id="dept-sub">Kies je afdeling om te starten</p>
       <div id="dept-buttons" class="dept-grid"></div>
-      <button class="landing-logout" onklik="logout()">Andere naam inloggen</button>
+      <button class="landing-logout" id="dept-logout-btn" onclick="logout()">Andere naam inloggen</button>
     </div>
   </div>
 </div>
@@ -1062,19 +1100,24 @@
 <div class="sidebar" style="display:none;">
   <div class="brand">
     <div class="brand-mark">UR</div>
-    <div class="brand-text"><strong>Urban Residences</strong>Checklisten — Alle Afdelingen</div>
+    <div class="brand-text" id="sidebar-brand-text"><strong>Urban Residences</strong>Checklisten — Alle Afdelingen</div>
+  </div>
+  <div class="lang-switcher">
+    <span id="lang-label">Taal</span>
+    <button class="lang-btn active" id="btn-nl" onclick="setLang('nl')">NL</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
   </div>
   <div id="user-badge" class="user-badge"></div>
   <div class="handover-tab-wrap">
     <button class="tab handover-tab" id="handover-tab-btn">
-      📋 Overdrachtslog
-      <small>Belangrijke punten van vandaag</small>
+      📋 <span id="sidebar-handover-label">Overdrachtslog</span>
+      <small id="sidebar-handover-sub">Belangrijke punten van vandaag</small>
     </button>
   </div>
   <div id="admin-wrap" class="admin-wrap" style="display:none;">
     <button class="tab admin-tab" id="admin-tab-btn">
-      🗓️ Dagoverzicht <span class="admin-only">Beheer</span>
-      <small>Samenvatting van alle diensten</small>
+      🗓️ <span id="sidebar-admin-label">Dagoverzicht</span> <span class="admin-only" id="sidebar-admin-badge">Beheer</span>
+      <small id="sidebar-admin-sub">Samenvatting van alle diensten</small>
     </button>
   </div>
   <div class="nav-divider"></div>
@@ -1082,17 +1125,17 @@
   <div class="nav-divider"></div>
   <div class="handover-tab-wrap">
     <button class="tab sop-tab" id="sop-tab-btn">
-      📄 SOP Bibliotheek
-      <small>Standaardprocedures</small>
+      📄 <span id="sidebar-sop-label">SOP Bibliotheek</span>
+      <small id="sidebar-sop-sub">Standaardprocedures</small>
     </button>
   </div>
   <div class="handover-tab-wrap" id="deepclean-wrap" style="display:none;">
     <a class="tab deepclean-tab" href="./deepclean.html" target="_blank" rel="noopener" style="text-decoration:none;display:block;">
-      🧹 Deepclean
-      <small>Kamer-voor-kamer checklist</small>
+      🧹 <span id="sidebar-deepclean-label">Deepclean</span>
+      <small id="sidebar-deepclean-sub">Kamer-voor-kamer checklist</small>
     </a>
   </div>
-  <div class="sidebar-footer">
+  <div class="sidebar-footer" id="sidebar-footer-text">
     Wijzigingen worden automatisch<br>bewaard in deze browser.
   </div>
 </div>
@@ -1123,6 +1166,379 @@
 </div>
 
 <script>
+/* ===== LANGUAGE SYSTEM ===== */
+let lang = localStorage.getItem('ur-lang') || 'nl';
+function td(nl, en){ return lang === 'en' ? (en || nl) : nl; }
+function setLang(l){
+  lang = l;
+  try{ localStorage.setItem('ur-lang', lang); }catch(e){}
+  document.documentElement.lang = lang === 'en' ? 'en' : 'nl';
+  document.getElementById('btn-nl').classList.toggle('active', lang === 'nl');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  applyStaticSidebarTranslations();
+  applyStaticLandingTranslations();
+  render();
+}
+function applyStaticLandingTranslations(){
+  const isEn = lang === 'en';
+  const el = id => document.getElementById(id);
+  if(el('landing-subtitle')) el('landing-subtitle').textContent = isEn ? 'Checklists — All Departments' : 'Checklisten — Alle Afdelingen';
+  if(el('landing-name-label')) el('landing-name-label').textContent = isEn ? 'Name' : 'Naam';
+  if(el('landing-pin-label') && el('landing-confirm-wrap')){
+    const isNew = el('landing-confirm-wrap').style.display !== 'none';
+    el('landing-pin-label').textContent = isNew ? (isEn ? 'Choose a PIN (4 digits)' : 'Kies een pincode (4 cijfers)') : (isEn ? 'PIN' : 'Pincode');
+  }
+  if(el('landing-confirm-label')) el('landing-confirm-label').textContent = isEn ? 'Repeat PIN' : 'Herhaal pincode';
+  if(el('landing-pin')) el('landing-pin').placeholder = isEn ? '4 digits' : '4 cijfers';
+  if(el('landing-confirm')) el('landing-confirm').placeholder = isEn ? 'Repeat 4 digits' : 'Herhaal 4 cijfers';
+  if(el('landing-btn')) el('landing-btn').textContent = isEn ? 'Log in' : 'Inloggen';
+  if(el('landing-new-hint')) el('landing-new-hint').textContent = isEn ? 'New employee? Ask Martin to add your name.' : 'Nieuwe medewerker? Vraag Martin om je naam toe te voegen.';
+  if(el('dept-sub')) el('dept-sub').textContent = isEn ? 'Choose your department to start' : 'Kies je afdeling om te starten';
+  if(el('dept-logout-btn')) el('dept-logout-btn').textContent = isEn ? 'Log in as different name' : 'Andere naam inloggen';
+}
+function applyStaticSidebarTranslations(){
+  const isEn = lang === 'en';
+  const el = id => document.getElementById(id);
+  if(el('sidebar-brand-text')) el('sidebar-brand-text').innerHTML = '<strong>Urban Residences</strong>' + (isEn ? 'Checklists — All Departments' : 'Checklisten — Alle Afdelingen');
+  if(el('lang-label')) el('lang-label').textContent = isEn ? 'Language' : 'Taal';
+  if(el('sidebar-handover-label')) el('sidebar-handover-label').textContent = isEn ? 'Handover Log' : 'Overdrachtslog';
+  if(el('sidebar-handover-sub')) el('sidebar-handover-sub').textContent = isEn ? "Today's key points" : 'Belangrijke punten van vandaag';
+  if(el('sidebar-admin-label')) el('sidebar-admin-label').textContent = isEn ? 'Daily Overview' : 'Dagoverzicht';
+  if(el('sidebar-admin-badge')) el('sidebar-admin-badge').textContent = isEn ? 'Admin' : 'Beheer';
+  if(el('sidebar-admin-sub')) el('sidebar-admin-sub').textContent = isEn ? 'Summary of all shifts' : 'Samenvatting van alle diensten';
+  if(el('sidebar-sop-label')) el('sidebar-sop-label').textContent = isEn ? 'SOP Library' : 'SOP Bibliotheek';
+  if(el('sidebar-sop-sub')) el('sidebar-sop-sub').textContent = isEn ? 'Standard procedures' : 'Standaardprocedures';
+  if(el('sidebar-deepclean-label')) el('sidebar-deepclean-label').textContent = isEn ? 'Deep Clean' : 'Deepclean';
+  if(el('sidebar-deepclean-sub')) el('sidebar-deepclean-sub').textContent = isEn ? 'Room-by-room checklist' : 'Kamer-voor-kamer checklist';
+  if(el('sidebar-footer-text')) el('sidebar-footer-text').innerHTML = isEn ? 'Changes are automatically<br>saved in this browser.' : 'Wijzigingen worden automatisch<br>bewaard in deze browser.';
+  if(el('date-today')) el('date-today').textContent = isEn ? 'Today' : 'Vandaag';
+}
+function statusDisplay(s){
+  if(lang === 'en'){
+    if(s === 'Bezig') return 'In Progress';
+    if(s === 'Gereed') return 'Done';
+    if(s === 'N.v.t.') return 'N/A';
+  }
+  return s;
+}
+
+const WEEKDAYS_NL = ["zo","ma","di","wo","do","vr","za"];
+const WEEKDAYS_EN = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const MONTHS_NL = ["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"];
+const MONTHS_EN = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+/* ===== TRANSLATION LOOKUP TABLES ===== */
+const BLOCK_NAME_EN = {
+  "Starten":"Start","Systemen":"Systems","Voorbereiding dienst":"Shift Preparation",
+  "Presentatie":"Presentation","Arrivals":"Arrivals","Communicatie":"Communication",
+  "Check-out":"Check-out","Lunch / rotatie":"Lunch / Rotation","Administratie":"Administration",
+  "Afronden":"Wrap-up","Overdracht":"Handover","Afhandeling":"Processing",
+  "Avond":"Evening","Avond laat":"Late Evening","Check-in":"Check-in",
+  "Controle":"Inspection","Controleronde":"Security Round","Front Office":"Front Office",
+  "Housekeeping":"Housekeeping","Algemeen":"General","Algemene Dienst":"General Services",
+  "Huishouding":"Housekeeping","Kamercontrole":"Room Inspection","MEWS":"MEWS",
+  "Midden nacht":"Midnight","Nacht vroeg":"Early Night","Nachtaudit":"Night Audit",
+  "Pauze":"Break","Rapportage":"Reporting","Reserveringen":"Reservations",
+  "Schoonmaak":"Cleaning","Start dienst":"Start of Shift","TD/MEWS":"Technical/MEWS",
+  "Technische Dienst":"Technical Services","Voor pauze":"Before Break",
+  "Voorbereiding dienst":"Shift Preparation","Voorraad":"Inventory",
+  "Vroege ochtend":"Early Morning"
+};
+
+const SHIFT_LABEL_EN = {
+  "ochtend":"Morning Shift","avond":"Evening Shift","nacht":"Night Shift",
+  "hk":"HK Supervisor","ad":"General Services","duty":"Duty Report"
+};
+
+const SHIFT_TIME_EN = {
+  "ochtend":"08:00 – 16:00","avond":"14:00 – 22:00","nacht":"22:00 – 07:00",
+  "hk":"09:00 – 17:00","ad":"09:30 – 19:30","duty":"21:45 – 08:00"
+};
+
+const SHIFT_NOTICE_EN = {
+  "ochtend":"Note: all Late Check-in (LCI), Late Check-out (LCO) and other tasks for Technical Services (TD) and Housekeeping (HK) must always be processed in MEWS (Tasks) AND in the Timeline. At end of shift, email ms@urbanresidences.com and fom@urbanresidences.com",
+  "avond":"Note: all Late Check-in (LCI), Late Check-out (LCO) and other tasks for Technical Services (TD) and Housekeeping (HK) must always be processed in MEWS (Tasks) AND in the Timeline. At end of shift, email ms@urbanresidences.com and fom@urbanresidences.com",
+  "nacht":"Note: all tasks for Technical Services (TD) and Housekeeping (HK) must always be processed in MEWS (Tasks) AND in the Timeline. Night audit must be completed before 07:00. At end of shift, email ms@urbanresidences.com and fom@urbanresidences.com",
+  "hk":"Note: communicate all room status updates to Front Office promptly. Report any damage or missing items via MEWS (Tasks).",
+  "ad":"Note: all tasks and findings must be processed in MEWS (Tasks) AND in the Timeline.",
+  "duty":"Note: MOD report must be completed and sent before 08:00. All incidents must be reported."
+};
+
+const TASK_TITLE_EN = {
+  "Inklokken bij aanvang dienst":"Clock in at start of shift",
+  "Uitklokken bij einde dienst":"Clock out at end of shift",
+  "Inklokken Dyflexis":"Clock in via Dyflexis",
+  "Timeline controleren op Unassigned Rooms":"Check timeline for Unassigned Rooms",
+  "PMS":"PMS",
+  "Muziek":"Music",
+  "Handover aanmaken":"Create handover log",
+  "Nightaudit rapport":"Night audit report",
+  "Billing CO verwerken in MEWS":"Process check-out billing in MEWS",
+  "Klachten afhandelen":"Handle complaints",
+  "Late check-out (LCO) verwerken":"Process late check-out (LCO)",
+  "Early check-out verwerken":"Process early check-out",
+  "Late check-in (LCI) verwerken":"Process late check-in (LCI)",
+  "No-show verwerken":"Process no-shows",
+  "Receptie & lobby schoonmaken":"Clean reception & lobby",
+  "Early check-in voorbereiden":"Prepare early check-in",
+  "MEWS-taken verwerken":"Process MEWS tasks",
+  "Bijzonderheden HSK":"Special instructions HK",
+  "Groepsaankomsten voorbereiden":"Prepare group arrivals",
+  "Dagverwachting doornemen":"Review daily forecast",
+  "Reserveringen verwerken":"Process reservations",
+  "E-Mails":"Emails",
+  "Booking.com Messages":"Booking.com messages",
+  "Expedia Messages":"Expedia messages",
+  "Airbnb":"Airbnb",
+  "Check-out afhandelen":"Handle check-out",
+  "Keycards aankomsten controleren":"Check keycards for arrivals",
+  "Lunchpauze inplannen":"Schedule lunch break",
+  "Accounting ledgers MEWS controleren en verwerken":"Check and process MEWS accounting ledgers",
+  "Gastnamen bij meerdere kamers opvragen":"Request guest names for multiple rooms",
+  "CI/CO-datums controleren":"Check CI/CO dates",
+  "ZVK Reserveringen":"Health insurance company reservations",
+  "Borg (deposit) terugbetalen":"Refund deposit",
+  "Overdracht nachtdienst voorbereiden":"Prepare handover for night shift",
+  "Overdracht ochtenddienst voorbereiden":"Prepare handover for morning shift",
+  "Overdracht volgende dienst voorbereiden":"Prepare handover for next shift",
+  "Overdracht ochtenddienst":"Morning shift handover",
+  "Overdracht avonddienst":"Evening shift handover",
+  "Overdracht met de avonddienst":"Handover with evening shift",
+  "Overdracht met ochtenddienst":"Handover with morning shift",
+  "Overdracht vorige dienst":"Previous shift handover",
+  "Dagverwachting doornemen":"Review daily forecast",
+  "Check-in gasten":"Check-in guests",
+  "SOP: Directe boekingen (telefoon/mail/walk-in)":"SOP: Direct bookings (phone/email/walk-in)",
+  "Ontbijt":"Breakfast",
+  "SOP: Gastnamen meerdere kamers controleren":"SOP: Check guest names for multiple rooms",
+  "Groepsaankomsten begeleiden":"Supervise group arrivals",
+  "Parkeren & bagage":"Parking & luggage",
+  "Parkeren":"Parking",
+  "Late check-in (LCI) & no-show verwerken":"Process late check-in (LCI) & no-shows",
+  "Late check-ins afhandelen":"Handle late check-ins",
+  "Checklijst opsturen":"Send checklist",
+  "OTA-vragen en opmerkingen beantwoorden":"Answer OTA questions and comments",
+  "Nachtrapport & MOD-rapport bijhouden":"Maintain night report & MOD report",
+  "Nachtrapportage TAGS versturen":"Send night report TAGS",
+  "Vroege vertrekken voorbereiden":"Prepare early departures",
+  "Nachtaudit starten":"Start night audit",
+  "Controleren op nieuwe reserveringen":"Check for new reservations",
+  "Wake-up calls uitvoeren":"Execute wake-up calls",
+  "Voorbereiding ontbijt":"Breakfast preparation",
+  "Vuilcontainers naar buiten brengen":"Take waste containers outside",
+  "Rapportages genereren":"Generate reports",
+  "Einde dienst":"End of shift",
+  "72-uur controle reserveringen":"72-hour reservation check",
+  "Registratiekaarten voorbereiden":"Prepare registration cards",
+  "Controleren van de Duty":"Check duty report",
+  "Keycards aanmaken":"Create keycards",
+  "SOP: Accounting ledger eindcontrole":"SOP: Accounting ledger final check",
+  "SOP: BTW-correcties annuleringen/no-shows":"SOP: VAT corrections cancellations/no-shows",
+  "Receptie bijvullen met handdoeken, wascapsules, wc-papier enz.":"Replenish reception with towels, detergent pods, toilet paper, etc.",
+  "Receptie stofzuigen en dweilen":"Vacuum and mop reception",
+  "Receptie afstoffen, stofzuigen en dweilen":"Dust, vacuum and mop reception",
+  "Receptie stofzuigen, dweilen en glazen deuren schoonmaken":"Vacuum, mop and clean glass doors at reception",
+  "Glazen deuren van de receptie schoonmaken":"Clean glass doors at reception",
+  "Balie opruimen":"Tidy the desk",
+  "Registratieformulieren & borgvoorwaarden inscannen":"Scan registration forms & deposit terms",
+  "Brandronde uitvoeren":"Conduct fire safety round",
+  "Brandweerlijst printen":"Print fire brigade list",
+  "Tweede beveiligingsronde":"Second security round",
+  "Deuren & toegang controleren":"Check doors & access",
+  "Toegang tot het hotel":"Access to the hotel",
+  "Pauze (30 min)":"Break (30 min)",
+  "Lunchpauze":"Lunch break",
+  "Dagplanning HK doornemen":"Review HK daily planning",
+  "Rapportage HK opstellen":"Prepare HK report",
+  "Task bijwerken":"Update task",
+  "Etages controleren en task bijwerken":"Check floors and update task",
+  "Etages van 19e t/m 5e verdieping dweilen":"Mop floors from 19th to 5th floor",
+  "Kamercontrole — Entree":"Room inspection — Entrance",
+  "Kamercontrole — Woonkamer":"Room inspection — Living room",
+  "Kamercontrole — Keuken":"Room inspection — Kitchen",
+  "Kamercontrole — Eetkamer":"Room inspection — Dining room",
+  "Kamercontrole — Badkamer":"Room inspection — Bathroom",
+  "Kamercontrole — WC":"Room inspection — Toilet",
+  "Kamercontrole — Washok":"Room inspection — Laundry room",
+  "Bevindingen verwerken":"Process findings",
+  "Linnen controleren en bijvullen":"Check and replenish linen",
+  "Linnen en vuilnis naar beneden":"Take linen and waste downstairs",
+  "Vaatwassers aanzetten":"Start dishwashers",
+  "P1 en P2 schoonmaken bij personenliften":"Clean P1 and P2 near passenger lifts",
+  "Autolift controleren op vervuiling":"Check car lift for dirt",
+  "Controleronde P1 en P2":"Patrol P1 and P2",
+  "Controleronde rond het hotel":"Security round around the hotel",
+  "Openbare ruimtes controleren":"Check public areas",
+  "Vuilnisbakken legen op parkeerdekken":"Empty waste bins on parking decks",
+  "WC -1 schoonmaken":"Clean toilet -1",
+  "Kantoor op -1 schoonmaken":"Clean office on -1",
+  "Kantoor op de 5e verdieping schoonmaken":"Clean office on 5th floor",
+  "Schoonmaken lobby en algemene ruimtes":"Clean lobby and common areas",
+  "Ronde door het hotel, troep opruimen":"Round through hotel, tidy up mess",
+  "Vuilnisruimte controleren / wasruimte controleren / task controle":"Check waste room / laundry room / task check",
+  "Vuilnisruimte en -1 dweilen":"Mop waste room and -1",
+  "Voorraadcontrole":"Stock check",
+  "1e controleronde":"1st inspection round",
+  "2e controleronde":"2nd inspection round",
+  "3e controleronde":"3rd inspection round",
+  "4e controleronde":"4th inspection round",
+  "5e controleronde":"5th inspection round",
+  "Op tijd en correct gekleed":"On time and correctly dressed",
+  "Gebruik van apparatuur":"Use of equipment",
+  "Werkplek tijdens de dienst":"Workstation during shift",
+  "Gedrag & professionaliteit":"Behaviour & professionalism",
+  "Te laat komen":"Late arrival",
+  "Escalatie bij problemen":"Escalation for problems",
+  "Telefooncentrale bemannen":"Man the telephone switchboard"
+};
+
+const TASK_DESC_EN = {
+  "Inklokken bij aanvang dienst":"Clock in using the current time registration system.",
+  "Uitklokken bij einde dienst":"Clock out at end of shift.",
+  "Inklokken Dyflexis":"Clock in via Dyflexis at the start of the shift.",
+  "Timeline controleren op Unassigned Rooms":"Open the Timeline in MEWS and check for pink bars (Unassigned Rooms): assign rooms without room assignment as quickly as possible.",
+  "PMS":"Log in to MEWS and check the system for outstanding tasks and notifications.",
+  "Muziek":"Turn on background music in the lobby via the system.",
+  "Handover aanmaken":"Create handover log in the system for the next shift.",
+  "Nightaudit rapport":"Review night shift handover log: notable events, outstanding matters.",
+  "Billing CO verwerken in MEWS":"Check and process billing for all yesterday's check-outs in MEWS: settle outstanding items, close invoices.",
+  "Klachten afhandelen":"Check registered complaints; create task in MEWS (Tasks) for the relevant department (TD/HK) and process in the Timeline.",
+  "Late check-out (LCO) verwerken":"Assess/process late check-out (LCO) requests and record in PMS; extend key. Process in MEWS (Tasks) AND in the Timeline.",
+  "Early check-out verwerken":"Check and process early check-outs in MEWS (Tasks) AND in the Timeline.",
+  "Late check-in (LCI) verwerken":"Process late check-ins (LCI) in MEWS (Tasks) AND in the Timeline.",
+  "No-show verwerken":"Process no-shows in MEWS (Tasks) AND in the Timeline.",
+  "Receptie & lobby schoonmaken":"Clean and maintain the reception and lobby in a presentable state.",
+  "Early check-in voorbereiden":"Mark rooms as ready and verify pre-assignment for early arrivals.",
+  "MEWS-taken verwerken":"Review and process outstanding tasks in MEWS.",
+  "Bijzonderheden HSK":"Create MEWS tasks: communicate extras (baby cot, twin, wine etc.) and cleaning priorities to HK.",
+  "Groepsaankomsten voorbereiden":"Prepare key packages and registration forms for groups.",
+  "Dagverwachting doornemen":"Review today's expected arrivals and departures (groups, allergies, special requests).",
+  "Reserveringen verwerken":"Process new bookings, modifications and cancellations.",
+  "E-Mails":"Answer emails in Outlook.",
+  "Booking.com Messages":"Answer messages in the Extranet.",
+  "Expedia Messages":"Answer messages in the Extranet.",
+  "Airbnb":"Answer messages in the Extranet.",
+  "Check-out afhandelen":"Check out departing guests in MEWS: verify billing, process deposit and send invoice.",
+  "Keycards aankomsten controleren":"Check keycards for today's arrivals for accuracy and process any changes in room number or check-out date.",
+  "Lunchpauze inplannen":"Ensure desk coverage during lunch breaks (minimum 1 staff member present).",
+  "Accounting ledgers MEWS controleren en verwerken":"Check accounting ledgers in MEWS and process outstanding items.",
+  "Gastnamen bij meerdere kamers opvragen":"For reservations with 2+ rooms: call (or email) the booker/main guest for names and room allocation; enter names correctly in MEWS.",
+  "CI/CO-datums controleren":"Check check-in and check-out dates of upcoming reservations and adjust if necessary: verify reservation via OTA extranet, compare with MEWS, process changes in email to guest AND update reservation in MEWS.",
+  "ZVK Reserveringen":"Check and process health insurance company reservations: check the check-in and check-out date, payment method and any special requests; process changes in email to guest AND update reservation in MEWS.",
+  "Borg (deposit) terugbetalen":"After inspection by HK or front office: refund deposit from departed guests (€300 studios / €500 apartments, minus any deductions).",
+  "Overdracht nachtdienst voorbereiden":"Fill in handover log: notable events, outstanding tasks, points of attention.",
+  "Overdracht ochtenddienst voorbereiden":"Fill in handover log: notable events, outstanding tasks, points of attention.",
+  "Overdracht volgende dienst voorbereiden":"Fill in handover log: notable events, outstanding tasks, points of attention.",
+  "Overdracht ochtenddienst":"Review morning shift handover log.",
+  "Overdracht avonddienst":"Review evening shift handover log.",
+  "Overdracht met de avonddienst":"Complete handover with evening shift.",
+  "Overdracht met ochtenddienst":"Complete handover with morning shift.",
+  "Overdracht vorige dienst":"Review previous shift handover.",
+  "Check-in gasten":"Check in guests, verify identity and record payment details.",
+  "SOP: Directe boekingen (telefoon/mail/walk-in)":"Before confirming: always mention deposit required — €300 for studios, €500 for apartments — and cash-free policy. If guest resists deposit/cash-free policy: be alert to possible risk; at your discretion consider refusing the booking and consult Martin or FOM. For phone bookings: double-check email address spelling and confirm confirmation email was received. Reservation only confirmed after credit card details OR advance payment. See 'SOP Reference' tab.",
+  "Ontbijt":"Inform guests about breakfast service (order before 19:00 via QR code).",
+  "SOP: Gastnamen meerdere kamers controleren":"At check-in for reservations with 2+ rooms: check whether names per room are already known; if not, request from booker and enter in MEWS. See 'SOP Reference' tab.",
+  "Groepsaankomsten begeleiden":"Receive groups, distribute keys and give instructions.",
+  "Parkeren & bagage":"Coordinate parking instructions and luggage service.",
+  "Parkeren":"Arrange parking for guests.",
+  "Late check-in (LCI) & no-show verwerken":"Process late check-ins (LCI) and apply no-show policy for non-appearing guests. Process in MEWS (Tasks) AND in the Timeline.",
+  "Late check-ins afhandelen":"Handle late check-ins: verify identity, process payment and hand over key.",
+  "Checklijst opsturen":"Send completed checklist to management.",
+  "OTA-vragen en opmerkingen beantwoorden":"Answer questions and comments from OTA platforms.",
+  "Nachtrapport & MOD-rapport bijhouden":"Maintain night report and MOD (Manager on Duty) report with all events during the night.",
+  "Nachtrapportage TAGS versturen":"Send night report via TAGS to management.",
+  "Vroege vertrekken voorbereiden":"Prepare bills and keys for early departures.",
+  "Nachtaudit starten":"Start the night audit process in MEWS.",
+  "Controleren op nieuwe reserveringen":"Check for new reservations received overnight.",
+  "Wake-up calls uitvoeren":"Execute wake-up calls for guests who requested them.",
+  "Voorbereiding ontbijt":"Set up breakfast service for the morning.",
+  "Vuilcontainers naar buiten brengen":"Take waste containers to the designated outdoor collection point.",
+  "Rapportages genereren":"Generate required reports in MEWS.",
+  "Einde dienst":"Complete end-of-shift tasks and hand over to next colleague.",
+  "72-uur controle reserveringen":"Check all reservations arriving within 72 hours: verify payment, deposit and special requests.",
+  "Registratiekaarten voorbereiden":"Print and prepare registration cards for today's and tomorrow's arrivals.",
+  "Controleren van de Duty":"Review the duty report from the previous shift.",
+  "Keycards aanmaken":"Create keycards for arrivals.",
+  "SOP: Accounting ledger eindcontrole":"Final check of the accounting ledger per SOP.",
+  "SOP: BTW-correcties annuleringen/no-shows":"Process VAT corrections for cancellations and no-shows per SOP.",
+  "Receptie bijvullen met handdoeken, wascapsules, wc-papier enz.":"Replenish reception supplies: towels, detergent pods, toilet paper, etc.",
+  "Receptie stofzuigen en dweilen":"Vacuum and mop the reception area.",
+  "Receptie afstoffen, stofzuigen en dweilen":"Dust, vacuum and mop the reception area.",
+  "Receptie stofzuigen, dweilen en glazen deuren schoonmaken":"Vacuum and mop reception and clean glass doors.",
+  "Glazen deuren van de receptie schoonmaken":"Clean the glass doors at the reception.",
+  "Balie opruimen":"Tidy and organise the front desk.",
+  "Registratieformulieren & borgvoorwaarden inscannen":"Scan registration forms and deposit terms and file them in the system.",
+  "Brandronde uitvoeren":"Conduct fire safety round through the building.",
+  "Brandweerlijst printen":"Print the current guest list for the fire brigade.",
+  "Tweede beveiligingsronde":"Conduct second security round through the building.",
+  "Deuren & toegang controleren":"Check that all doors and access points are properly secured.",
+  "Toegang tot het hotel":"Verify access control is working correctly.",
+  "Pauze (30 min)":"Take a 30-minute break. Ensure desk coverage.",
+  "Lunchpauze":"Take your lunch break. Ensure minimum desk coverage.",
+  "Dagplanning HK doornemen":"Review the HK daily planning and task distribution.",
+  "Rapportage HK opstellen":"Prepare the HK report with room statuses and findings.",
+  "Task bijwerken":"Update the relevant task in MEWS.",
+  "Etages controleren en task bijwerken":"Check floors and update corresponding task in MEWS.",
+  "Etages van 19e t/m 5e verdieping dweilen":"Mop all floor corridors from 19th to 5th floor.",
+  "Kamercontrole — Entree":"Inspect entrance: check door, hallway, coat rack and floor.",
+  "Kamercontrole — Woonkamer":"Inspect living room: furniture, windows, TV, lighting.",
+  "Kamercontrole — Keuken":"Inspect kitchen: appliances, surfaces, supplies.",
+  "Kamercontrole — Eetkamer":"Inspect dining area: table, chairs, surfaces.",
+  "Kamercontrole — Badkamer":"Inspect bathroom: shower/bath, toilet, sink, supplies.",
+  "Kamercontrole — WC":"Inspect toilet: cleanliness, supplies, ventilation.",
+  "Kamercontrole — Washok":"Inspect laundry room: washer, dryer, supplies.",
+  "Bevindingen verwerken":"Process and report all findings in MEWS.",
+  "Linnen controleren en bijvullen":"Check linen stock and replenish as needed.",
+  "Linnen en vuilnis naar beneden":"Take linen and waste to the laundry/waste area.",
+  "Vaatwassers aanzetten":"Start dishwashers.",
+  "P1 en P2 schoonmaken bij personenliften":"Clean P1 and P2 areas near passenger lifts.",
+  "Autolift controleren op vervuiling":"Check the car lift for dirt and clean if necessary.",
+  "Controleronde P1 en P2":"Conduct security/cleanliness round of P1 and P2.",
+  "Controleronde rond het hotel":"Conduct security round around the hotel exterior.",
+  "Openbare ruimtes controleren":"Check all public areas for cleanliness and safety.",
+  "Vuilnisbakken legen op parkeerdekken":"Empty waste bins on all parking decks.",
+  "WC -1 schoonmaken":"Clean the toilet on level -1.",
+  "Kantoor op -1 schoonmaken":"Clean the office on level -1.",
+  "Kantoor op de 5e verdieping schoonmaken":"Clean the office on the 5th floor.",
+  "Schoonmaken lobby en algemene ruimtes":"Clean the lobby and all common areas.",
+  "Ronde door het hotel, troep opruimen":"Walk through the hotel and tidy up any mess.",
+  "Vuilnisruimte controleren / wasruimte controleren / task controle":"Check waste room / laundry room / verify tasks in MEWS.",
+  "Vuilnisruimte en -1 dweilen":"Mop the waste room and level -1.",
+  "Voorraadcontrole":"Check stock levels and report shortages.",
+  "1e controleronde":"1st inspection round — check all assigned areas.",
+  "2e controleronde":"2nd inspection round — check all assigned areas.",
+  "3e controleronde":"3rd inspection round — check all assigned areas.",
+  "4e controleronde":"4th inspection round — check all assigned areas.",
+  "5e controleronde":"5th inspection round — check all assigned areas.",
+  "Op tijd en correct gekleed":"Arrive on time and in correct uniform.",
+  "Gebruik van apparatuur":"Use equipment according to instructions and report defects.",
+  "Werkplek tijdens de dienst":"Keep your workstation tidy and professional during the shift.",
+  "Gedrag & professionaliteit":"Maintain professional behaviour at all times.",
+  "Te laat komen":"Report lateness immediately to the supervisor.",
+  "Escalatie bij problemen":"Escalate problems immediately to the shift manager or on-call manager.",
+  "Telefooncentrale bemannen":"Man the telephone switchboard and handle incoming calls."
+};
+
+/* ===== CHECKLIST ITEM TRANSLATIONS ===== */
+const CHECKLIST_ITEM_EN = {
+  "Prullenbak legen":"Empty bin",
+  "Receptie desinfecteren":"Disinfect reception desk",
+  "Opruimen lobby":"Tidy lobby",
+  "Losse troepjes opruimen":"Tidy loose items",
+  "Bank rechtzetten":"Straighten sofa",
+  "Pin-apparaten schoonmaken":"Clean PIN terminals",
+  "Bagage naar bagageopslag":"Take luggage to luggage storage"
+};
+
+/* Helper: translate task title, description, block name, checklist items */
+function trTitle(t){ return lang==='en' ? (TASK_TITLE_EN[t]||t) : t; }
+function trDesc(t, d){ return lang==='en' ? (TASK_DESC_EN[t]||d) : d; }
+function trBlock(name){ return lang==='en' ? (BLOCK_NAME_EN[name]||name) : name; }
+function trChecklist(item){ return lang==='en' ? (CHECKLIST_ITEM_EN[item]||item) : item; }
+function trShiftLabel(key){ return lang==='en' ? (SHIFT_LABEL_EN[key]||key) : (SHIFTS[key]?SHIFTS[key].label:key); }
+function trShiftTime(key){ return lang==='en' ? (SHIFT_TIME_EN[key]||'') : (SHIFTS[key]?SHIFTS[key].time:''); }
+function trShiftNotice(key){ return lang==='en' ? (SHIFT_NOTICE_EN[key]||(SHIFTS[key]?SHIFTS[key].notice:'')) : (SHIFTS[key]?SHIFTS[key].notice:''); }
+
 const STATUS_CYCLE = ["Open","Bezig","Gereed"];
 
 const EMPLOYEE_LISTS = {
@@ -1760,19 +2176,18 @@ function scheduleLogSave(date, shift){
         const ref = doc(window.urDB, "checklisten", dayLogKey(date, shift));
         await setDoc(ref, { log: dayLogCache[cacheKey] || {} });
       }
-      if(ind) ind.textContent = "Opgeslagen — " + formatDateLong(date);
+      if(ind) ind.textContent = td("Opgeslagen — ","Saved — ") + formatDateLong(date);
     }catch(e){
-      if(ind) ind.textContent = "Opslaan mislukt (lokaal onthouden)";
+      if(ind) ind.textContent = td("Opslaan mislukt (lokaal onthouden)","Save failed (kept locally)");
     }
   }, 500);
 }
 
-const WEEKDAYS = ["zo","ma","di","wo","do","vr","za"];
-const MONTHS = ["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"];
 function formatDateLong(key){
   const [y,m,d] = key.split("-").map(Number);
   const dt = new Date(y, m-1, d);
-  return `${WEEKDAYS[dt.getDay()]} ${d} ${MONTHS[m-1]}`;
+  if(lang === 'en') return `${WEEKDAYS_EN[dt.getDay()]} ${d} ${MONTHS_EN[m-1]}`;
+  return `${WEEKDAYS_NL[dt.getDay()]} ${d} ${MONTHS_NL[m-1]}`;
 }
 
 // ---------- Stabiele taak-sleutels ----------
@@ -1840,9 +2255,9 @@ async function saveHandover(date){
     if(window.storage){
       await window.storage.set(handoverKey(date), JSON.stringify(handoverCache[date] || []), true);
     }
-    if(ind) ind.textContent = "Opgeslagen — " + formatDateLong(date);
+    if(ind) ind.textContent = td("Opgeslagen — ","Saved — ") + formatDateLong(date);
   }catch(e){
-    if(ind) ind.textContent = "Opslaan mislukt (lokaal onthouden)";
+    if(ind) ind.textContent = td("Opslaan mislukt (lokaal onthouden)","Save failed (kept locally)");
   }
 }
 
@@ -1854,7 +2269,7 @@ function renderTabs(){
     const s = state[key];
     const btn = document.createElement("button");
     btn.className = "tab" + (key===currentShift ? " active" : "");
-    btn.innerHTML = s.label + "<small>" + s.time + "</small>";
+    btn.innerHTML = trShiftLabel(key) + "<small>" + trShiftTime(key) + "</small>";
     btn.onclick = () => { currentShift = key; render(); };
     nav.appendChild(btn);
   });
@@ -1889,17 +2304,19 @@ async function renderContent(){
     return;
   }
   const shift = state[currentShift];
-  document.getElementById("page-title").textContent = shift.label;
-  document.getElementById("page-sub").textContent = "Front Office checklist — " + shift.time;
-  document.getElementById("page-notice").textContent = shift.notice;
+  document.getElementById("page-title").textContent = trShiftLabel(currentShift);
+  document.getElementById("page-sub").textContent = td("Front Office checklist — ","Front Office checklist — ") + trShiftTime(currentShift);
+  document.getElementById("page-notice").textContent = trShiftNotice(currentShift);
 
   const content = document.getElementById("content");
   content.innerHTML = "";
 
   const isAdminNow = currentUser === ADMIN_NAME;
   document.getElementById("page-hint").textContent = isAdminNow
-    ? "Klik op een taak, omschrijving of opmerking om te bewerken. Klik op de status-knop om te wisselen tussen Open → Bezig → Gereed. Als beheerder kun jij de volgorde altijd doorbreken."
-    : "Taak en omschrijving zijn alleen door Martin te bewerken. Klik op de status-knop om af te vinken, of voeg een opmerking toe. Een taak ontgrendelt pas zodra de taak erboven op Gereed staat.";
+    ? td("Klik op een taak, omschrijving of opmerking om te bewerken. Klik op de status-knop om te wisselen tussen Open → Bezig → Gereed. Als beheerder kun jij de volgorde altijd doorbreken.",
+        "Click a task, description or note to edit. Click the status button to cycle Open → In Progress → Done. As admin you can always override the sequence.")
+    : td("Taak en omschrijving zijn alleen door Martin te bewerken. Klik op de status-knop om af te vinken, of voeg een opmerking toe. Een taak ontgrendelt pas zodra de taak erboven op Gereed staat.",
+        "Task titles and descriptions can only be edited by Martin. Click the status button to check off, or add a note. A task only unlocks once the task above it is marked Done.");
 
   const dayLog = await loadDayLog(selectedDate, currentShift);
   let prevDone = true; // eerste taak van de dienst is nooit vergrendeld
@@ -1920,7 +2337,7 @@ async function renderContent(){
     if(block.name){
       const name = document.createElement("div");
       name.className = "block-name";
-      name.textContent = block.name;
+      name.textContent = trBlock(block.name);
       head.appendChild(name);
     }
     wrap.appendChild(head);
@@ -1932,7 +2349,7 @@ async function renderContent(){
     if(tooEarly){
       const early = document.createElement("div");
       early.className = "block-early";
-      early.textContent = "Nog niet aan de beurt — dit blok start later vandaag.";
+      early.textContent = td("Nog niet aan de beurt — dit blok start later vandaag.","Not your turn yet — this block starts later today.");
       wrap.appendChild(early);
     }
 
@@ -1952,26 +2369,27 @@ async function renderContent(){
       title.className = "task-title";
       title.contentEditable = isAdmin ? "true" : "false";
       if(!isAdmin) title.classList.add("locked");
-      title.textContent = task.t;
+      title.textContent = trTitle(task.t);
       title.oninput = ()=>{ if(isAdmin){ task.t = title.textContent; scheduleSave(); } };
 
       const desc = document.createElement("div");
       desc.className = "task-desc";
       desc.contentEditable = isAdmin ? "true" : "false";
       if(!isAdmin) desc.classList.add("locked");
-      desc.textContent = task.d || "";
+      desc.textContent = trDesc(task.t, task.d || "");
       desc.oninput = ()=>{ if(isAdmin){ task.d = desc.textContent; scheduleSave(); } };
 
       const notes = document.createElement("div");
       notes.className = "task-notes";
       notes.contentEditable = "true";
       notes.textContent = entry.n || "";
+      notes.setAttribute("data-placeholder", td("+ opmerking toevoegen","+ add a note"));
       notes.onfocus = ()=>{ if(!currentUser) showUserOverlay(shift.dept); };
       notes.oninput = ()=>{
         entry.n = notes.textContent;
         if(entry.n.trim()){
-          entry.nBy = currentUser || "Onbekend";
-          entry.nAt = new Date().toLocaleString("nl-NL", {day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+          entry.nBy = currentUser || td("Onbekend","Unknown");
+          entry.nAt = new Date().toLocaleString(lang==='en'?"en-GB":"nl-NL", {day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
         } else {
           entry.nBy = null; entry.nAt = null;
         }
@@ -2004,14 +2422,14 @@ async function renderContent(){
         toggle.className = "task-cl-toggle";
         toggle.type = "button";
         const setToggleLabel = ()=>{
-          toggle.textContent = `${clWrap.classList.contains("open") ? "▾" : "▸"} Controlepunten OTA/PMS (${countChecked()}/${total})`;
+          toggle.textContent = `${clWrap.classList.contains("open") ? "▾" : "▸"} ${td("Controlepunten OTA/PMS","Checkpoints OTA/PMS")} (${countChecked()}/${total})`;
         };
 
         const table = document.createElement("div");
         table.className = "task-cl-table";
         const headRow = document.createElement("div");
         headRow.className = "task-cl-row task-cl-head";
-        headRow.innerHTML = `<div>Controlepunt</div><div>OTA</div><div>PMS</div>`;
+        headRow.innerHTML = `<div>${td("Controlepunt","Checkpoint")}</div><div>OTA</div><div>PMS</div>`;
         table.appendChild(headRow);
 
         task.checklist.forEach((label, i)=>{
@@ -2019,7 +2437,7 @@ async function renderContent(){
           const row = document.createElement("div");
           row.className = "task-cl-row";
           const nameCell = document.createElement("div");
-          nameCell.textContent = label;
+          nameCell.textContent = trChecklist(label);
           row.appendChild(nameCell);
           ["ota","pms"].forEach(col=>{
             const cell = document.createElement("div");
@@ -2056,8 +2474,8 @@ async function renderContent(){
         const sopLink = document.createElement("button");
         sopLink.className = "sop-link";
         sopLink.type = "button";
-        sopLink.textContent = "📄 SOP openen";
-        sopLink.title = "Opent de bijbehorende procedure in de SOP Bibliotheek.";
+        sopLink.textContent = td("📄 SOP openen","📄 Open SOP");
+        sopLink.title = td("Opent de bijbehorende procedure in de SOP Bibliotheek.","Opens the associated procedure in the SOP Library.");
         sopLink.onclick = ()=> openSop(task.sopId);
         mainCol.appendChild(sopLink);
       }
@@ -2066,7 +2484,7 @@ async function renderContent(){
       statusBtn.className = "status-btn";
       const st = entry.s || "Open";
       statusBtn.dataset.status = st;
-      statusBtn.textContent = st;
+      statusBtn.textContent = statusDisplay(st);
       const isFo = (employeesFor(shift.dept).length > 0);
       const isNvt = entry.s === "N.v.t.";
       const seqLocked = !prevDone && !isAdmin;
@@ -2074,22 +2492,22 @@ async function renderContent(){
       const locked = seqLocked || timeLocked;
       if(isNvt){
         statusBtn.classList.add("status-nvt");
-        statusBtn.textContent = "N.v.t.";
+        statusBtn.textContent = statusDisplay("N.v.t.");
       } else if(locked){
         statusBtn.classList.add("status-locked");
-        statusBtn.textContent = "🔒 " + st;
+        statusBtn.textContent = "🔒 " + statusDisplay(st);
       }
       statusBtn.onclick = ()=>{
         if(isNvt){
-          stampEl.textContent = "Maak eerst N.v.t. ongedaan via de N.v.t.-knop.";
+          stampEl.textContent = td("Maak eerst N.v.t. ongedaan via de N.v.t.-knop.","First undo N/A via the N/A button.");
           setTimeout(()=>{ renderContent(); }, 1800);
           return;
         }
         if(locked){
-          stampEl.textContent = timeLocked ? "Dit tijdblok is nog niet begonnen." : "Voltooi eerst de taak hierboven.";
+          stampEl.textContent = timeLocked ? td("Dit tijdblok is nog niet begonnen.","This time block hasn't started yet.") : td("Voltooi eerst de taak hierboven.","Complete the task above first.");
           setTimeout(()=>{
             stampEl.textContent = (entry.s && entry.s !== "Open" && entry.sAt)
-              ? (entry.sBy ? `${entry.sBy} · ${entry.sAt}` : `Afgevinkt · ${entry.sAt}`)
+              ? (entry.sBy ? `${entry.sBy} · ${entry.sAt}` : td("Afgevinkt","Checked") + " · " + entry.sAt)
               : "";
           }, 1800);
           return;
@@ -2101,7 +2519,7 @@ async function renderContent(){
         const idx = STATUS_CYCLE.indexOf(entry.s || "Open");
         const next = STATUS_CYCLE[(idx+1) % STATUS_CYCLE.length];
         entry.s = next;
-        entry.sAt = new Date().toLocaleString("nl-NL", {day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+        entry.sAt = new Date().toLocaleString(lang==='en'?"en-GB":"nl-NL", {day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
         entry.sBy = isFo ? currentUser : null;
         dayLog[taskId] = entry;
         scheduleLogSave(selectedDate, currentShift);
@@ -2121,36 +2539,36 @@ async function renderContent(){
       // "Niet van toepassing" — aparte knop, reden verplicht
       const nvtBtn = document.createElement("button");
       nvtBtn.className = "nvt-btn" + (entry.s === "N.v.t." ? " nvt-active" : "");
-      nvtBtn.textContent = entry.s === "N.v.t." ? "N.v.t. ✎" : "N.v.t.";
-      nvtBtn.title = entry.s === "N.v.t." ? "Reden aanpassen of ongedaan maken" : "Markeer als niet van toepassing (reden verplicht)";
+      nvtBtn.textContent = entry.s === "N.v.t." ? td("N.v.t. ✎","N/A ✎") : td("N.v.t.","N/A");
+      nvtBtn.title = entry.s === "N.v.t." ? td("Reden aanpassen of ongedaan maken","Edit reason or undo N/A") : td("Markeer als niet van toepassing (reden verplicht)","Mark as not applicable (reason required)");
       nvtBtn.onclick = ()=>{
         if(timeLocked){
-          stampEl.textContent = "Dit tijdblok is nog niet begonnen.";
+          stampEl.textContent = td("Dit tijdblok is nog niet begonnen.","This time block hasn't started yet.");
           setTimeout(()=>{ renderContent(); }, 1800);
           return;
         }
         if(!currentUser){ showUserOverlay(shift.dept); return; }
         if(entry.s === "N.v.t."){
-          const keep = prompt("Reden aanpassen (leeg laten = N.v.t. ongedaan maken):", entry.nvtReason || "");
+          const keep = prompt(td("Reden aanpassen (leeg laten = N.v.t. ongedaan maken):","Edit reason (leave empty to undo N/A):"), entry.nvtReason || "");
           if(keep === null) return;
           if(keep.trim() === ""){
             entry.s = "Open"; entry.nvtReason = null; entry.sBy = null; entry.sAt = null;
           } else {
             entry.nvtReason = keep.trim();
             entry.sBy = currentUser;
-            entry.sAt = new Date().toLocaleString("nl-NL", {day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+            entry.sAt = new Date().toLocaleString(lang==='en'?"en-GB":"nl-NL", {day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
           }
         } else {
-          const reason = prompt("Waarom is deze taak vandaag niet van toepassing?\n(Verplicht — bijv. 'geen groepsaankomsten vandaag')");
+          const reason = prompt(td("Waarom is deze taak vandaag niet van toepassing?\n(Verplicht — bijv. 'geen groepsaankomsten vandaag')","Why is this task not applicable today?\n(Required — e.g. 'no group arrivals today')"));
           if(reason === null) return;
           if(reason.trim() === ""){
-            alert("Een reden is verplicht om een taak op N.v.t. te zetten.");
+            alert(td("Een reden is verplicht om een taak op N.v.t. te zetten.","A reason is required to mark a task as N/A."));
             return;
           }
           entry.s = "N.v.t.";
           entry.nvtReason = reason.trim();
           entry.sBy = currentUser;
-          entry.sAt = new Date().toLocaleString("nl-NL", {day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+          entry.sAt = new Date().toLocaleString(lang==='en'?"en-GB":"nl-NL", {day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
         }
         dayLog[taskId] = entry;
         scheduleLogSave(selectedDate, currentShift);
@@ -2162,9 +2580,9 @@ async function renderContent(){
       stampEl.style.textAlign = "right";
       stampEl.style.maxWidth = "180px";
       if(entry.s === "N.v.t." && entry.nvtReason){
-        stampEl.textContent = `${entry.sBy || "Onbekend"} · ${entry.sAt || ""} — ${entry.nvtReason}`;
+        stampEl.textContent = `${entry.sBy || td("Onbekend","Unknown")} · ${entry.sAt || ""} — ${entry.nvtReason}`;
       } else if(entry.s && entry.s !== "Open" && entry.sAt){
-        stampEl.textContent = entry.sBy ? `${entry.sBy} · ${entry.sAt}` : `Afgevinkt · ${entry.sAt}`;
+        stampEl.textContent = entry.sBy ? `${entry.sBy} · ${entry.sAt}` : `${td("Afgevinkt","Checked")} · ${entry.sAt}`;
       }
       const btnRow = document.createElement("div");
       btnRow.style.display = "flex";
@@ -2204,17 +2622,17 @@ function findTaskTitle(shiftKey, taskId){
   const prefix = taskId.split("~")[0];
   for(const block of state[shiftKey].blocks){
     for(const task of block.tasks){
-      if(taskKey(block.time, task.t, 0).startsWith(prefix)) return task.t;
+      if(taskKey(block.time, task.t, 0).startsWith(prefix)) return trTitle(task.t);
     }
   }
   return "";
 }
 
 async function renderReport(report){
-  document.getElementById("page-title").textContent = "Dagoverzicht";
+  document.getElementById("page-title").textContent = td("Dagoverzicht","Daily Overview");
   document.getElementById("page-sub").textContent = formatDateLong(report.date);
   document.getElementById("page-notice").textContent = "";
-  document.getElementById("page-hint").textContent = "Alleen zichtbaar voor jou als beheerder.";
+  document.getElementById("page-hint").textContent = td("Alleen zichtbaar voor jou als beheerder.","Only visible to you as admin.");
 
   const content = document.getElementById("content");
   content.innerHTML = "";
@@ -2229,9 +2647,9 @@ async function renderReport(report){
     const head = document.createElement("div");
     head.className = "report-shift-head";
     head.innerHTML = `
-      <h3>${shift.label}</h3>
-      <div class="report-shift-stat"><span class="dot done"></span> ${done} Gereed &nbsp; <span class="dot nvt"></span> ${nvt} N.v.t.</div>
-      <div class="report-shift-stat"><span class="dot open"></span> ${open} Open &nbsp; <span class="dot notes"></span> ${notes} ${notes === 1 ? "opmerking" : "opmerkingen"}</div>
+      <h3>${trShiftLabel(shiftKey)}</h3>
+      <div class="report-shift-stat"><span class="dot done"></span> ${done} ${td("Gereed","Done")} &nbsp; <span class="dot nvt"></span> ${nvt} ${td("N.v.t.","N/A")}</div>
+      <div class="report-shift-stat"><span class="dot open"></span> ${open} Open &nbsp; <span class="dot notes"></span> ${notes} ${td(notes===1?"opmerking":"opmerkingen",notes===1?"note":"notes")}</div>
       <div class="report-pct ${pctDone === 100 ? "pct-100" : ""}">${pctDone}<small>%</small></div>
     `;
     wrap.appendChild(head);
@@ -2254,14 +2672,14 @@ async function renderReport(report){
         task.classList.add("has-notes");
         const reason = document.createElement("div");
         reason.className = "report-task-notes";
-        reason.textContent = `N.v.t. — ${entry.nvtReason} (${entry.sBy || ""})`;
+        reason.textContent = `${td("N.v.t.","N/A")} — ${entry.nvtReason} (${entry.sBy || ""})`;
         task.appendChild(reason);
       }
       if(entry.n && entry.n.trim()){
         task.classList.add("has-notes");
         const noteEl = document.createElement("div");
         noteEl.className = "report-task-notes";
-        noteEl.textContent = `${entry.n.trim()} (${entry.nBy || "onbekend"})`;
+        noteEl.textContent = `${entry.n.trim()} (${entry.nBy || td("onbekend","unknown")})`;
         task.appendChild(noteEl);
       }
       taskList.appendChild(task);
@@ -2270,7 +2688,7 @@ async function renderReport(report){
       const empty = document.createElement("div");
       empty.className = "report-task-notes";
       empty.style.padding = "10px 18px";
-      empty.textContent = "Nog geen taken bijgewerkt op deze dag.";
+      empty.textContent = td("Nog geen taken bijgewerkt op deze dag.","No tasks updated for this day yet.");
       taskList.appendChild(empty);
     }
     wrap.appendChild(taskList);
@@ -2290,15 +2708,23 @@ function sendReportMail(){
 
   const noteLines = Object.entries(log)
     .filter(([_, e]) => e.n && e.n.trim())
-    .map(([taskId, e]) => `- ${findTaskTitle(shiftKey, taskId)}: ${e.n.trim()} (${e.nBy || "onbekend"}, ${e.nAt || ""})`)
+    .map(([taskId, e]) => `- ${findTaskTitle(shiftKey, taskId)}: ${e.n.trim()} (${e.nBy || td("onbekend","unknown")}, ${e.nAt || ""})`)
     .join("\n");
   const nvtLines = Object.entries(log)
     .filter(([_, e]) => e.s === "N.v.t." && e.nvtReason)
-    .map(([taskId, e]) => `- ${findTaskTitle(shiftKey, taskId)}: ${e.nvtReason} (${e.sBy || "onbekend"}, ${e.sAt || ""})`)
+    .map(([taskId, e]) => `- ${findTaskTitle(shiftKey, taskId)}: ${e.nvtReason} (${e.sBy || td("onbekend","unknown")}, ${e.sAt || ""})`)
     .join("\n");
 
-  const body =
-`${shift.label} — ${formatDateLong(selectedDate)}
+  const body = lang === 'en'
+? `${trShiftLabel(shiftKey)} — ${formatDateLong(selectedDate)}
+
+Done: ${done}/${total} (${pctDone}%)
+N/A: ${nvt}
+Still open: ${open}
+${noteLines ? "\nNotes:\n" + noteLines : ""}${nvtLines ? "\n\nN/A reasons:\n" + nvtLines : ""}
+
+Sent by: ${currentUser || "unknown"}`
+: `${trShiftLabel(shiftKey)} — ${formatDateLong(selectedDate)}
 
 Gereed: ${done}/${total} (${pctDone}%)
 N.v.t.: ${nvt}
@@ -2307,7 +2733,9 @@ ${noteLines ? "\nOpmerkingen:\n" + noteLines : ""}${nvtLines ? "\n\nN.v.t.-reden
 
 Verzonden door: ${currentUser || "onbekend"}`;
 
-  const subject = `${shift.label} overzicht — ${formatDateLong(selectedDate)}`;
+  const subject = lang === 'en'
+    ? `${trShiftLabel(shiftKey)} overview — ${formatDateLong(selectedDate)}`
+    : `${trShiftLabel(shiftKey)} overzicht — ${formatDateLong(selectedDate)}`;
   window.location.href = `mailto:ms@urbanresidences.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
@@ -3120,13 +3548,700 @@ const SOPS = [
 `
   },
 ];
+
+// ── English SOP translations ──────────────────────────────────────────────────
+const SOP_EN = {
+  "sop-72uur-controle-reserveringen": {
+    titleEn: "Reservation Check — 72 Hours",
+    htmlEn: `
+      <h2>1. Purpose</h2>
+      <p>This SOP ensures that all reservations arriving within the next 72 hours are complete, correct and up to date in the PMS, and that all outstanding requests have been followed up in time. This prevents errors at check-in and operational surprises.</p>
+      <h2>2. When to perform?</h2>
+      <p>Carry out this check every day before the arrivals of the next 3 days. Always check arrivals for:</p>
+      <ul><li>Tomorrow</li><li>The day after tomorrow</li><li>The day after that</li></ul>
+      <h2>3. Check all OTA extranets</h2>
+      <p>Open every OTA extranet through which the hotel receives reservations. Go to the reservations overview and select arrivals for the next 3 days. Check each reservation individually for:</p>
+      <ul>
+        <li>Guest name</li><li>Number of guests</li><li>Check-in date</li><li>Check-out date</li>
+        <li>Room type</li><li>Number of rooms</li><li>Price and total amount</li><li>Rate plan</li>
+        <li>Any supplements and extras</li><li>Payment method and payment guarantee</li>
+        <li>Special requests and notes</li><li>Cancellation conditions</li><li>Reservation status</li>
+      </ul>
+      <h2>4. Compare OTA with the PMS</h2>
+      <p>Check each OTA reservation again in the PMS. The details must match completely.</p>
+      <table class="sop-table">
+        <tr><th>Checkpoint</th><th>OTA</th><th>PMS</th></tr>
+        <tr><td>Guest name</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Number of guests</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Check-in date</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Check-out date</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Room type</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Number of rooms</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Price / total amount</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Rate plan</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Payment method / guarantee</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td><strong>Special requests</strong></td><td>☐ Correct</td><td>☐ Correct</td></tr>
+        <tr><td>Status</td><td>☐ Correct</td><td>☐ Correct</td></tr>
+      </table>
+      <h2>5. Check all requests and communications</h2>
+      <p>Verify that all guest questions, requests and messages for the next 72 hours have been handled:</p>
+      <ul>
+        <li>Email</li><li>Messages and requests via all OTAs</li><li>Special requests attached to the reservation</li>
+        <li>Questions about arrival time, parking, beds, extras, early check-in and late check-out</li>
+        <li>All requests requiring a response or action from the hotel</li>
+      </ul>
+      <div class="sop-callout">For each request it must be clear what the guest is asking, whether a reply has been sent, what has been agreed and whether any action is still outstanding.</div>
+      <h2>6. Arrival highlights</h2>
+      <ul>
+        <li>VIP or special guests</li><li>Special occasions</li><li>Early check-in / late check-out</li>
+        <li><strong>Parking arrangements (!)</strong></li><li>Extra beds, cots or other amenities</li>
+        <li>Payments or payment issues</li><li>Technical or operational particulars</li>
+        <li>Overbookings or non-standard room types</li>
+      </ul>
+      <h2>7. Action on a discrepancy</h2>
+      <ul>
+        <li>Correct the error immediately if you have the authority to do so.</li>
+        <li>Cannot be resolved immediately? Assign the action to the responsible colleague.</li>
+        <li>After correction, check again that OTA and PMS match.</li>
+        <li>Inform relevant colleagues when the discrepancy affects the guest's arrival.</li>
+      </ul>
+      <h2>8. Final check</h2>
+      <ul class="sop-checklist">
+        <li>All OTA arrivals for the next 72 hours have been checked.</li>
+        <li>All reservations have been compared with the PMS.</li>
+        <li>Prices and reservation details are correct.</li>
+        <li>All special requests have been reviewed.</li>
+        <li>Direct reservations and emails have been checked.</li>
+        <li>All OTA messages and requests have been checked.</li>
+        <li>Outstanding actions have been assigned to the right person.</li>
+        <li>Arrival highlights for the coming days are known to the team.</li>
+      </ul>
+      <h2>9. Sign off</h2>
+      <div class="sop-signoff">
+        <div><label>Date</label><div class="sop-line"></div></div>
+        <div><label>Completed by</label><div class="sop-line"></div></div>
+        <div style="grid-column:1/-1;"><label>Notes / actions</label><div class="sop-line"></div><div class="sop-line" style="margin-top:8px;"></div></div>
+      </div>
+    `
+  },
+  "openen-overdracht-nachtdienst": {
+    titleEn: "Opening — Handover from Night Shift",
+    htmlEn: `
+  <h2>Handover from the night shift</h2>
+  <ul>
+    <li>Read the night shift handover in the Duty Report in Google Drive.</li>
+    <li>Process any action points — such as noise complaints or notes for reception, HK or TD — in the guest notes in MEWS and pass them on to the relevant department.</li>
+    <li>Process payments for check-ins left by the security guard (if needed).</li>
+    <li>Skim the handovers from the past few days to know what's going on.</li>
+  </ul>
+`
+  },
+  "no-shows-verwerken": {
+    titleEn: "Processing No-Shows",
+    htmlEn: `
+  <h2>What is a no-show?</h2>
+  <ul>
+    <li>A no-show occurs when a guest fails to arrive and does not check in.</li>
+    <li>Always check carefully whether the reservation really is a no-show — look for a registration card in the folder or a note in the reservation.</li>
+    <li>If there is no such evidence, check whether payment has already been made and how it was booked.</li>
+  </ul>
+  <h2>No-show — MEWS/Synxis</h2>
+  <p>If the reservation was made through our own website, process the no-show via MEWS.</p>
+  <p>Open the reservation in MEWS → Status tab → Cancellation → Under Reason select 'No-show' and enter your initials → Tick 'Apply Cancellation Fee' → Click OK.</p>
+  <h2>No-show — Booking.com</h2>
+  <p>If the reservation was made through Booking.com, process the no-show via the Extranet.</p>
+  <p>Open the reservation in the Booking.com Extranet → select 'Mark as a no show' on the right side of the profile. The following options will appear:</p>
+  <ul>
+    <li>If the guest already paid online, or if payment was due at arrival and the card has been verified, click "no, charge the guest".</li>
+    <li>If payment was due at arrival and the card is <strong>not</strong> verified, click "yes, waive the fee" — we have no payment guarantee.</li>
+    <li>Then go to MEWS and cancel the reservation there as well. Make sure to tick "apply cancellation fee". The billing will show the total amount as a negative "cancellation fee", which you can move to the Booking.com paymaster.</li>
+  </ul>
+  <div class="sop-callout">Did the billing not go negative automatically, or did you forget to tick "apply cancellation fee"? No problem — you can add the total nights in billing as "cancellation fee" and move it to the Booking.com paymaster.</div>
+  <h2>No-show — Expedia</h2>
+  <p>If the reservation was made through Expedia, process the no-show via the Extranet.</p>
+  <p>Open the reservation in the Expedia Extranet → search for the guest profile using the magnifying glass top right → select "Mark as no-show" on the left side of the profile. The following option will appear:</p>
+  <ul>
+    <li>If the guest paid everything online, or if payment was due at arrival, click "charge full cancellation fee".</li>
+  </ul>
+  <div class="sop-callout">Make sure to complete all these steps, otherwise we will be charged commission! Afterwards, check in MEWS that the reservation has also been cancelled (this may take a few minutes). If not: Status tab → Cancellation → Reason: No-show → Tick "Apply cancellation fee" (only if paid) → OK. Done.</div>
+`
+  },
+  "housekeepinglijst-controleren": {
+    titleEn: "Checking the Housekeeping List",
+    htmlEn: `
+  <h2>Checking the housekeeping book</h2>
+  <ul>
+    <li>At reception there is a black folder called the housekeeping book, where all long-stay reservations are recorded. Guests staying longer than 28 nights (long-stayers) receive fixed cleaning days per week: 1 regular and 1 refresh per week. Check the housekeeping book for preferred days and the long-stay cleaning schedule.</li>
+    <li>The book also shows which days guests without fixed days receive a clean. Colour codes: <strong>Refresh = green</strong>, <strong>Regular = blue</strong>, <strong>Final = pink</strong>. A refresh means the guest receives fresh towels, shampoo and body wash, and bins may be replaced plus toilet paper restocked. A regular clean means the entire apartment is cleaned.</li>
+  </ul>
+  <h2>Printing the housekeeping list</h2>
+  <p>Go to Dashboard → Space status. Under "Options", "Display assignees" is always on — you can remove this. Then click the printer icon → To PDF → and print it out.</p>
+  <h2>Reading the numbers on the HSK list</h2>
+  <p>Once the HSK list is printed, numbers will appear on it. Read these by looking at the housekeeping book schedule: for example, a guest with a refresh is marked green on the HSK list.</p>
+`
+  },
+  "departures-checken": {
+    titleEn: "Checking Departures",
+    htmlEn: `
+  <h2>Opening the departures</h2>
+  <p>Open the departures list via <em>Remaining departures</em> on your MEWS dashboard.</p>
+  <h2>Checking outstanding payments</h2>
+  <ul>
+    <li>If a guest has not yet paid, this will appear in the list. When the room comes to check out, take the room key with you.</li>
+    <li>Read the guest notes to find out what needs to happen with any outstanding amount. If it states that room nights and city tax need to be moved to the Booking.com paymaster, do this in billing — otherwise you will not be able to check out the guest.</li>
+  </ul>
+  <div class="sop-callout"><strong>Always</strong> open the billing when checking out and confirm that everything has actually been paid — even if there is nothing in the notes.</div>
+  <ul>
+    <li>Is there an outstanding parking charge or Chromecast rental? Have the guest pay at the front desk, or deduct it from the deposit.</li>
+    <li>Once everything is paid, click check-out. Make sure "close balanced bills" is enabled. You may <strong>not</strong> tick "check out with unbalanced bill" without permission.</li>
+  </ul>
+  <h2>Cancelling the deposit</h2>
+  <p>Go to the guest profile → payments → preauthorizations → 3 dots → cancel.</p>
+  <div class="sop-callout">The deposit can only be cancelled once the room has been approved for deposit release. Cancel the deposit only <strong>after</strong> TD has inspected all rooms.</div>
+`
+  },
+  "mails-beantwoorden": {
+    titleEn: "Answering Emails",
+    htmlEn: `
+  <p>Answering emails is usually straightforward but can occasionally be complex. We often receive the same questions, such as about parking, late check-out and early check-in. Aim to compose your emails as professionally as possible.</p>
+  <h2>Structure of a reply</h2>
+  <ul>
+    <li>Begin with a formal salutation: "Dear [Name],"</li>
+    <li>Start a new paragraph with your opening line, for example "Thank you for your message regarding..." or "Thank you for your response" — depending on the type of email.</li>
+    <li>Use another paragraph to answer the guest's question. Give a concrete explanation rather than a brief confirmation (e.g. don't just say "I have reserved parking for you" — explain the parking procedure).</li>
+    <li>Close with something like "If you have any further questions, please let us know." — everyone is free to word this in their own way.</li>
+    <li>Add your own signature with your name and job title.</li>
+  </ul>
+`
+  },
+  "registratiekaarten-uitprinten": {
+    titleEn: "Printing Registration Cards",
+    htmlEn: `
+  <h2>Printing per guest</h2>
+  <p>Go to today's arrivals. For the relevant guest you can print the registration card.</p>
+  <h2>Printing all registration cards at once</h2>
+  <p>Go to "Reservation Overview" and select "Registration cards".</p>
+  <div class="sop-callout">Tip! You can print two registration cards per page (adjustable just before printing) — this saves paper. Use the paper cutter to trim them neatly and place them behind the corresponding key card.</div>
+`
+  },
+  "morning-meeting": {
+    titleEn: "Morning Meeting",
+    htmlEn: `
+  <ul>
+    <li>The morning meeting takes place every day at 10:00.</li>
+    <li>The person on the morning shift leads the meeting.</li>
+    <li>If there is a second person at reception, the morning meeting <strong>MUST</strong> be held upstairs. If that is not possible, it may be held downstairs.</li>
+    <li>Topics covered: fill in any LCO (late check-outs), early CI (check-ins), HSK and TD tasks, and any room extras.</li>
+  </ul>
+`
+  },
+  "voorraden-aanvullen-fo": {
+    titleEn: "Restocking Supplies (Front Office)",
+    htmlEn: `
+  <ul>
+    <li>On level -1 we have an FO storage room (46) and a wine storage room (40). It is important that supplies are kept stocked.</li>
+    <li>Every Tuesday and Sunday we restock the front desk — this may include wine/cava, or printer ink that has run out.</li>
+    <li>If an item is out of stock, we create an order list. There is a file for this on the reception computers: <em>Bestellijst FRONT-OFFICE.docx</em>.</li>
+  </ul>
+`
+  },
+  "betalingen-verwerken-aankomsten": {
+    titleEn: "Processing Payments & Reviewing Arrivals",
+    htmlEn: `
+  <h2>Synxis — reservations from our own website</h2>
+  <p>You will receive 2 emails per booking: 1 GlobRes confirmation and 1 from Cubilis (our connection between the website and MEWS). You then process the payment in MEWS.</p>
+  <h2>Booking.com — Prepaid</h2>
+  <p>The reservation details indicate how the booking was made:</p>
+  <ul>
+    <li>If the notes contain <strong>"this reservation has been pre-paid"</strong>, the booking has already been paid online. Add to the notes: "Nights + CT to be moved to Booking.com paymaster + deposit at arrival".</li>
+    <li>Not sure whether the reservation has been paid? Check in the Extranet: copy the reservation number and look it up in Booking.com. Under payment status you can see whether the guest paid online.</li>
+    <li>If the notes contain <strong>"You will collect payment from the guest at your property"</strong>, the guest has not yet paid online and will pay on arrival. Add to the notes: "Guests pay everything at check-in + deposit".</li>
+    <li>The Extranet may also show "You are responsible for collecting payment" — the guest must then pay everything at check-in.</li>
+  </ul>
+  <div class="sop-callout">If guests choose to pay on arrival, we need a payment guarantee (credit card details) so we have security in case of a no-show. If it says "invalid credit card details", we have no guarantee for that reservation.</div>
+`
+  },
+  "check-in-procedure": {
+    titleEn: "Check-in Procedure",
+    htmlEn: `
+  <h2>1. Ask the guest for the name on the reservation</h2>
+  <ul>
+    <li>Go to "remaining arrivals".</li>
+    <li>Click "Check in" next to the correct guest.</li>
+  </ul>
+  <div class="sop-callout">Note: a room can only be checked in when "inspected" shows in green — meaning the room has been inspected. If it is not green, do not yet check the guest in.</div>
+  <h2>2. Request ID documents from all guests</h2>
+  <p>Enter the names and dates of birth of all guests, and the ID number of the main guest.</p>
+  <ul>
+    <li><strong>Main guest:</strong> click the person icon next to the name → "identity documents" → plus sign → enter "number" (passport/ID number) → select "type" and expiry date → click "create".</li>
+    <li>Then enter the date of birth under "profile" (typing via the keyboard is faster than using the mouse).</li>
+  </ul>
+  <div class="sop-callout"><strong>Note:</strong> all guests must be 21 or older. Always verify the date of birth.</div>
+  <ul>
+    <li>Click "SAVE" and then the X in the top left.</li>
+    <li><strong>Other guests:</strong> go to the "group" tab, scroll down and under "add new customer" enter title, first name, last name and date of birth, then click "create". Repeat for everyone. If it doesn't work, check the "properties" tab to ensure the number of "adults" matches the actual number of guests.</li>
+  </ul>
+  <h2>3. Registration card and deposit terms</h2>
+  <p>During registration, hand the guest the printed registration card and deposit terms. Not yet printed? Go to the "status" tab → registration card → print only the first page (only needed for the main guest). Have the guest sign the registration card, confirming that the details are correct.</p>
+  <h2>4. Deposit</h2>
+  <table class="sop-table">
+    <tr><th>Room type</th><th>Deposit amount</th></tr>
+    <tr><td>Studio – corner studio</td><td>€300</td></tr>
+    <tr><td>Family studio</td><td>€300</td></tr>
+    <tr><td>Apartment &amp; large apartment</td><td>€500</td></tr>
+    <tr><td>Penthouse &amp; I-Penthouse</td><td>€500</td></tr>
+  </table>
+  <h2>5. What still needs to be paid?</h2>
+  <p>Go to "billing" and carefully check what is outstanding. The system creates 1 billing and 1 "preview" billing — make sure everything is under 1 heading so you can see exactly what the guest still owes. The outstanding amount is shown top right under "to be paid".</p>
+  <div class="sop-callout"><strong>Do not mention</strong> rose petals or a bottle of cava etc. — this could spoil a surprise for other guests nearby. Instead say: "The tourist tax, extras and parking are still open to pay, a total of €xx.xx."</div>
+  <h2>6. Collecting the deposit</h2>
+  <p>The guest may pay by credit card or debit card at the terminal.</p>
+  <ul>
+    <li>Does the reservation show "virtual credit card"? Go to billing and ensure room nights + city tax are in 1 billing screen; charge these two costs to the virtual card. A virtual card can <strong>only</strong> be charged for nights + city tax, <strong>not</strong> for the deposit.</li>
+    <li><strong>Deposit by credit card is preferred</strong> — only possible if the guest has the card with them and it is in their own name. The deposit may also be paid by someone else (friend, partner, family) at their own responsibility.</li>
+  </ul>
+  <div class="sop-callout"><strong>Note:</strong> this method is only possible for stays of fewer than 7 nights — MEWS cannot hold a deposit for longer than 7 days; after that it is automatically released.</div>
+  <ul>
+    <li><strong>MEWS:</strong> go to "payments" → "preauthorization". Is there already a credit card in the guest's own name in the system? Click online preauthorization → payment card → enter the deposit amount → type "Deposit" in "notes" → click "create".</li>
+    <li><strong>Deposit by debit or credit card via terminal:</strong> go to "payments" → preauthorization → choose "terminal" instead of "online preauthorization". Select the terminal, enter the deposit amount in "amount", enter "deposit" in "notes".</li>
+  </ul>
+  <div class="sop-callout"><strong>IMPORTANT!</strong> Note in the MEWS reservation: (1) how much deposit was paid, (2) how it was paid, (3) your initials — so we know exactly what's what at check-out. Also note any special circumstances.</div>
+  <h2>7. Deposit / no deposit</h2>
+  <p><strong>All guests</strong> must pay a deposit, unless it is a long-stay guest — this will be noted in their reservation.</p>
+  <p>Explain the deposit terms: no smoking inside the building (only on the balcony with the balcony door closed), no deep-frying, etc. The lead booker signs with name and signature.</p>
+  <h2>8. Final step</h2>
+  <ul>
+    <li>Hand over the room keys and mention <strong>only</strong> the floor — for privacy reasons you may not announce the room number.</li>
+    <li>Is this the guest's first visit? Explain: apartments may receive up to 4 visitors, studios fewer (fire safety); Wi-Fi login is on the back of the front door; there is a welcome pack of coffee/tea for free use; the front desk is open until 22:00, after which a security guard is always present; we also rent bicycles; the supermarket is nearby and we also sell coffee, laundry detergent, wine and beer; check-out is at 11:00.</li>
+  </ul>
+`
+  },
+  "booking-com-reservering-terugbetaling": {
+    titleEn: "Booking.com — New Reservation & Refund",
+    htmlEn: `
+  <h2>Cancellation — own website (Synxis)</h2>
+  <p>When someone cancels a reservation via www.urbanresidences.com, two emails arrive: (1) help@globres.com "GlobRes Cancelled-GUEST", and (2) Urban Residences Rotterdam "Cancelled reservation via SynXis".</p>
+  <ul>
+    <li>Process email 1: find the reservation in MEWS using the reservation number ('Confirmation Number').</li>
+    <li>Check whether the guest was permitted to cancel (Fully Flexible rate and at least 7 days before arrival date).</li>
+    <li>Permitted to cancel + paid via iDeal → this must be refunded by the Manager or Supervisor via the bank; forward the cancellation to a manager.</li>
+    <li>Permitted to cancel + paid via Credit Card → automatically refunded, but the payment must still be brought to €0 in the MEWS Billing (counter-book the External Payment – Prepayment, then close the bill).</li>
+  </ul>
+  <p>Once everything is processed: move email 1 and 2 to the folder 'A-verwerkt' → 02. OTA/Boekingen → Globres/Hoteliers.</p>
+  <h2>Refund — own website (Synxis)</h2>
+  <p>Bookings made through our website are always pre-paid, except for tourist tax. When processing a cancellation, always first check whether the guest was permitted to cancel (Early Bird is non-refundable).</p>
+  <ul>
+    <li>iDeal payments: refunded by Brigitte via the bank. Forward the cancellation to Mildred so she can look up the account number and send it to Brigitte. Include the reason for the refund and the reservation number.</li>
+    <li>Credit card payments: automatically refunded if it is a fully flexible booking that falls outside the 7-day cancellation policy. Afterwards process the refund in MEWS as Payment → External Payment → Pre-payment (same as a regular payment, but as a refund). Close and send the invoice to the guest, and cancel the reservation in MEWS.</li>
+  </ul>
+  <h2>New reservation — Booking.com</h2>
+  <ul>
+    <li>Guest notes are automatically processed in the MEWS reservation notes. Answer questions via the Booking.com extranet.</li>
+    <li>After processing, move the email to 'A-verwerkt' → 02. OTA/Boekingen → Booking.com.</li>
+  </ul>
+  <h2>Refund — Booking.com</h2>
+  <div class="sop-callout">Fully Flexible cancellations outside the cancellation period are <strong>always</strong> handled by the guest themselves via the Booking.com Extranet. We then receive an email "Cancelled reservation via Booking.com". If the guest is permitted to cancel, simply move the email to the processed folder — nothing else to do. If the email mentions a "Cancellation fee", the guest cancelled outside the permitted period (or the rate is non-refundable). In that case, try to charge the guest's card via MEWS (the Billing tab) if payment has not yet been made. If this fails, Brigitte and Mildred will see the reservation in the accounting ledger and resolve it.</div>
+`
+  },
+  "check-out-procedure": {
+    titleEn: "Check-out Procedure",
+    htmlEn: `
+  <h2>Basics</h2>
+  <ul>
+    <li>Greet the guest and ask for their room number.</li>
+    <li>Always ask whether everything was to their satisfaction during their stay.</li>
+    <li>Does the guest have any comments? Note them and always pass them on to the relevant department (e.g. TD for maintenance issues).</li>
+    <li>Did the guest have a good experience? Ask if they would like to leave a review (Booking, Expedia, Tripadvisor, Google etc.).</li>
+  </ul>
+  <h2>Returning the deposit</h2>
+  <p>If a deposit was paid, this should be noted in the reservation notes.</p>
+  <ul>
+    <li><strong>Debit or credit card:</strong> guests do not need to wait. For debit card: ask for IBAN details; refund processed within 5 business days.</li>
+  </ul>
+  <p><strong>Cancelling the deposit:</strong> payments tab → 3 dots on the right → cancel. The amount is then almost immediately available again on the credit card. If you do not do this, it takes approximately 7 days for MEWS to release it, after which the credit card company still needs to process it.</p>
+  <h2>Room not eligible for deposit return (damage)</h2>
+  <ul>
+    <li>Debit and credit card: go to billing → charge to accommodation → property damage. Note in the reservation why the deposit is being withheld.</li>
+    <li>Debit card: post to unbalanced bill; refunded within 14 days.</li>
+    <li>Credit card: process the payment in billing via payments → pre-authorisation. Check in the payments tab whether the remainder has been released automatically.</li>
+  </ul>
+  <h2>Checking out a guest in MEWS</h2>
+  <ul>
+    <li>Open the reservation and check in the notes and/or Billing/Payments whether the guest paid a deposit. If so, ask TD to inspect the room.</li>
+    <li>Check whether the payment balance in "Billing" is €0. If not, find out which amount is outstanding and why (e.g. parking, tourist tax, or the deposit to be returned).</li>
+    <li>Is everything at €0 (no + or - in Billing)? Click "Close" bottom right → on the next page click "Close" again on the right.</li>
+    <li>Click the mail icon to send the invoice to the guest.</li>
+    <li>Thank the guest for their stay and wish them a pleasant day.</li>
+  </ul>
+`
+  },
+  "late-check-out-beleid": {
+    titleEn: "Late Check-out — Policy",
+    htmlEn: `
+  <ol>
+    <li>Late check-outs cannot be booked in advance — guests may only request this on arrival, subject to availability.</li>
+    <li>The cost for a late check-out is €50; the guest may then check out no later than 15:00.</li>
+    <li>We do not offer a late check-out if room occupancy is 80% or higher — in that case we prefer to sell the room.</li>
+    <li>Is a guest booking a late check-out? Set the room to OOO in MEWS with the text "late check-out hsk morgen". This way the colleague working the following morning can clearly see that the room should be marked as Final on the cleaning list.</li>
+  </ol>
+`
+  },
+  "oaky-upselling": {
+    titleEn: "OAKY — Upselling Tool",
+    htmlEn: `
+  <p>Oaky is our upselling tool. After making a reservation, guests receive an email with options to personalise their stay, such as a room upgrade, parking, rose petals and Nespresso coffee cups.</p>
+  <ul>
+    <li>Every day we receive an Oaky Pre-arrival Report in the mailbox listing the products booked by guests arriving that day.</li>
+    <li>In MEWS these extra booked options appear under "Products" in each reservation.</li>
+    <li>Most requests are processed automatically, but occasionally you need to accept or decline them yourself — you will receive an email for these. Review them via <a href="https://dashboard.getoaky.com/" target="_blank" rel="noopener">dashboard.getoaky.com</a>.</li>
+  </ul>
+  <div class="sop-callout">Before accepting any request, always check whether availability exists — for example: for a room upgrade, first check whether the desired room type is available.</div>
+`
+  },
+  "sleutelkaarten-aanmaken": {
+    titleEn: "Making Key Cards (Hotek Keycards)",
+    htmlEn: `
+  <ol>
+    <li>Get the key card holders.</li>
+    <li>Use your check-in list for an overview of all guest names.</li>
+    <li>Open the programme 'DYMO Label'.</li>
+    <li>Replace the name and room number and click 'Print'.</li>
+    <li>Open the programme 'Hotek Keycards'.</li>
+    <li>Double-click the room number in the blue area.</li>
+    <li>Click 'Check-out without card' and click 'OK'.</li>
+    <li>The area will now turn green — double-click the room number again.</li>
+    <li>Make sure 'Copy card' is ticked twice.</li>
+    <li>Enter the guest's check-out date.</li>
+    <li>Make sure the 'Entrees' box is ticked.</li>
+    <li>Click 'Make card'.</li>
+    <li>Make 2 key cards per room.</li>
+  </ol>
+`
+  },
+  "einde-van-je-dienst": {
+    titleEn: "End of Shift — Handover & Closing",
+    htmlEn: `
+  <h2>Handover morning/mid shift</h2>
+  <ul>
+    <li>Note any action points, follow them up where needed and ensure they are dealt with during your shift.</li>
+    <li>Skim the handovers from the past few days (know what's going on!).</li>
+  </ul>
+  <h2>Answering emails</h2>
+  <p>See the SOP 'Answering Emails'.</p>
+  <h2>TD handover</h2>
+  <p>When TD is going home: check whether any room needs to be set to OOO.</p>
+  <h2>Do a round</h2>
+  <ul>
+    <li>Start at the entrance — is it dirty? If so, add it as an extra task in the duty report for the night shift.</li>
+    <li>Loud music, smell of smoke or too many people in one room? Hand out warnings!</li>
+    <li>Log your findings in MEWS and note them in the duty report.</li>
+  </ul>
+  <h2>Check supplies</h2>
+  <ul>
+    <li>Make sure all supplies at the front desk are fully stocked.</li>
+    <li>Make sure the reception area is tidy — no unnecessary papers, boxes or clutter.</li>
+  </ul>
+  <h2>Making keys</h2>
+  <ul>
+    <li>Process emails — make sure all emails up to 21:00 have been handled.</li>
+    <li>Emails you are unsure how to process: flag them.</li>
+  </ul>
+  <h2>Count the cash register</h2>
+  <ul>
+    <li>Count the cash register.</li>
+    <li>Check that the cash register matches the Balance in MEWS (found via Cashier on the dashboard).</li>
+    <li>Process the cash register contents (and any surpluses/shortfalls) via internal messages under 'Kassa' (Messages top right on the dashboard).</li>
+  </ul>
+  <h2>Tidying up</h2>
+  <p>Put all dirty dishes in the dishwasher and turn it on. Make sure rooms 102 and 104 are tidy.</p>
+  <h2>Night security handover</h2>
+  <ul>
+    <li>Are there any check-ins booked with a virtual card? Charge these via the system.</li>
+    <li>Discuss with the security guard which rooms need attention and whether there are any expected check-ins.</li>
+  </ul>
+  <div class="sop-callout">Tip! Is it quiet on arrivals tomorrow? Check whether you can pre-assign rooms on the highest possible floors before making the keys, so guests can enjoy the view.</div>
+`
+  },
+  "verwarming-verkoeling-uitleg": {
+    titleEn: "Technical Issues — Heating/Cooling",
+    categoryEn: "Technical Services",
+    htmlEn: `
+  <p>All rooms have underfloor heating. There are thermostats in both the bathroom and the living room (and bedrooms in apartments/penthouses).</p>
+  <ul>
+    <li>When the light (the snowflake symbol) is on, the system is requesting cold water.</li>
+    <li>To get either cold or warm, the thermostat in all rooms must be set to the same position. If the light is on in the living room but not in the bathroom, you are requesting cold water in the living room and warm in the bathroom.</li>
+    <li>Warm and cold mixed = lukewarm — very little happens in that case.</li>
+    <li>These are large pipes running under the floor carrying water — it takes approximately 1.5 to 4 hours for the requested temperature to actually be reached.</li>
+  </ul>
+  <div class="sop-callout"><strong>DON'T KEEP ADJUSTING IT!</strong> In winter, advise the guest to set everything to 22 degrees — it will genuinely be warm in about 3 hours. In summer, advise the guest to set everything to the snowflake symbol (light on) and 0 degrees — it will be approximately 8 degrees cooler.</div>
+  <p><strong>It is NOT an air conditioner!</strong> All guests have a fan in their wardrobe or hallway cupboard that they are welcome to use.</p>
+  <p>Is the heating not working and the guest is cold? Provide a small electric heater from the cupboard in room 102 (numbered). Note in the guest's MEWS reservation notes which heater number you provided, so we can retrieve it at check-out.</p>
+`
+  },
+  "fietsverhuur": {
+    titleEn: "Bicycle Rental (Myhotelbike)",
+    htmlEn: `
+  <h2>Prices</h2>
+  <ul>
+    <li>3 hours: €10.50</li>
+    <li>1 day: €12.50</li>
+  </ul>
+  <h2>Renting out a bicycle</h2>
+  <p>We rent bicycles via the Myhotelbike programme: <a href="https://login.myhotelbike.com" target="_blank" rel="noopener">login.myhotelbike.com</a> — login credentials: see the password file at reception.</p>
+  <ul>
+    <li>Go to 'Rentals' at the top of the page → 'Add rental' → complete the form and click 'Submit'.</li>
+    <li>Print the form and have the guest sign it. The form can be filed in the 'Fietsverhuur' folder at reception.</li>
+    <li>Have the guest pay the amount shown on screen.</li>
+    <li>Process the payment in MEWS via Billing → Hotel Service → Facilities → Bicycle rent.</li>
+  </ul>
+  <h2>Modifying an active bicycle rental</h2>
+  <p>Click 'Edit' — you can add/remove days, change a bicycle number, or check out one bicycle from a group. Click 'Save'.</p>
+  <h2>Returning a bicycle &amp; repairs</h2>
+  <ul>
+    <li>Are the bicycle and keys being returned? Click 'End now'.</li>
+    <li>To log a repair: go to 'Repairs' → 'Add repair' → select the bicycle number → 'Submit'. Does the system indicate that an additional charge is required? Have the guest pay and always process this in MEWS as well.</li>
+  </ul>
+`
+  },
+  "chromecast-verhuur": {
+    titleEn: "Chromecast Rental",
+    htmlEn: `
+  <p>We rent out 5 Chromecasts (numbered 1 to 5) at €5 per day. Guests pay a deposit of €40, refundable when the Chromecast is returned in exactly the same condition: correct box, undamaged, and all cables present.</p>
+  <ul>
+    <li>The €40 deposit can be pre-authorised on the guest's credit card, or handled in cash.</li>
+    <li>Cash deposit: place it in an envelope in the deposit safe, including the sheet signed by the guest.</li>
+    <li>Always add a note to the reservation that the guest has rented a Chromecast, so it is visible at check-out.</li>
+  </ul>
+  <h2>Explaining usage to the guest</h2>
+  <p>Connect the Chromecast to the HDMI port of the Loewe TV, connect the power cable to the Chromecast and the wall socket. Select the HDMI port as the source using the "OK" button on the remote control. Make sure the guest is connected to the in-room Wi-Fi and downloads the 'Google Home' app to set up the Chromecast.</p>
+  <div class="sop-callout">The Chromecast must be returned to reception in its original condition (box, cables, all parts). If anything is missing or damaged, the full deposit will not be refunded.</div>
+`
+  },
+  "paybylink": {
+    titleEn: "PayByLink — Sending a Payment Link",
+    htmlEn: `
+  <p>It may happen that a guest makes or extends a reservation by phone and cannot come to reception to pay. In that case we send a payment link via PayByLink.</p>
+  <h2>Creating a payment link</h2>
+  <ul>
+    <li>Open <a href="https://secure.paybylink.com/" target="_blank" rel="noopener">secure.paybylink.com</a> and log in (if the details are not pre-filled, check the password file).</li>
+    <li>Click 'Actions' at the top → 'Create Payment'.</li>
+    <li>Fill in: Order ID (reservation number from MEWS, 5 digits), Amount (total amount), Client name, Mail address.</li>
+    <li>Description: 'Payment required for your reservation at Urban Residences Rotterdam'.</li>
+    <li>Language: Dutch or English as appropriate.</li>
+    <li>Click 'Create'. The guest will now receive an email with the payment link.</li>
+  </ul>
+  <h2>Processing the payment</h2>
+  <p>Once the guest has paid, we receive an email from PayByLink saying "The payment is successfully paid" along with the payment details. Process the payment as you would for a payment made through our own website (External Payment), and note that the payment was made via PayByLink including the payment method (iDeal, credit card, etc.).</p>
+`
+  },
+  "creditcard-autorisatie-terminal": {
+    titleEn: "Credit Card Authorisation at the Terminal",
+    htmlEn: `
+  <h2>Step 1: CC authorisation via the terminal</h2>
+  <ol>
+    <li>Select 'Other TRX'.</li>
+    <li>Select 'Reservation'.</li>
+    <li>Select the amount, press 'OK' and hand the terminal to the guest.</li>
+  </ol>
+  <div class="sop-callout">Keep the receipt safe by stapling it to the registration card! The authorisation code on the receipt and the associated card are needed to process the (refund) payment later.</div>
+  <h2>Step 2: Charge the CC authorisation (penalty)</h2>
+  <ol>
+    <li>Select 'Other TRX'.</li>
+    <li>Select 'Payment after RSV'.</li>
+    <li>Select the penalty amount to be withheld, confirm with 'OK'.</li>
+    <li>Enter the authorisation code from the receipt, confirm with 'OK'.</li>
+  </ol>
+  <p>Is there a remaining amount after the penalty has been charged? Proceed to Step 3 to release the remainder of the authorisation.</p>
+  <h2>Step 3: Release the CC authorisation</h2>
+  <p>First check whether the guest owes a penalty for violating house rules or deposit conditions. If so, follow Step 2 first. Note: you need the same credit card for the refund.</p>
+  <ol>
+    <li>Select 'Other TRX'.</li>
+    <li>Select 'Cancellation'.</li>
+    <li>Enter the Manager Password — see the password file at reception.</li>
+    <li>Enter the amount the guest will receive back, confirm with 'OK'.</li>
+    <li>Select cancellation type: 'Reservation'.</li>
+    <li>Enter the authorisation code from the receipt, confirm with 'OK'.</li>
+  </ol>
+`
+  },
+  "faciliteitcodes-kpn": {
+    titleEn: "KPN ÉÉN Feature Codes",
+    htmlEn: `
+  <p>Overview of feature codes for the KPN ÉÉN telephone exchange.</p>
+  <table class="sop-table">
+    <tr><th>Function</th><th>Code</th></tr>
+    <tr><td>Activate rejection of anonymous calls</td><td>*77</td></tr>
+    <tr><td>Deactivate rejection of anonymous calls</td><td>*87</td></tr>
+    <tr><td>Check anonymous call rejection status</td><td>*52*</td></tr>
+    <tr><td>Cancel automatic callback</td><td>#8</td></tr>
+    <tr><td>Voice-controlled automatic callback menu</td><td>#9</td></tr>
+    <tr><td>Activate always-forward</td><td>*72</td></tr>
+    <tr><td>Deactivate always-forward</td><td>*73</td></tr>
+    <tr><td>Check always-forward status</td><td>*21*</td></tr>
+    <tr><td>Activate always-forward to voicemail</td><td>*21</td></tr>
+    <tr><td>Deactivate always-forward to voicemail</td><td>#21</td></tr>
+    <tr><td>Activate forward on busy</td><td>*90</td></tr>
+    <tr><td>Deactivate forward on busy</td><td>*91</td></tr>
+    <tr><td>Check forward on busy status</td><td>*67*</td></tr>
+    <tr><td>Activate forward on busy to voicemail</td><td>*40</td></tr>
+    <tr><td>Deactivate forward on busy to voicemail</td><td>#40</td></tr>
+    <tr><td>Activate forward on no answer</td><td>*92</td></tr>
+    <tr><td>Deactivate forward on no answer</td><td>*93</td></tr>
+    <tr><td>Check forward on no answer status</td><td>*61*</td></tr>
+    <tr><td>Activate forward on no answer to voicemail</td><td>*41</td></tr>
+    <tr><td>Deactivate forward on no answer to voicemail</td><td>#41</td></tr>
+    <tr><td>Activate forward on unavailable</td><td>*94</td></tr>
+    <tr><td>Deactivate forward on unavailable</td><td>*95</td></tr>
+    <tr><td>Check forward on unavailable status</td><td>*63*</td></tr>
+    <tr><td>Activate selective forwarding</td><td>#76</td></tr>
+    <tr><td>Deactivate selective forwarding</td><td>#77</td></tr>
+    <tr><td>Check caller ID blocking status</td><td>*54*</td></tr>
+    <tr><td>Block caller ID per call</td><td>*67</td></tr>
+    <tr><td>Enable caller ID blocking (persistent)</td><td>*31</td></tr>
+    <tr><td>Disable caller ID blocking (persistent)</td><td>#31</td></tr>
+    <tr><td>Unblock caller ID per call</td><td>*65</td></tr>
+    <tr><td>Park call (hold)</td><td>*68</td></tr>
+    <tr><td>Retrieve parked call</td><td>*88</td></tr>
+    <tr><td>Pick up call</td><td>*98</td></tr>
+    <tr><td>Pick up call on another device</td><td>*11</td></tr>
+    <tr><td>Call back last incoming number</td><td>*69</td></tr>
+    <tr><td>Delete last incoming number</td><td>#92#</td></tr>
+    <tr><td>Check call waiting blocking status</td><td>*53*</td></tr>
+    <tr><td>Activate call waiting block</td><td>*43</td></tr>
+    <tr><td>Deactivate call waiting block</td><td>#43</td></tr>
+    <tr><td>Temporarily disable call waiting for next call</td><td>*70</td></tr>
+    <tr><td>Clear voicemail LED</td><td>*99</td></tr>
+    <tr><td>Check caller ID display status</td><td>*56*</td></tr>
+    <tr><td>Individual call pickup</td><td>*97</td></tr>
+    <tr><td>Break into existing call</td><td>*33</td></tr>
+    <tr><td>Transfer directly to voicemail</td><td>*55</td></tr>
+    <tr><td>Block forwarding of called number</td><td>*80</td></tr>
+    <tr><td>Activate do not disturb</td><td>*78</td></tr>
+    <tr><td>Deactivate do not disturb</td><td>*79</td></tr>
+    <tr><td>Last number redial</td><td>*66</td></tr>
+    <tr><td>Activate night mode</td><td>#70</td></tr>
+    <tr><td>Deactivate night mode</td><td>#71</td></tr>
+    <tr><td>Speed dial 100 (code 00–99)</td><td>*75</td></tr>
+    <tr><td>Speed dial 8 (code 2–9)</td><td>*74</td></tr>
+    <tr><td>Unlock device</td><td>*47</td></tr>
+    <tr><td>Lock device</td><td>*37</td></tr>
+    <tr><td>Retrieve voicemail messages (external server)</td><td>*86</td></tr>
+    <tr><td>Access voicemail (same as calling 1233)</td><td>*62</td></tr>
+  </table>
+`
+  },
+  "parking-systeem-intratone": {
+    titleEn: "Parking System Intratone",
+    htmlEn: `
+  <div class="sop-callout">Note: entry is only possible using the new phone numbers. Exit is always via the button on the side near the right-hand lift.</div>
+  <h2>Phone numbers</h2>
+  <ul>
+    <li>Staff park on P1: 00337000034559018</li>
+    <li>Guests park on P2: 00337000034535998</li>
+  </ul>
+  <p>When level P2 is full, guests may also park on P1.</p>
+  <p>Website: <a href="https://intratone.info/nl/" target="_blank" rel="noopener">intratone.info/nl</a> — login: see the password file at reception.</p>
+  <h2>1. Adding a new number</h2>
+  <ol>
+    <li>Click 'Residences' in the left column.</li>
+    <li>Click 'Urban Residences Rotterdam' at the top of the grey bar.</li>
+    <li>Click 'Create'.</li>
+    <li>Under 'Create a MOBILE KEY', click 'Create' on the right side of the screen.</li>
+    <li>Enter the 'Phone number' — foreign numbers <strong>without</strong> country code (0049-123456789 becomes 0-123456789).</li>
+    <li>Under 'Comment', enter the guest's name.</li>
+    <li>Tick 'Badge deactivation date' and select the guest's check-out date.</li>
+    <li>Under 'Authorisation', select: 'Lift 4th floor'. If the guest has an electric car to charge, select 'Lift 3rd floor'.</li>
+    <li>Click the blue 'Register' button.</li>
+    <li>Go back to 'Residences' → click 'Update all' → click 'Update'.</li>
+    <li>The guest is now added and can enter the car park using their phone number.</li>
+  </ol>
+  <h2>2. A returning guest</h2>
+  <p>A phone number cannot be added again as it was for a new guest. Instead use:</p>
+  <ol>
+    <li>Click 'Manage/Search' in the left column.</li>
+    <li>Select the 'Badges and remotes' tab.</li>
+    <li>Search by name or phone number (foreign numbers without country code).</li>
+    <li>Click on the guest's details.</li>
+    <li>Click 'Click here' next to 'Change the information'.</li>
+    <li>Under 'Badge deactivation date', change the check-out date to the new date.</li>
+    <li>Then follow the same closing steps as for a new guest (Register → Update all → Update).</li>
+  </ol>
+`
+  },
+  "hotel-employee-rate": {
+    titleEn: "Hotel Employee Rate — Policy & Processing",
+    htmlEn: `
+  <p>Urban Residences is registered with the Hotel Employee Rate programme: staff can book rooms at a discount at affiliated hotels, and their staff can do the same at ours.</p>
+  <div class="sop-callout"><strong>You may NOT</strong> book a room for yourself under this rate — this must be done via <a href="https://www.hotelemployeerate.com" target="_blank" rel="noopener">www.hotelemployeerate.com</a>. Ask your manager for guidance.</div>
+  <ul>
+    <li>The booking comes directly into MEWS — no action needed on your part.</li>
+    <li>Guests pay everything on arrival.</li>
+    <li>These are always fully flexible bookings.</li>
+  </ul>
+  <p>If you create a booking in the system yourself, you will also see 'Hotel Employee Rate' as a Flex discount — <strong>do not use this</strong>. Depending on the rate type, only use: <strong>Fully Flex</strong> or <strong>NRF (Non Refundable)</strong>.</p>
+  <div class="sop-callout">Hotel Employee Rate bookings do not require any action from you! Simply move the email to processed → Hotel Employee Rate.</div>
+  <h2>CXL / No-show Hotel Employee Rate</h2>
+  <p>For a late cancellation or no-show, we send the guest a Pay link ourselves. Give the guest 2 days to pay and mention this in the email. If payment is not received, the guest will be removed from the programme.</p>
+  <ul>
+    <li>No payment received? Send an email to service@hotelemployeerate.com stating that the guest was late and did not pay.</li>
+    <li>Received a cancellation email? Check carefully whether the guest was permitted to cancel. If yes: move the email to Processed → Hotel Employee Rate. If no: send a Pay link.</li>
+  </ul>
+  <h2>Returning guests</h2>
+  <p>For a returning guest, search by name and look in previous bookings for two things: (1) returning guests receive extras after every 5 stays, and (2) in the notes of previous bookings you can see if there were any issues or complaints.</p>
+  <table class="sop-table">
+    <tr><th>Visit</th><th>Gift</th></tr>
+    <tr><td>5th visit</td><td>Chocolate bar with a card from us</td></tr>
+    <tr><td>10th visit</td><td>Bottle of cava in an ice bucket with glasses and a card</td></tr>
+    <tr><td>15th visit</td><td>Free upgrade if possible, otherwise a bottle of white wine with a card</td></tr>
+    <tr><td>20th visit</td><td>Room spray with a card</td></tr>
+  </table>
+  <p>The cycle then restarts (25th = chocolate, 30th = cava, etc.).</p>
+  <div class="sop-callout">Pay close attention to notes from previous bookings — some guests may no longer be accepted (e.g. due to fraud or blacklisting). If there were previous complaints: inform TD and HSK so we can do even better this time.</div>
+  <p><strong>Quick access to all of a guest's bookings:</strong> MEWS → guest's reservation → click "Manage" → click the guest's name/profile → "Dashboard" tab. Future bookings appear at the top; past bookings (invoices/bills) are listed below (scroll down).</p>
+`
+  },
+  "foute-mews-merchant-charge": {
+    titleEn: "Identifying an Incorrect MEWS Merchant Charge",
+    htmlEn: `
+  <p>When you need to charge a virtual card or Mastercard in the system, you can recognise a correct payment as follows:</p>
+  <div class="sop-callout"><strong>CORRECT:</strong> under "Identifier" you will see a long number (a technical reference, e.g. starting with "ch_..."). This applies to both CC payments via MEWS/merchant and virtual card payments via MEWS/merchant.</div>
+  <div class="sop-callout"><strong>INCORRECT:</strong> if there is no long number under "Identifier", the guests have not actually paid anything! This usually happens because you accidentally clicked the "Terminal" tab instead of "Merchant" when creating the card payment.</div>
+  <p><strong>Note:</strong> when creating a card payment, always select the "Merchant" tab, not "Terminal" — otherwise the guests will have paid €0 without you noticing.</p>
+`
+  },
+  "telefoon-instructies": {
+    titleEn: "Phone Instructions & Emergency Numbers",
+    htmlEn: `
+  <h2>Call forwarding</h2>
+  <table class="sop-table">
+    <tr><th>Action</th><th>Code</th></tr>
+    <tr><td>Forward to InterSwitch</td><td>*72 [InterSwitch number — see password file]#</td></tr>
+    <tr><td>Forward to mobile security</td><td>*72 [Mobile security — see password file]#</td></tr>
+    <tr><td>Forward to phone number</td><td>*72 [phone number]#</td></tr>
+    <tr><td>Return to reception</td><td>*72 501#</td></tr>
+  </table>
+  <div class="sop-callout">The reception phone is automatically forwarded to Interswitch at 21:00 and returned to reception at 08:00.</div>
+  <h2>Emergency numbers</h2>
+  <table class="sop-table">
+    <tr><th>Service</th><th>Number</th></tr>
+    <tr><td>Emergency services</td><td>112</td></tr>
+    <tr><td>Neighbourhood officer (Adrie)</td><td>06 51423462</td></tr>
+    <tr><td>Rotterdam Police</td><td>0900 8844</td></tr>
+    <tr><td>Control room</td><td>088 8779000</td></tr>
+  </table>
+`
+  }
+};
+// Merge English translations into SOPS
+SOPS.forEach(sop => { if(SOP_EN[sop.id]) Object.assign(sop, SOP_EN[sop.id]); });
+
 let pendingSopId = null;
 
 function renderSop(){
-  document.getElementById("page-title").textContent = "SOP Bibliotheek";
-  document.getElementById("page-sub").textContent = "Standaardprocedures — Urban Residences Rotterdam";
+  document.getElementById("page-title").textContent = td("SOP Bibliotheek","SOP Library");
+  document.getElementById("page-sub").textContent = td("Standaardprocedures — Urban Residences Rotterdam","Standard Procedures — Urban Residences Rotterdam");
   document.getElementById("page-notice").textContent = "";
-  document.getElementById("page-hint").textContent = "Kies een procedure hieronder, of open 'm direct vanaf een taak in de checklist.";
+  document.getElementById("page-hint").textContent = td("Kies een procedure hieronder, of open 'm direct vanaf een taak in de checklist.","Choose a procedure below, or open it directly from a task in the checklist.");
 
   const content = document.getElementById("content");
   content.innerHTML = "";
@@ -3136,7 +4251,7 @@ function renderSop(){
   SOPS.forEach(sop=>{
     const item = document.createElement("button");
     item.className = "sop-list-item";
-    item.innerHTML = `<span>${sop.title}</span><small>${sop.category}</small>`;
+    item.innerHTML = `<span>${lang==='en'&&sop.titleEn?sop.titleEn:sop.title}</span><small>${lang==='en'&&sop.categoryEn?sop.categoryEn:sop.category}</small>`;
     item.onclick = ()=>{ document.getElementById("sop-" + sop.id).scrollIntoView({behavior:"smooth", block:"start"}); };
     list.appendChild(item);
   });
@@ -3146,7 +4261,10 @@ function renderSop(){
     const doc = document.createElement("article");
     doc.className = "sop-doc";
     doc.id = "sop-" + sop.id;
-    doc.innerHTML = `<div class="sop-banner">${sop.title}</div><div class="sop-sub">Urban Residences Rotterdam · ${sop.category}</div>${sop.html}`;
+    const sopTitle = lang==='en'&&sop.titleEn ? sop.titleEn : sop.title;
+    const sopCat = lang==='en'&&sop.categoryEn ? sop.categoryEn : sop.category;
+    const sopBody = lang==='en'&&sop.htmlEn ? sop.htmlEn : sop.html;
+    doc.innerHTML = `<div class="sop-banner">${sopTitle}</div><div class="sop-sub">Urban Residences Rotterdam · ${sopCat}</div>${sopBody}`;
     content.appendChild(doc);
   });
 
@@ -3163,19 +4281,27 @@ function openSop(sopId){
   render();
 }
 
-const HANDOVER_DEPTS = [
+const HANDOVER_DEPTS_NL = [
   { key:"FO", label:"Front Office" },
   { key:"AD", label:"AD (Algemene Dienst)" },
   { key:"HK", label:"Housekeeping" },
   { key:"TD", label:"Technische Dienst" },
   { key:"Reservations", label:"Reservations" },
 ];
+const HANDOVER_DEPTS_EN = [
+  { key:"FO", label:"Front Office" },
+  { key:"AD", label:"AD (General Services)" },
+  { key:"HK", label:"Housekeeping" },
+  { key:"TD", label:"Technical Services" },
+  { key:"Reservations", label:"Reservations" },
+];
+function getHandoverDepts(){ return lang === 'en' ? HANDOVER_DEPTS_EN : HANDOVER_DEPTS_NL; }
 
 async function renderHandover(){
-  document.getElementById("page-title").textContent = "Overdrachtslog";
-  document.getElementById("page-sub").textContent = "Belangrijke punten — " + formatDateLong(selectedDate);
-  document.getElementById("page-notice").textContent = "Gedeeld tussen alle afdelingen. Zet hier bijzonderheden, openstaande taken en aandachtspunten neer voor de volgende dienst.";
-  document.getElementById("page-hint").textContent = "Punten zijn zichtbaar voor iedereen en blijven gekoppeld aan deze dag.";
+  document.getElementById("page-title").textContent = td("Overdrachtslog","Handover Log");
+  document.getElementById("page-sub").textContent = td("Belangrijke punten — ","Key points — ") + formatDateLong(selectedDate);
+  document.getElementById("page-notice").textContent = td("Gedeeld tussen alle afdelingen. Zet hier bijzonderheden, openstaande taken en aandachtspunten neer voor de volgende dienst.","Shared between all departments. Use this to note special events, outstanding tasks and points of attention for the next shift.");
+  document.getElementById("page-hint").textContent = td("Punten zijn zichtbaar voor iedereen en blijven gekoppeld aan deze dag.","Points are visible to everyone and remain linked to this day.");
 
   const content = document.getElementById("content");
   content.innerHTML = "";
@@ -3185,7 +4311,7 @@ async function renderHandover(){
   const allKnownStaff = [...new Set([].concat(...Object.values(EMPLOYEE_LISTS)))];
   const canPost = isAdmin || allKnownStaff.includes(currentUser);
 
-  HANDOVER_DEPTS.forEach(dept=>{
+  getHandoverDepts().forEach(dept=>{
     const wrap = document.createElement("div");
     wrap.className = "block";
 
@@ -3202,11 +4328,11 @@ async function renderHandover(){
     composer.className = "handover-composer";
     const textarea = document.createElement("textarea");
     textarea.placeholder = canPost
-      ? `Punt toevoegen voor ${dept.label}…`
-      : "Kies eerst je naam (linksboven) om een punt toe te voegen.";
+      ? `${td("Punt toevoegen voor","Add point for")} ${dept.label}…`
+      : td("Kies eerst je naam (linksboven) om een punt toe te voegen.","First choose your name (top left) to add a point.");
     textarea.disabled = !canPost;
     const postBtn = document.createElement("button");
-    postBtn.textContent = "Toevoegen";
+    postBtn.textContent = td("Toevoegen","Add");
     postBtn.disabled = !canPost;
     postBtn.onclick = async ()=>{
       const text = textarea.value.trim();
@@ -3216,7 +4342,7 @@ async function renderHandover(){
         text,
         dept: dept.key,
         by: currentUser,
-        at: new Date().toLocaleTimeString("nl-NL", {hour:"2-digit",minute:"2-digit"}),
+        at: new Date().toLocaleTimeString(lang==='en'?"en-GB":"nl-NL", {hour:"2-digit",minute:"2-digit"}),
       });
       handoverCache[selectedDate] = entries;
       textarea.value = "";
@@ -3237,7 +4363,7 @@ async function renderHandover(){
     if(deptEntries.length === 0){
       const empty = document.createElement("div");
       empty.className = "handover-empty";
-      empty.textContent = "Nog geen punten voor " + dept.label + ".";
+      empty.textContent = td("Nog geen punten voor","No points yet for") + " " + dept.label + ".";
       list.appendChild(empty);
     } else {
       deptEntries.forEach(entry=>{
@@ -3255,7 +4381,7 @@ async function renderHandover(){
           const del = document.createElement("button");
           del.className = "handover-del";
           del.textContent = "✕";
-          del.title = "Verwijderen";
+          del.title = td("Verwijderen","Delete");
           del.onclick = async ()=>{
             entries.splice(entry._idx, 1);
             handoverCache[selectedDate] = entries;
@@ -3277,15 +4403,15 @@ function renderUserBadge(){
   const dept = currentShift === "handover" ? "fo" : state[currentShift].dept;
   const list = employeesFor(dept);
   if(list.length === 0){
-    el.innerHTML = `<span class="lbl">Naamregistratie</span><span class="name" style="color:#8B8477;font-weight:400;">n.v.t. voor deze afdeling</span>`;
+    el.innerHTML = `<span class="lbl">${td("Naamregistratie","Name registration")}</span><span class="name" style="color:#8B8477;font-weight:400;">${td("n.v.t. voor deze afdeling","n/a for this department")}</span>`;
     el.onclick = null;
     return;
   }
-  const deptLabel = dept === "fo" ? "Front Office" : (dept === "ad" ? "Algemene Dienst" : "Housekeeping");
+  const deptLabel = dept === "fo" ? "Front Office" : (dept === "ad" ? td("Algemene Dienst","General Services") : "Housekeeping");
   if(currentUser && list.includes(currentUser)){
-    el.innerHTML = `<span class="lbl">Ingelogd als</span><span class="name">${currentUser}</span><span class="switch">wisselen</span>`;
+    el.innerHTML = `<span class="lbl">${td("Ingelogd als","Logged in as")}</span><span class="name">${currentUser}</span><span class="switch">${td("wisselen","switch")}</span>`;
   } else {
-    el.innerHTML = `<span class="lbl">${deptLabel}</span><span class="name">Kies je naam…</span>`;
+    el.innerHTML = `<span class="lbl">${deptLabel}</span><span class="name">${td("Kies je naam…","Choose your name…")}</span>`;
   }
   el.onclick = ()=> showUserOverlay(dept);
 }
@@ -3298,24 +4424,24 @@ function showUserOverlay(dept){
   overlay.className = "overlay";
   overlay.innerHTML = `
     <div class="overlay-card">
-      <h2>Wie ben jij?</h2>
-      <p>Kies je naam en voer je pincode in. Afgevinkte taken worden aan jou gekoppeld.</p>
+      <h2>${td("Wie ben jij?","Who are you?")}</h2>
+      <p>${td("Kies je naam en voer je pincode in. Afgevinkte taken worden aan jou gekoppeld.","Choose your name and enter your PIN. Completed tasks will be linked to you.")}</p>
       <select id="user-select">
-        <option value="" disabled ${!selected ? "selected" : ""}>Kies je naam…</option>
+        <option value="" disabled ${!selected ? "selected" : ""}>${td("Kies je naam…","Choose your name…")}</option>
         ${list.map(n => `<option value="${n}" ${n===selected ? "selected" : ""}>${n}</option>`).join("")}
       </select>
       <div id="pin-wrap" style="display:none;">
-        <div id="pin-label" style="font-size:12px;color:#77705F;margin-bottom:6px;">Voer je pincode in:</div>
-        <input type="password" id="pin-input" inputmode="numeric" maxlength="4" placeholder="Pincode (4 cijfers)" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--line);border-radius:5px;margin-bottom:6px;font-family:inherit;letter-spacing:.2em;box-sizing:border-box;">
+        <div id="pin-label" style="font-size:12px;color:#77705F;margin-bottom:6px;">${td("Voer je pincode in:","Enter your PIN:")}</div>
+        <input type="password" id="pin-input" inputmode="numeric" maxlength="4" placeholder="${td("Pincode (4 cijfers)","PIN (4 digits)")}" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--line);border-radius:5px;margin-bottom:6px;font-family:inherit;letter-spacing:.2em;box-sizing:border-box;">
         <div id="pin-confirm-wrap" style="display:none;">
-          <input type="password" id="pin-confirm" inputmode="numeric" maxlength="4" placeholder="Herhaal pincode" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--line);border-radius:5px;margin-bottom:6px;font-family:inherit;letter-spacing:.2em;box-sizing:border-box;">
+          <input type="password" id="pin-confirm" inputmode="numeric" maxlength="4" placeholder="${td("Herhaal pincode","Repeat PIN")}" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--line);border-radius:5px;margin-bottom:6px;font-family:inherit;letter-spacing:.2em;box-sizing:border-box;">
         </div>
         <div id="pin-error" style="display:none;color:#B04545;font-size:12px;margin-bottom:10px;"></div>
         <div id="pin-forgot-wrap" style="display:none;text-align:right;">
-          <button type="button" id="pin-forgot" style="background:none;border:none;color:#9A9284;font-size:11.5px;cursor:pointer;font-family:inherit;text-decoration:underline;padding:0;">Pincode vergeten?</button>
+          <button type="button" id="pin-forgot" style="background:none;border:none;color:#9A9284;font-size:11.5px;cursor:pointer;font-family:inherit;text-decoration:underline;padding:0;">${td("Pincode vergeten?","Forgot PIN?")}</button>
         </div>
       </div>
-      <button id="user-confirm" ${selected ? "" : "disabled"}>Doorgaan</button>
+      <button id="user-confirm" ${selected ? "" : "disabled"}>${td("Doorgaan","Continue")}</button>
     </div>
   `;
   document.body.appendChild(overlay);
@@ -3355,10 +4481,10 @@ function showUserOverlay(dept){
       }
       const existingPin = await getPin(select.value);
       if(!existingPin){
-        pinLabel.textContent = "Kies een pincode van 4 cijfers (jouw eigen code):";
+        pinLabel.textContent = td("Kies een pincode van 4 cijfers (jouw eigen code):","Choose a PIN of 4 digits (your own code):");
         pinConfirmWrap.style.display = "block";
       } else {
-        pinLabel.textContent = "Voer je pincode in:";
+        pinLabel.textContent = td("Voer je pincode in:","Enter your PIN:");
         pinConfirmWrap.style.display = "none";
       }
       pinWrap.style.display = "block";
@@ -3393,18 +4519,18 @@ function showUserOverlay(dept){
     }
     const existingPin = await getPin(select.value);
     if(!existingPin){
-      if(pinInput.value.length !== 4){ pinError.textContent = "Kies een pincode van precies 4 cijfers."; pinError.style.display = "block"; return; }
-      if(pinInput.value !== pinConfirm.value){ pinError.textContent = "Pincodes komen niet overeen."; pinError.style.display = "block"; pinInput.value=""; pinConfirm.value=""; pinInput.focus(); return; }
+      if(pinInput.value.length !== 4){ pinError.textContent = td("Kies een pincode van precies 4 cijfers.","Choose a PIN of exactly 4 digits."); pinError.style.display = "block"; return; }
+      if(pinInput.value !== pinConfirm.value){ pinError.textContent = td("Pincodes komen niet overeen.","PINs do not match."); pinError.style.display = "block"; pinInput.value=""; pinConfirm.value=""; pinInput.focus(); return; }
       await savePin(select.value, pinInput.value);
     } else {
       const attempts = await getPinAttempts(select.value);
       const remaining = lockoutRemaining(attempts.lockedUntil);
-      if(remaining > 0){ pinError.textContent = `Te veel pogingen. Wacht nog ${remaining} seconden.`; pinError.style.display="block"; pinInput.value=""; btn.disabled=true; return; }
+      if(remaining > 0){ pinError.textContent = td(`Te veel pogingen. Wacht nog ${remaining} seconden.`,`Too many attempts. Wait ${remaining} seconds.`); pinError.style.display="block"; pinInput.value=""; btn.disabled=true; return; }
       if(pinInput.value !== existingPin){
         const updated = await recordFailedAttempt(select.value);
         const rem = lockoutRemaining(updated.lockedUntil);
-        if(rem > 0) pinError.textContent = `Te veel foute pogingen. Geblokkeerd voor ${PIN_LOCKOUT_MINUTES} minuten.`;
-        else pinError.textContent = `Onjuiste pincode. Nog ${PIN_MAX_ATTEMPTS - updated.count} poging(en).`;
+        if(rem > 0) pinError.textContent = td(`Te veel foute pogingen. Geblokkeerd voor ${PIN_LOCKOUT_MINUTES} minuten.`,`Too many failed attempts. Blocked for ${PIN_LOCKOUT_MINUTES} minutes.`);
+        else pinError.textContent = td(`Onjuiste pincode. Nog ${PIN_MAX_ATTEMPTS - updated.count} poging(en).`,`Incorrect PIN. ${PIN_MAX_ATTEMPTS - updated.count} attempt(s) remaining.`);
         pinError.style.display="block"; pinInput.value=""; pinInput.focus(); btn.disabled=true; return;
       }
       await resetAttempts(select.value);
@@ -3425,13 +4551,13 @@ function renderDateBar(){
     days.push(d);
   }
   document.getElementById("date-month").textContent =
-    MONTHS[days[0].getMonth()] + " " + days[0].getFullYear();
+    (lang === 'en' ? MONTHS_EN : MONTHS_NL)[days[0].getMonth()] + " " + days[0].getFullYear();
 
   days.forEach(d=>{
     const key = dateKey(d);
     const pill = document.createElement("button");
     pill.className = "day-pill" + (key===TODAY_KEY ? " is-today" : "") + (key===selectedDate ? " is-selected" : "");
-    pill.innerHTML = `<span class="wd">${WEEKDAYS[d.getDay()]}</span><span class="num">${d.getDate()}</span>`;
+    pill.innerHTML = `<span class="wd">${(lang==='en'?WEEKDAYS_EN:WEEKDAYS_NL)[d.getDay()]}</span><span class="num">${d.getDate()}</span>`;
     pill.onclick = ()=>{ selectedDate = key; renderDateBar(); if(currentShift === "report"){ loadReport(selectedDate).then(renderReport); } else { renderContent(); } };
     strip.appendChild(pill);
   });
@@ -3485,7 +4611,7 @@ function renderSendBar(){
   }
   wrap.style.display = "block";
   const btn = document.getElementById("send-report-btn");
-  btn.textContent = `Verstuur ${state[currentShift].label.toLowerCase()}-overzicht`;
+  btn.textContent = lang==='en' ? `Send ${trShiftLabel(currentShift).toLowerCase()} overview` : `Verstuur ${state[currentShift].label.toLowerCase()}-overzicht`;
   btn.href = "#";
   btn.onclick = sendReportMail;
 }
@@ -3500,10 +4626,11 @@ function showLanding(){
   document.querySelector("main").style.display = "none";
   const datebar = document.querySelector(".date-bar");
   if(datebar) datebar.style.display = "none";
+  applyStaticLandingTranslations();
 
   // Naam-dropdown vullen
   const sel = document.getElementById("landing-name");
-  sel.innerHTML = '<option value="" disabled selected>Kies je naam…</option>';
+  sel.innerHTML = `<option value="" disabled selected>${td("Kies je naam…","Choose your name…")}</option>`;
   ALL_EMPLOYEES.forEach(function(n){
     const opt = document.createElement("option");
     opt.value = n; opt.textContent = n;
@@ -3551,10 +4678,10 @@ function showLanding(){
     pinWrap.style.display = "block";
     var existing = await getPin(sel.value);
     if(!existing){
-      pinLabel.textContent = "Kies een pincode (4 cijfers)";
+      pinLabel.textContent = td("Kies een pincode (4 cijfers)","Choose a PIN (4 digits)");
       confirmWrap.style.display = "block";
     } else {
-      pinLabel.textContent = "Pincode";
+      pinLabel.textContent = td("Pincode","PIN");
       confirmWrap.style.display = "none";
     }
     updateBtn();
@@ -3576,19 +4703,19 @@ function showLanding(){
     }
     var existing = await getPin(name);
     if(!existing){
-      if(pinInput.value.length !== 4){ showError("Kies een pincode van 4 cijfers."); return; }
-      if(pinInput.value !== confirmInput.value){ showError("Pincodes komen niet overeen."); pinInput.value=""; confirmInput.value=""; pinInput.focus(); return; }
+      if(pinInput.value.length !== 4){ showError(td("Kies een pincode van 4 cijfers.","Choose a PIN of 4 digits.")); return; }
+      if(pinInput.value !== confirmInput.value){ showError(td("Pincodes komen niet overeen.","PINs do not match.")); pinInput.value=""; confirmInput.value=""; pinInput.focus(); return; }
       await savePin(name, pinInput.value);
     } else {
       var attempts = await getPinAttempts(name);
       var rem = lockoutRemaining(attempts.lockedUntil);
-      if(rem > 0){ showError("Te veel pogingen. Wacht nog " + rem + " seconden."); pinInput.value=""; btn.disabled=true; return; }
+      if(rem > 0){ showError(td("Te veel pogingen. Wacht nog ","Too many attempts. Wait ") + rem + td(" seconden."," seconds.")); pinInput.value=""; btn.disabled=true; return; }
       if(pinInput.value !== existing){
         var updated = await recordFailedAttempt(name);
         var rem2 = lockoutRemaining(updated.lockedUntil);
         showError(rem2 > 0
-          ? "Te veel foute pogingen. Geblokkeerd voor " + PIN_LOCKOUT_MINUTES + " minuten."
-          : "Onjuiste pincode. Nog " + (PIN_MAX_ATTEMPTS - updated.count) + " poging(en).");
+          ? td("Te veel foute pogingen. Geblokkeerd voor " + PIN_LOCKOUT_MINUTES + " minuten.","Too many failed attempts. Blocked for " + PIN_LOCKOUT_MINUTES + " minutes.")
+          : td("Onjuiste pincode. Nog " + (PIN_MAX_ATTEMPTS - updated.count) + " poging(en).","Incorrect PIN. " + (PIN_MAX_ATTEMPTS - updated.count) + " attempt(s) remaining."));
         pinInput.value=""; pinInput.focus(); btn.disabled=true; return;
       }
       await resetAttempts(name);
@@ -3601,10 +4728,19 @@ function showLanding(){
 function showDeptPicker(name){
   document.getElementById("landing").style.display = "none";
   document.getElementById("dept-picker").style.display = "block";
-  document.getElementById("dept-welcome-name").textContent = name.split(" ")[0];
+  const firstName = name.split(" ")[0];
+  document.getElementById("dept-welcome-name").textContent = firstName;
+  const titleEl = document.getElementById("dept-welcome-title");
+  if(titleEl) titleEl.innerHTML = `${td("Welkom","Welcome")}, <span id="dept-welcome-name">${firstName}</span>`;
+  applyStaticLandingTranslations();
 
   const ownDept = userDept(name);
-  const depts = [
+  const depts = lang === 'en' ? [
+    { key:"fo", icon:"🏨", name:"Front Office", sub:"Morning, Evening, Night, Duty Report" },
+    { key:"ad", icon:"🧹", name:"General Services", sub:"09:30 – 19:30" },
+    { key:"hk", icon:"🛏️", name:"Housekeeping", sub:"HK Supervisor 09:00 – 17:00" },
+    { key:"td", icon:"🔧", name:"Technical Services", sub:"Maintenance & faults" },
+  ] : [
     { key:"fo", icon:"🏨", name:"Front Office", sub:"Ochtend, Avond, Nacht, Duty Rapport" },
     { key:"ad", icon:"🧹", name:"Algemene Dienst", sub:"09:30 – 19:30 uur" },
     { key:"hk", icon:"🛏️", name:"Housekeeping", sub:"HK Supervisor 09:00 – 17:00 uur" },
@@ -3619,7 +4755,7 @@ function showDeptPicker(name){
     btn.innerHTML = `
       <span class="dept-btn-icon">${d.icon}</span>
       <span>
-        <span class="dept-btn-name">${d.name}${d.key===ownDept?" <small style='color:var(--gold);font-size:10px;font-weight:400;'>Jouw afdeling</small>":""}</span>
+        <span class="dept-btn-name">${d.name}${d.key===ownDept?` <small style='color:var(--gold);font-size:10px;font-weight:400;'>${td("Jouw afdeling","Your department")}</small>`:""}</span>
         <span class="dept-btn-sub">${d.sub}</span>
       </span>`;
     btn.addEventListener("click", (function(key){
@@ -3651,6 +4787,12 @@ function logout(){
 }
 
 (async ()=>{
+  // Apply saved language before rendering anything
+  document.documentElement.lang = lang === 'en' ? 'en' : 'nl';
+  if(document.getElementById('btn-nl')) document.getElementById('btn-nl').classList.toggle('active', lang === 'nl');
+  if(document.getElementById('btn-en')) document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  applyStaticSidebarTranslations();
+
   currentUser = await loadUser();
   state = await loadState();
   if(!currentUser){
