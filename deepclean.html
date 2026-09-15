@@ -35,8 +35,35 @@
     display:flex;align-items:center;justify-content:center;
     font-weight:700;font-size:14px;flex-shrink:0;
   }
+  .header-text{flex:1;}
   .header-text h1{font-size:17px;font-weight:700;color:#fff;}
   .header-text p{font-size:12px;color:#B9B2A2;font-family:Arial,sans-serif;margin-top:2px;}
+
+  /* Language switcher */
+  .lang-switcher{
+    display:flex;
+    gap:4px;
+    flex-shrink:0;
+  }
+  .lang-btn{
+    background:transparent;
+    border:1px solid rgba(255,255,255,.25);
+    color:#B9B2A2;
+    font-family:Arial,sans-serif;
+    font-size:12px;
+    font-weight:600;
+    padding:5px 10px;
+    border-radius:4px;
+    cursor:pointer;
+    letter-spacing:.04em;
+    transition:background .15s,color .15s;
+  }
+  .lang-btn:hover{background:rgba(255,255,255,.1);color:#fff;}
+  .lang-btn.active{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:#fff;
+  }
 
   /* Main layout */
   .container{max-width:860px;margin:0 auto;padding:32px 24px 80px;}
@@ -131,7 +158,6 @@
   .room-chevron{color:#9A9284;font-size:14px;transition:transform .2s;}
   .room-header.open .room-chevron{transform:rotate(90deg);}
 
-  /* Sectie inhoud */
   .room-body{display:none;border-top:1px solid var(--line);}
   .room-body.open{display:block;}
 
@@ -145,6 +171,7 @@
     font-family:Arial,sans-serif;
     font-size:12.5px;
     color:#77705F;
+    flex-wrap:wrap;
   }
   .date-row input[type="date"]{
     padding:5px 8px;
@@ -164,7 +191,7 @@
     width:160px;
   }
 
-  /* Hoofdpunten */
+  /* Secties */
   .section{border-bottom:1px solid var(--line);}
   .section:last-child{border-bottom:none;}
   .section-header{
@@ -186,7 +213,6 @@
   .section-body{display:none;padding:0 18px 14px 18px;}
   .section-body.open{display:block;}
 
-  /* Taken in sectie */
   .task-item{
     display:flex;
     align-items:flex-start;
@@ -210,7 +236,6 @@
   }
   .task-label.checked{text-decoration:line-through;color:#B3AC9E;}
 
-  /* Vrije tekst opmerkingen per sectie */
   .section-notes{
     width:100%;
     margin-top:10px;
@@ -235,7 +260,6 @@
     display:block;
   }
 
-  /* Status badge */
   .badge{
     display:inline-block;
     padding:2px 8px;
@@ -249,7 +273,6 @@
   .badge-done{background:#E8F5EC;color:#3A8A50;}
   .badge-overdue{background:#FDECEA;color:#C0392B;}
 
-  /* Save indicator */
   #save-indicator{
     position:fixed;bottom:16px;right:20px;
     background:var(--charcoal);
@@ -267,6 +290,7 @@
   @media(max-width:600px){
     .container{padding:20px 12px 80px;}
     .filter-bar{gap:6px;}
+    .header{padding:16px 18px;}
   }
 </style>
 </head>
@@ -275,155 +299,279 @@
 <div class="header">
   <div class="brand-mark">UR</div>
   <div class="header-text">
-    <h1>Deepclean Checklist</h1>
-    <p>Urban Residences Rotterdam &mdash; 10:00&ndash;14:30 uur</p>
+    <h1 id="hdr-title">Deepclean Checklist</h1>
+    <p id="hdr-sub">Urban Residences Rotterdam &mdash; 10:00&ndash;14:30 uur</p>
+  </div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" id="btn-nl" onclick="setLang('nl')">NL</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
   </div>
 </div>
 
 <div class="container">
-
   <div class="info-banner">
-    <strong>Deepclean — eens per 6 weken per kamer</strong>
-    Elke kamer krijgt minimaal één keer per 6 weken een volledige deepclean. Vul de datum en medewerker in bij de kamer, werk alle hoofdpunten af en voeg opmerkingen toe waar nodig. Vink de kamer pas af als alles gereed is.
+    <strong id="info-title">Deepclean — eens per 6 weken per kamer</strong>
+    <span id="info-body">Elke kamer krijgt minimaal één keer per 6 weken een volledige deepclean. Vul de datum en medewerker in bij de kamer, werk alle hoofdpunten af en voeg opmerkingen toe waar nodig. Vink de kamer pas af als alles gereed is.</span>
   </div>
 
   <div class="filter-bar">
     <input type="text" id="search-input" placeholder="Zoek kamernummer...">
-    <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">Alle kamers</button>
-    <button class="filter-btn" data-filter="open" onclick="setFilter('open',this)">Open</button>
-    <button class="filter-btn" data-filter="done" onclick="setFilter('done',this)">Klaar</button>
-    <button class="filter-btn" data-filter="overdue" onclick="setFilter('overdue',this)">Te laat</button>
+    <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)" id="btn-filter-all">Alle kamers</button>
+    <button class="filter-btn" data-filter="open" onclick="setFilter('open',this)" id="btn-filter-open">Open</button>
+    <button class="filter-btn" data-filter="done" onclick="setFilter('done',this)" id="btn-filter-done">Klaar</button>
+    <button class="filter-btn" data-filter="overdue" onclick="setFilter('overdue',this)" id="btn-filter-overdue">Te laat</button>
   </div>
 
   <div class="progress-label" id="progress-label">0 van 77 kamers volledig afgerond</div>
   <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
 
   <div id="rooms-container"></div>
-
 </div>
 
 <div id="save-indicator">Opgeslagen</div>
 
 <script>
-// ---------- Kamerlijst ----------
-// Kamertypes op basis van UR Rotterdam nummering
-const ROOM_TYPES = {
-  '100': 'Studio', '102': 'Studio', '104': 'Studio', '106': 'Studio',
-  '108': 'Studio', '110': 'Studio', '112': 'Studio', '114': 'Studio',
-  '116': 'Studio', '118': 'Studio', '120': 'Studio', '122': 'Studio',
-  '124': 'Studio', '126': 'Studio', '128': 'Studio', '130': 'Studio',
-  '132': 'Studio', '134': 'Studio', '136': 'Studio', '138': 'Studio',
-  '140': 'Studio', '142': 'Studio', '144': 'Studio', '146': 'Studio',
-  '148': 'Studio', '150': 'Studio', '152': 'Studio', '154': 'Studio',
-  '156': 'Studio', '158': 'Studio', '160': 'Studio', '162': 'Studio',
-  '164': 'Studio', '166': 'Studio', '168': 'Studio', '170': 'Studio',
-  '172': 'Studio', '174': 'Studio', '176': 'Studio', '178': 'Studio',
-  '180': 'Hoekstudio', '182': 'Hoekstudio',
-  '200': 'Appartement', '202': 'Appartement', '204': 'Appartement',
-  '206': 'Appartement', '208': 'Appartement', '210': 'Appartement',
-  '212': 'Appartement', '214': 'Appartement', '216': 'Appartement',
-  '218': 'Appartement', '220': 'Appartement', '222': 'Appartement',
-  '224': 'Family Studio', '226': 'Family Studio', '228': 'Family Studio',
-  '230': 'Family Studio', '232': 'Appartement', '234': 'Appartement',
-  '236': 'Appartement', '238': 'Appartement', '240': 'Groot Appartement',
-  '242': 'Groot Appartement', '244': 'Groot Appartement', '246': 'Groot Appartement',
-  '248': 'Penthouse', '250': 'Penthouse',
+// ---------- Taal / Language ----------
+let lang = localStorage.getItem('ur-lang') || 'nl';
+
+const T = {
+  nl: {
+    hdrSub: 'Urban Residences Rotterdam — 10:00–14:30 uur',
+    infoTitle: 'Deepclean — eens per 6 weken per kamer',
+    infoBody: 'Elke kamer krijgt minimaal één keer per 6 weken een volledige deepclean. Vul de datum en medewerker in bij de kamer, werk alle hoofdpunten af en voeg opmerkingen toe waar nodig. Vink de kamer pas af als alles gereed is.',
+    filterAll: 'Alle kamers',
+    filterOpen: 'Open',
+    filterDone: 'Klaar',
+    filterOverdue: 'Te laat',
+    searchPlaceholder: 'Zoek kamernummer...',
+    progressLabel: (done, total) => `${done} van ${total} kamers volledig afgerond`,
+    dateLabel: 'Datum deepclean:',
+    employeeLabel: 'Medewerker:',
+    employeePlaceholder: 'Naam medewerker',
+    notesLabel: 'Opmerkingen',
+    notesPlaceholder: 'Bijzonderheden, schade, opvolgpunten...',
+    badgeDone: 'Klaar',
+    badgeOverdue: 'Te laat',
+    badgeOpen: 'Open',
+    notScheduled: 'Nog niet gepland',
+    lastClean: 'Laatste:',
+    saved: 'Opgeslagen',
+  },
+  en: {
+    hdrSub: 'Urban Residences Rotterdam — 10:00–14:30',
+    infoTitle: 'Deep clean — once every 6 weeks per room',
+    infoBody: 'Every room receives a full deep clean at least once every 6 weeks. Enter the date and employee for each room, complete all sections and add comments where needed. Only mark the room as done when everything is complete.',
+    filterAll: 'All rooms',
+    filterOpen: 'Open',
+    filterDone: 'Done',
+    filterOverdue: 'Overdue',
+    searchPlaceholder: 'Search room number...',
+    progressLabel: (done, total) => `${done} of ${total} rooms fully completed`,
+    dateLabel: 'Deep clean date:',
+    employeeLabel: 'Employee:',
+    employeePlaceholder: 'Employee name',
+    notesLabel: 'Notes',
+    notesPlaceholder: 'Special notes, damage, follow-up items...',
+    badgeDone: 'Done',
+    badgeOverdue: 'Overdue',
+    badgeOpen: 'Open',
+    notScheduled: 'Not yet scheduled',
+    lastClean: 'Last:',
+    saved: 'Saved',
+  }
 };
 
-// Genereer alle kamernummers 100-250 (even nummers)
-const ROOMS = [];
-for(let n = 100; n <= 250; n += 2){
-  ROOMS.push(String(n));
+function t(key, ...args) {
+  const val = (T[lang] || T.nl)[key];
+  return typeof val === 'function' ? val(...args) : (val != null ? val : (T.nl[key] || key));
 }
 
-// ---------- Hoofdpunten per kamer ----------
+function setLang(newLang) {
+  lang = newLang;
+  try { localStorage.setItem('ur-lang', lang); } catch(e){}
+  document.documentElement.lang = lang === 'en' ? 'en' : 'nl';
+  document.getElementById('btn-nl').classList.toggle('active', lang === 'nl');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  applyStaticTranslations();
+  renderRooms();
+}
+
+function applyStaticTranslations() {
+  document.getElementById('hdr-sub').textContent = t('hdrSub');
+  document.getElementById('info-title').textContent = t('infoTitle');
+  document.getElementById('info-body').textContent = t('infoBody');
+  document.getElementById('btn-filter-all').textContent = t('filterAll');
+  document.getElementById('btn-filter-open').textContent = t('filterOpen');
+  document.getElementById('btn-filter-done').textContent = t('filterDone');
+  document.getElementById('btn-filter-overdue').textContent = t('filterOverdue');
+  document.getElementById('search-input').placeholder = t('searchPlaceholder');
+  document.getElementById('save-indicator').textContent = t('saved');
+}
+
+// ---------- Kamerlijst ----------
+const ROOM_TYPES = {
+  nl: {
+    '100':'Studio','102':'Studio','104':'Studio','106':'Studio',
+    '108':'Studio','110':'Studio','112':'Studio','114':'Studio',
+    '116':'Studio','118':'Studio','120':'Studio','122':'Studio',
+    '124':'Studio','126':'Studio','128':'Studio','130':'Studio',
+    '132':'Studio','134':'Studio','136':'Studio','138':'Studio',
+    '140':'Studio','142':'Studio','144':'Studio','146':'Studio',
+    '148':'Studio','150':'Studio','152':'Studio','154':'Studio',
+    '156':'Studio','158':'Studio','160':'Studio','162':'Studio',
+    '164':'Studio','166':'Studio','168':'Studio','170':'Studio',
+    '172':'Studio','174':'Studio','176':'Studio','178':'Studio',
+    '180':'Hoekstudio','182':'Hoekstudio',
+    '200':'Appartement','202':'Appartement','204':'Appartement',
+    '206':'Appartement','208':'Appartement','210':'Appartement',
+    '212':'Appartement','214':'Appartement','216':'Appartement',
+    '218':'Appartement','220':'Appartement','222':'Appartement',
+    '224':'Family Studio','226':'Family Studio','228':'Family Studio',
+    '230':'Family Studio','232':'Appartement','234':'Appartement',
+    '236':'Appartement','238':'Appartement','240':'Groot Appartement',
+    '242':'Groot Appartement','244':'Groot Appartement','246':'Groot Appartement',
+    '248':'Penthouse','250':'Penthouse',
+  },
+  en: {
+    '100':'Studio','102':'Studio','104':'Studio','106':'Studio',
+    '108':'Studio','110':'Studio','112':'Studio','114':'Studio',
+    '116':'Studio','118':'Studio','120':'Studio','122':'Studio',
+    '124':'Studio','126':'Studio','128':'Studio','130':'Studio',
+    '132':'Studio','134':'Studio','136':'Studio','138':'Studio',
+    '140':'Studio','142':'Studio','144':'Studio','146':'Studio',
+    '148':'Studio','150':'Studio','152':'Studio','154':'Studio',
+    '156':'Studio','158':'Studio','160':'Studio','162':'Studio',
+    '164':'Studio','166':'Studio','168':'Studio','170':'Studio',
+    '172':'Studio','174':'Studio','176':'Studio','178':'Studio',
+    '180':'Corner Studio','182':'Corner Studio',
+    '200':'Apartment','202':'Apartment','204':'Apartment',
+    '206':'Apartment','208':'Apartment','210':'Apartment',
+    '212':'Apartment','214':'Apartment','216':'Apartment',
+    '218':'Apartment','220':'Apartment','222':'Apartment',
+    '224':'Family Studio','226':'Family Studio','228':'Family Studio',
+    '230':'Family Studio','232':'Apartment','234':'Apartment',
+    '236':'Apartment','238':'Apartment','240':'Large Apartment',
+    '242':'Large Apartment','244':'Large Apartment','246':'Large Apartment',
+    '248':'Penthouse','250':'Penthouse',
+  }
+};
+
+// Kamernummers 100-250 (even)
+const ROOMS = [];
+for(let n = 100; n <= 250; n += 2) ROOMS.push(String(n));
+
+// ---------- Secties & taken (tweetalig) ----------
 const SECTIONS = [
-  { id:'geheel', icon:'', title:'Gehele appartement', tasks:[
-    'Alle ramen van binnen reinigen',
-    'Raamkozijnen afnemen (overal)',
-    'Vitrage (alle) loshalen en wassen',
-    'Wanden afnemen met witte spons',
-    'Vloeren stofzuigen en dweilen',
-    'Plinten en hoeken reinigen',
-    'Deuren, deurknoppen, deurposten en rubbers reinigen',
-    'Lichtschakelaars en stopcontacten reinigen',
-    'Lampen schoonmaken/afstoffen',
-    'Ventilatie/afzuiging demonteren en afwassen',
-    'Spiegels reinigen',
-  ]},
-  { id:'keuken', icon:'', title:'Keuken', tasks:[
-    'Keukenkasten/lades van buiten en binnen reinigen',
-    'Koelkast leegmaken, reinigen en ontgeuren — scharnieren en rubbers met stoomcleaner',
-    'Vriezer ontdooien',
-    'Oven van binnen en buiten reinigen, ook randjes',
-    'Magnetron van binnen en buiten reinigen',
-    'Kookplaat grondig reinigen',
-    'Afzuigkap en filter reinigen',
-    'Gootsteen, kraan, koffie- en theeapparaat ontkalken en reinigen',
-    'Vaatwasser filter en scharnieren reinigen',
-    'Aanrechtblad grondig reinigen',
-    'Prullenbak reinigen en desinfecteren — binnen, buitenkant en rails',
-  ]},
-  { id:'woonkamer', icon:'', title:'Woonkamer', tasks:[
-    'Bank/stoelen stofzuigen en stoomcleanen',
-    'Bank, salontafel en tv-meubel reinigen met stoomcleaner',
-    'Kussens kloppen en opfrissen',
-    'Tv en tv-meubel afnemen',
-    'Eettafel en stoelen grondig reinigen',
-    'Vensterbanken reinigen',
-    'Decoratie afnemen en terugplaatsen',
-    'Vloer grondig schrobben en dweilen',
-  ]},
-  { id:'balkon', icon:'', title:'Balkon', tasks:[
-    'Vloer schrobben',
-    'Glas en railingen reinigen',
-    'Schuifdeur binnen- en buitenkant reinigen, ook sloten',
-    'Meubilair reinigen met schuurspons',
-    'Asbak reinigen',
-    'Balkondrain controleren op verstopping',
-  ]},
-  { id:'toilet', icon:'', title:'Toilet', tasks:[
-    'Toiletpot grondig reinigen en desinfecteren',
-    'Toiletbril en deksel reinigen',
-    'Wastafel en kraan ontkalken en reinigen',
-    'Spiegel reinigen',
-    'Tegelwanden reinigen',
-    'Vloer reinigen en desinfecteren',
-    'Toiletrolhouder en accessoires reinigen',
-    'Prullenbak reinigen',
-  ]},
-  { id:'badkamer', icon:'', title:'Badkamer', tasks:[
-    'Douchewanden en deur ontkalken',
-    'Kranen en afvoerputjes ontkalken',
-    'Schimmel verwijderen met stoomcleaner',
-    'Douche/bad grondig reinigen',
-    'Douchedrain reinigen',
-    'Wastafel en kraan reinigen',
-    'Spiegel reinigen',
-    'Tegelwanden reinigen',
-    'Vloer reinigen en desinfecteren',
-    'Handdoekhouders reinigen',
-  ]},
-  { id:'slaapkamer', icon:'', title:'Slaapkamer(s)', tasks:[
-    'Kozijnen en ramen reinigen',
-    'Lampen afnemen en reinigen',
-    'Ventilatie/afzuiging afnemen en reinigen',
-    'Bed uit elkaar schuiven, eronder stofzuigen',
-    'Hoofdbord en bed reinigen met stoomcleaner',
-    'Kledingkasten afstoffen en soppen — binnen en buitenkant',
-    'Matras keren en stofzuigen',
-    'Nachtkastjes van buiten én binnen reinigen',
-    'Gordijnen/vitrages controleren',
-    'Vloer grondig stofzuigen en dweilen',
-  ]},
-  { id:'technisch', icon:'', title:'Technische ruimte', tasks:[
-    'Ventilatoren checken en schoonmaken',
-    'Stofzuigerzak vervangen en stofzuiger afnemen',
-    'Droger en filters schoonmaken',
-    'Wasmachine en zeeplade schoonmaken',
-    'Eventuele schade of lekkage melden bij TD',
-    'Vloer reinigen',
-  ]},
+  { id:'geheel', icon:'🏠',
+    title: { nl:'Gehele appartement', en:'Entire apartment' },
+    tasks: [
+      { nl:'Alle ramen van binnen reinigen', en:'Clean all windows from the inside' },
+      { nl:'Raamkozijnen afnemen (overal)', en:'Wipe down all window frames' },
+      { nl:'Vitrage (alle) loshalen en wassen', en:'Remove and wash all net curtains' },
+      { nl:'Wanden afnemen met witte spons', en:'Wipe down walls with white sponge' },
+      { nl:'Vloeren stofzuigen en dweilen', en:'Vacuum and mop all floors' },
+      { nl:'Plinten en hoeken reinigen', en:'Clean skirting boards and corners' },
+      { nl:'Deuren, deurknoppen, deurposten en rubbers reinigen', en:'Clean doors, door handles, door frames and seals' },
+      { nl:'Lichtschakelaars en stopcontacten reinigen', en:'Clean light switches and power outlets' },
+      { nl:'Lampen schoonmaken/afstoffen', en:'Clean/dust light fixtures' },
+      { nl:'Ventilatie/afzuiging demonteren en afwassen', en:'Disassemble and wash ventilation/extraction covers' },
+      { nl:'Spiegels reinigen', en:'Clean mirrors' },
+    ]
+  },
+  { id:'keuken', icon:'🍳',
+    title: { nl:'Keuken', en:'Kitchen' },
+    tasks: [
+      { nl:'Keukenkasten/lades van buiten en binnen reinigen', en:'Clean kitchen cabinets/drawers inside and out' },
+      { nl:'Koelkast leegmaken, reinigen en ontgeuren — scharnieren en rubbers met stoomcleaner', en:'Empty, clean and deodorise fridge — hinges and seals with steam cleaner' },
+      { nl:'Vriezer ontdooien', en:'Defrost freezer' },
+      { nl:'Oven van binnen en buiten reinigen, ook randjes', en:'Clean oven inside and out, including edges' },
+      { nl:'Magnetron van binnen en buiten reinigen', en:'Clean microwave inside and out' },
+      { nl:'Kookplaat grondig reinigen', en:'Thoroughly clean hob/cooktop' },
+      { nl:'Afzuigkap en filter reinigen', en:'Clean extractor hood and filter' },
+      { nl:'Gootsteen, kraan, koffie- en theeapparaat ontkalken en reinigen', en:'Descale and clean sink, tap, coffee and tea maker' },
+      { nl:'Vaatwasser filter en scharnieren reinigen', en:'Clean dishwasher filter and hinges' },
+      { nl:'Aanrechtblad grondig reinigen', en:'Thoroughly clean worktop/countertop' },
+      { nl:'Prullenbak reinigen en desinfecteren — binnen, buitenkant en rails', en:'Clean and disinfect bin — inside, outside and rails' },
+    ]
+  },
+  { id:'woonkamer', icon:'🛋️',
+    title: { nl:'Woonkamer', en:'Living room' },
+    tasks: [
+      { nl:'Bank/stoelen stofzuigen en stoomcleanen', en:'Vacuum and steam clean sofa/chairs' },
+      { nl:'Bank, salontafel en tv-meubel reinigen met stoomcleaner', en:'Clean sofa, coffee table and TV unit with steam cleaner' },
+      { nl:'Kussens kloppen en opfrissen', en:'Beat and freshen cushions' },
+      { nl:'Tv en tv-meubel afnemen', en:'Wipe down TV and TV unit' },
+      { nl:'Eettafel en stoelen grondig reinigen', en:'Thoroughly clean dining table and chairs' },
+      { nl:'Vensterbanken reinigen', en:'Clean window sills' },
+      { nl:'Decoratie afnemen en terugplaatsen', en:'Remove, clean and replace decorations' },
+      { nl:'Vloer grondig schrobben en dweilen', en:'Thoroughly scrub and mop floor' },
+    ]
+  },
+  { id:'balkon', icon:'🌿',
+    title: { nl:'Balkon', en:'Balcony' },
+    tasks: [
+      { nl:'Vloer schrobben', en:'Scrub floor' },
+      { nl:'Glas en railingen reinigen', en:'Clean glass and railings' },
+      { nl:'Schuifdeur binnen- en buitenkant reinigen, ook sloten', en:'Clean sliding door inside and out, including locks' },
+      { nl:'Meubilair reinigen met schuurspons', en:'Clean furniture with scouring sponge' },
+      { nl:'Asbak reinigen', en:'Clean ashtray' },
+      { nl:'Balkondrain controleren op verstopping', en:'Check balcony drain for blockage' },
+    ]
+  },
+  { id:'toilet', icon:'🚽',
+    title: { nl:'Toilet', en:'Toilet' },
+    tasks: [
+      { nl:'Toiletpot grondig reinigen en desinfecteren', en:'Thoroughly clean and disinfect toilet bowl' },
+      { nl:'Toiletbril en deksel reinigen', en:'Clean toilet seat and lid' },
+      { nl:'Wastafel en kraan ontkalken en reinigen', en:'Descale and clean washbasin and tap' },
+      { nl:'Spiegel reinigen', en:'Clean mirror' },
+      { nl:'Tegelwanden reinigen', en:'Clean tiled walls' },
+      { nl:'Vloer reinigen en desinfecteren', en:'Clean and disinfect floor' },
+      { nl:'Toiletrolhouder en accessoires reinigen', en:'Clean toilet roll holder and accessories' },
+      { nl:'Prullenbak reinigen', en:'Clean bin' },
+    ]
+  },
+  { id:'badkamer', icon:'🚿',
+    title: { nl:'Badkamer', en:'Bathroom' },
+    tasks: [
+      { nl:'Douchewanden en deur ontkalken', en:'Descale shower walls and door' },
+      { nl:'Kranen en afvoerputjes ontkalken', en:'Descale taps and drain plugs' },
+      { nl:'Schimmel verwijderen met stoomcleaner', en:'Remove mould with steam cleaner' },
+      { nl:'Douche/bad grondig reinigen', en:'Thoroughly clean shower/bath' },
+      { nl:'Douchedrain reinigen', en:'Clean shower drain' },
+      { nl:'Wastafel en kraan reinigen', en:'Clean washbasin and tap' },
+      { nl:'Spiegel reinigen', en:'Clean mirror' },
+      { nl:'Tegelwanden reinigen', en:'Clean tiled walls' },
+      { nl:'Vloer reinigen en desinfecteren', en:'Clean and disinfect floor' },
+      { nl:'Handdoekhouders reinigen', en:'Clean towel rails' },
+    ]
+  },
+  { id:'slaapkamer', icon:'🛏️',
+    title: { nl:'Slaapkamer(s)', en:'Bedroom(s)' },
+    tasks: [
+      { nl:'Kozijnen en ramen reinigen', en:'Clean window frames and windows' },
+      { nl:'Lampen afnemen en reinigen', en:'Wipe down and clean light fixtures' },
+      { nl:'Ventilatie/afzuiging afnemen en reinigen', en:'Remove and clean ventilation/extraction covers' },
+      { nl:'Bed uit elkaar schuiven, eronder stofzuigen', en:'Move bed and vacuum underneath' },
+      { nl:'Hoofdbord en bed reinigen met stoomcleaner', en:'Clean headboard and bed with steam cleaner' },
+      { nl:'Kledingkasten afstoffen en soppen — binnen en buitenkant', en:'Dust and wash wardrobes — inside and out' },
+      { nl:'Matras keren en stofzuigen', en:'Turn and vacuum mattress' },
+      { nl:'Nachtkastjes van buiten én binnen reinigen', en:'Clean bedside tables inside and out' },
+      { nl:'Gordijnen/vitrages controleren', en:'Check curtains/net curtains' },
+      { nl:'Vloer grondig stofzuigen en dweilen', en:'Thoroughly vacuum and mop floor' },
+    ]
+  },
+  { id:'technisch', icon:'🔧',
+    title: { nl:'Technische ruimte', en:'Technical room' },
+    tasks: [
+      { nl:'Ventilatoren checken en schoonmaken', en:'Check and clean fans' },
+      { nl:'Stofzuigerzak vervangen en stofzuiger afnemen', en:'Replace vacuum cleaner bag and wipe down vacuum cleaner' },
+      { nl:'Droger en filters schoonmaken', en:'Clean dryer and filters' },
+      { nl:'Wasmachine en zeeplade schoonmaken', en:'Clean washing machine and soap drawer' },
+      { nl:'Eventuele schade of lekkage melden bij TD', en:'Report any damage or leakage to Technical Services' },
+      { nl:'Vloer reinigen', en:'Clean floor' },
+    ]
+  },
 ];
 
 // ---------- Opslag ----------
@@ -439,6 +587,7 @@ function saveData(){
   try{
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     const ind = document.getElementById('save-indicator');
+    ind.textContent = t('saved');
     ind.classList.add('visible');
     setTimeout(()=> ind.classList.remove('visible'), 1800);
   }catch(e){}
@@ -481,7 +630,7 @@ function isOverdue(room){
   if(!rd.date) return false;
   const d = new Date(rd.date);
   const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - 42); // 6 weken
+  cutoff.setDate(cutoff.getDate() - 42);
   return d < cutoff;
 }
 
@@ -489,7 +638,7 @@ function updateProgressBar(){
   const done = ROOMS.filter(r=> roomProgress(r).pct === 100).length;
   const pct = Math.round(done/ROOMS.length*100);
   document.getElementById('progress-bar').style.width = pct + '%';
-  document.getElementById('progress-label').textContent = `${done} van ${ROOMS.length} kamers volledig afgerond`;
+  document.getElementById('progress-label').textContent = t('progressLabel', done, ROOMS.length);
 }
 
 // ---------- Render ----------
@@ -509,10 +658,9 @@ function checkAutoReset(){
     const rd = data[room];
     if(!rd || !rd.date) return;
     const prog = roomProgress(room);
-    if(prog.pct !== 100) return; // alleen voltooide kamers resetten
+    if(prog.pct !== 100) return;
     const done = new Date(rd.date).getTime();
     if(Date.now() - done > SIX_WEEKS){
-      // Reset: bewaar datum als lastClean, wis taken
       data[room].lastClean = rd.date;
       data[room].date = '';
       data[room].medewerker = '';
@@ -550,22 +698,24 @@ function renderRooms(){
 
     const wasOpen = existing[room] || false;
 
-    // Badge
     let badgeHtml = '';
-    if(isDone) badgeHtml = '<span class="badge badge-done">Klaar</span>';
-    else if(overdue) badgeHtml = '<span class="badge badge-overdue">Te laat</span>';
-    else badgeHtml = '<span class="badge badge-open">Open</span>';
+    if(isDone) badgeHtml = `<span class="badge badge-done">${t('badgeDone')}</span>`;
+    else if(overdue) badgeHtml = `<span class="badge badge-overdue">${t('badgeOverdue')}</span>`;
+    else badgeHtml = `<span class="badge badge-open">${t('badgeOpen')}</span>`;
 
+    const locale = lang === 'en' ? 'en-GB' : 'nl-NL';
     const dateStr = rd.date
-    ? new Date(rd.date).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'})
-    : (rd.lastClean
-      ? 'Laatste: ' + new Date(rd.lastClean).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'})
-      : 'Nog niet gepland');
+      ? new Date(rd.date).toLocaleDateString(locale,{day:'2-digit',month:'2-digit',year:'numeric'})
+      : (rd.lastClean
+        ? t('lastClean') + ' ' + new Date(rd.lastClean).toLocaleDateString(locale,{day:'2-digit',month:'2-digit',year:'numeric'})
+        : t('notScheduled'));
+
+    const roomTypeName = (ROOM_TYPES[lang] || ROOM_TYPES.nl)[room] || (lang === 'en' ? 'Room' : 'Kamer');
 
     card.innerHTML = `
       <div class="room-header ${wasOpen?'open':''} ${isDone?'done':''}" onclick="toggleRoom('${room}',this)">
         <span class="room-number">${room}</span>
-        <span class="room-type">${ROOM_TYPES[room]||'Kamer'}</span>
+        <span class="room-type">${roomTypeName}</span>
         <div class="room-meta">
           ${badgeHtml}
           <span class="room-date">${dateStr}</span>
@@ -575,18 +725,20 @@ function renderRooms(){
       </div>
       <div class="room-body ${wasOpen?'open':''}">
         <div class="date-row">
-          <label>Datum deepclean:</label>
+          <label>${t('dateLabel')}</label>
           <input type="date" value="${rd.date||''}" onchange="setDate('${room}',this.value)">
-          <label style="margin-left:12px;">Medewerker:</label>
-          <input type="text" class="medewerker-input" placeholder="Naam medewerker" value="${rd.medewerker||''}" oninput="setMedewerker('${room}',this.value)">
+          <label style="margin-left:12px;">${t('employeeLabel')}</label>
+          <input type="text" class="medewerker-input" placeholder="${t('employeePlaceholder')}" value="${rd.medewerker||''}" oninput="setMedewerker('${room}',this.value)">
         </div>
         ${SECTIONS.map(sec=>{
           const sp = sectionProgress(room, sec.id);
           const allDone = sp.done === sp.total;
+          const secTitle = sec.title[lang] || sec.title.nl;
           return `
           <div class="section">
             <div class="section-header" onclick="toggleSection('${room}','${sec.id}',this)">
-              <span class="section-title">${sec.title}</span>
+              <span class="section-icon">${sec.icon}</span>
+              <span class="section-title">${secTitle}</span>
               <span class="section-pct">${sp.done}/${sp.total}</span>
               ${allDone ? '<span class="section-check">✓</span>' : ''}
               <span class="section-chevron">›</span>
@@ -595,13 +747,14 @@ function renderRooms(){
               ${sec.tasks.map((task,i)=>{
                 const sd = sectionData(room, sec.id);
                 const checked = !!sd[i];
+                const taskText = task[lang] || task.nl;
                 return `<div class="task-item">
                   <input type="checkbox" class="task-cb" ${checked?'checked':''} onchange="toggleTask('${room}','${sec.id}',${i},this)">
-                  <label class="task-label ${checked?'checked':''}">${task}</label>
+                  <label class="task-label ${checked?'checked':''}">${taskText}</label>
                 </div>`;
               }).join('')}
-              <span class="notes-label">Opmerkingen</span>
-              <textarea class="section-notes" placeholder="Bijzonderheden, schade, opvolgpunten..." oninput="setNote('${room}','${sec.id}',this.value)">${(rd.notes||{})[sec.id]||''}</textarea>
+              <span class="notes-label">${t('notesLabel')}</span>
+              <textarea class="section-notes" placeholder="${t('notesPlaceholder')}" oninput="setNote('${room}','${sec.id}',this.value)">${(rd.notes||{})[sec.id]||''}</textarea>
             </div>
           </div>`;
         }).join('')}
@@ -632,7 +785,6 @@ function toggleTask(room, secId, idx, cb){
   const sd = sectionData(room, secId);
   sd[idx] = cb.checked;
   cb.nextElementSibling.classList.toggle('checked', cb.checked);
-  // Update pct in header
   const prog = roomProgress(room);
   const sp = sectionProgress(room, secId);
   const card = cb.closest('.room-card');
@@ -677,8 +829,12 @@ document.getElementById('search-input').addEventListener('input', renderRooms);
 // ---------- Init ----------
 loadData();
 checkAutoReset();
+applyStaticTranslations();
+// Herstel actieve taal bij laden
+document.getElementById('btn-nl').classList.toggle('active', lang === 'nl');
+document.getElementById('btn-en').classList.toggle('active', lang === 'en');
 renderRooms();
-setInterval(checkAutoReset, 60*60*1000); // elk uur checken
+setInterval(checkAutoReset, 60*60*1000);
 </script>
 </body>
 </html>
