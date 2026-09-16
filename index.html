@@ -688,6 +688,24 @@
     padding:2px 6px;
   }
   .handover-del:hover{color:#B04545;}
+  .handover-cb{
+    width:17px;height:17px;
+    accent-color:var(--gold);
+    cursor:pointer;
+    flex-shrink:0;
+    margin-top:4px;
+    margin-right:10px;
+  }
+  .handover-item{display:flex;align-items:flex-start;gap:0;padding:10px 14px;position:relative;}
+  .handover-item.handover-done{opacity:.65;}
+  .handover-text-done{text-decoration:line-through;color:#9A9284;}
+  .handover-done-label{
+    display:inline-block;
+    font-size:11px;
+    color:#4A8C5C;
+    font-style:italic;
+    margin-left:8px;
+  }
 
   /* ---------- Main ---------- */
   main{
@@ -3324,16 +3342,43 @@ const HANDOVER_DEPTS = [
   { key:"Reservations", label:"Reservations" },
 ];
 
+// Laad punten van de afgelopen 7 dagen (gecombineerd, gesorteerd op datum)
+async function loadHandoverMultiDay(){
+  const all = [];
+  for(let i = 0; i < 7; i++){
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dk = dateKey(d);
+    const entries = await loadHandover(dk);
+    entries.forEach((e, idx)=>{
+      all.push({...e, _date: dk, _idx: idx, _daysAgo: i});
+    });
+  }
+  // Verwijder punten ouder dan 7 dagen (automatisch opruimen)
+  for(let i = 7; i < 14; i++){
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dk = dateKey(d);
+    if(handoverCache[dk] && handoverCache[dk].length > 0){
+      handoverCache[dk] = [];
+      await saveHandover(dk);
+    }
+  }
+  return all;
+}
+
 async function renderHandover(){
   document.getElementById("page-title").textContent = "Overdrachtslog";
   document.getElementById("page-sub").textContent = "Belangrijke punten — " + formatDateLong(selectedDate);
   document.getElementById("page-notice").textContent = "Gedeeld tussen alle afdelingen. Zet hier bijzonderheden, openstaande taken en aandachtspunten neer voor de volgende dienst.";
-  document.getElementById("page-hint").textContent = "Punten zijn zichtbaar voor iedereen en blijven gekoppeld aan deze dag.";
+  document.getElementById("page-hint").textContent = "Punten blijven 7 dagen zichtbaar. Vink een punt af zodra het is opgepakt.";
 
   const content = document.getElementById("content");
   content.innerHTML = "";
 
-  const entries = await loadHandover(selectedDate);
+  // Laad punten: huidige dag voor invoer, alle 7 dagen voor weergave
+  const todayEntries = await loadHandover(selectedDate);
+  const allEntries = await loadHandoverMultiDay();
   const isAdmin = currentUser === ADMIN_NAME;
   const allKnownStaff = [...new Set([].concat(...Object.values(EMPLOYEE_LISTS)))];
   const canPost = isAdmin || allKnownStaff.includes(currentUser);
@@ -3351,6 +3396,7 @@ async function renderHandover(){
     wrap.appendChild(head);
     wrap.appendChild(document.createElement("hr"));
 
+    // Invoerveld
     const composer = document.createElement("div");
     composer.className = "handover-composer";
     const textarea = document.createElement("textarea");
@@ -3365,28 +3411,37 @@ async function renderHandover(){
       const text = textarea.value.trim();
       if(!text) return;
       if(!currentUser){ showUserOverlay("fo"); return; }
-      entries.push({
+      todayEntries.push({
         text,
         dept: dept.key,
         by: currentUser,
         at: new Date().toLocaleTimeString("nl-NL", {hour:"2-digit",minute:"2-digit"}),
+        done: false,
+        doneBy: null,
+        doneAt: null,
+        date: selectedDate,
       });
-      handoverCache[selectedDate] = entries;
+      handoverCache[selectedDate] = todayEntries;
       textarea.value = "";
       await saveHandover(selectedDate);
-      renderContent();
+      await renderHandover();
     };
     composer.appendChild(textarea);
     composer.appendChild(postBtn);
     wrap.appendChild(composer);
 
-    const deptEntries = entries
-      .map((e, i)=>({...e, _idx:i}))
+    // Punten van alle 7 dagen voor deze afdeling
+    const deptEntries = allEntries
       .filter(e => (e.dept || "FO") === dept.key)
-      .reverse();
+      .sort((a, b) => {
+        // Onafgevinkte punten eerst, dan nieuwste bovenaan
+        if(a.done !== b.done) return a.done ? 1 : -1;
+        return a._daysAgo - b._daysAgo;
+      });
 
     const list = document.createElement("div");
     list.className = "handover-list";
+
     if(deptEntries.length === 0){
       const empty = document.createElement("div");
       empty.className = "handover-empty";
@@ -3395,25 +3450,66 @@ async function renderHandover(){
     } else {
       deptEntries.forEach(entry=>{
         const item = document.createElement("div");
-        item.className = "handover-item";
+        item.className = "handover-item" + (entry.done ? " handover-done" : "");
+
+        // Afvinkvakje
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.className = "handover-cb";
+        cb.checked = !!entry.done;
+        cb.title = entry.done ? `Afgevinkt door ${entry.doneBy} om ${entry.doneAt}` : "Markeer als opgepakt";
+        cb.onchange = async ()=>{
+          const dayEntries = await loadHandover(entry._date);
+          if(dayEntries[entry._idx]){
+            dayEntries[entry._idx].done = cb.checked;
+            dayEntries[entry._idx].doneBy = cb.checked ? (currentUser || "Onbekend") : null;
+            dayEntries[entry._idx].doneAt = cb.checked
+              ? new Date().toLocaleTimeString("nl-NL",{hour:"2-digit",minute:"2-digit"})
+              : null;
+            handoverCache[entry._date] = dayEntries;
+            await saveHandover(entry._date);
+            await renderHandover();
+          }
+        };
+
+        const textWrap = document.createElement("div");
+        textWrap.style.flex = "1";
+
         const meta = document.createElement("div");
         meta.className = "handover-meta";
-        meta.innerHTML = `<strong>${entry.by}</strong><span>${entry.at}</span>`;
+        // Toon datum als het niet vandaag is
+        const dagLabel = entry._daysAgo === 0 ? entry.at
+          : entry._daysAgo === 1 ? `gisteren ${entry.at}`
+          : `${entry._daysAgo} dagen geleden ${entry.at}`;
+        meta.innerHTML = `<strong>${entry.by}</strong><span>${dagLabel}</span>`;
+        if(entry.done && entry.doneBy){
+          const doneSpan = document.createElement("span");
+          doneSpan.className = "handover-done-label";
+          doneSpan.textContent = `✓ Opgepakt door ${entry.doneBy}`;
+          meta.appendChild(doneSpan);
+        }
+
         const txt = document.createElement("div");
-        txt.className = "handover-text";
+        txt.className = "handover-text" + (entry.done ? " handover-text-done" : "");
         txt.textContent = entry.text;
-        item.appendChild(meta);
-        item.appendChild(txt);
+
+        textWrap.appendChild(meta);
+        textWrap.appendChild(txt);
+
+        item.appendChild(cb);
+        item.appendChild(textWrap);
+
         if(isAdmin){
           const del = document.createElement("button");
           del.className = "handover-del";
           del.textContent = "✕";
           del.title = "Verwijderen";
           del.onclick = async ()=>{
-            entries.splice(entry._idx, 1);
-            handoverCache[selectedDate] = entries;
-            await saveHandover(selectedDate);
-            renderContent();
+            const dayEntries = await loadHandover(entry._date);
+            dayEntries.splice(entry._idx, 1);
+            handoverCache[entry._date] = dayEntries;
+            await saveHandover(entry._date);
+            await renderHandover();
           };
           item.appendChild(del);
         }
