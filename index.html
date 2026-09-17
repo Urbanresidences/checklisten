@@ -951,6 +951,10 @@
     accent-color:var(--gold);
     cursor:pointer;
   }
+  .task-cl-row .checked{
+    text-decoration:line-through;
+    color:#9A9284;
+  }
 
   .role-badge{
     font-size:11px;
@@ -1453,7 +1457,7 @@ const SHIFTS = {
         {t:"Timeline controleren op Unassigned Rooms", d:"In MEWS de Timeline openen en controleren op roze balken (Unassigned Rooms): kamers zonder kamerassignment zo snel mogelijk toewijzen."},
       ]},
       { time:"20:30 - 21:30", name:"Avond laat", tasks:[
-        {t:"72-uur controle reserveringen", d:"", sopId:"72uur-controle-reserveringen", checklist:[
+        {t:"72-uur controle reserveringen", d:"", sopId:"72uur-controle-reserveringen", columns:["OTA","PMS"], checklist:[
           "Gastnaam","Aantal gasten","Incheckdatum","Uitcheckdatum","Kamertype",
           "Aantal kamers","Prijs / totaalbedrag","Tariefplan","Betaalwijze / garantie",
           "Speciale verzoeken","Status",
@@ -1691,90 +1695,28 @@ const SHIFTS = {
     roleLabel: "Sectie",
     blocks: [
       { time:"10:00", name:"Gehele appartement", tasks:[
-        {t:"Alle ramen van binnen reinigen", d:""},
-        {t:"Raamkozijnen afnemen (overal)", d:""},
-        {t:"Vitrage (alle) loshalen en wassen", d:""},
-        {t:"Wanden afnemen met witte spons", d:""},
-        {t:"Vloeren stofzuigen en dweilen", d:""},
-        {t:"Plinten en hoeken reinigen", d:""},
-        {t:"Deuren, deurknoppen, deurposten en rubbers reinigen", d:""},
-        {t:"Lichtschakelaars en stopcontacten reinigen", d:""},
-        {t:"Lampen schoonmaken/afstoffen", d:""},
-        {t:"Ventilatie/afzuiging demonteren en afwassen", d:""},
-        {t:"Spiegels reinigen", d:""},
+        {t:"(Werkzaamheden nog toe te voegen)", d:""},
       ]},
       { time:"10:30", name:"Keuken", tasks:[
-        {t:"Keukenkasten/lades van buiten en binnen reinigen", d:""},
-        {t:"Koelkast leegmaken, reinigen en ontgeuren — scharnieren en rubbers met stoomcleaner", d:""},
-        {t:"Vriezer ontdooien", d:""},
-        {t:"Oven van binnen en buiten reinigen, ook randjes", d:""},
-        {t:"Magnetron van binnen en buiten reinigen", d:""},
-        {t:"Kookplaat grondig reinigen", d:""},
-        {t:"Afzuigkap en filter reinigen", d:""},
-        {t:"Gootsteen, kraan, koffie- en theeapparaat ontkalken en reinigen", d:""},
-        {t:"Vaatwasser filter en scharnieren reinigen", d:""},
-        {t:"Aanrechtblad grondig reinigen", d:""},
-        {t:"Prullenbak reinigen en desinfecteren — binnen, buitenkant en rails", d:""},
+        {t:"(Werkzaamheden nog toe te voegen)", d:""},
       ]},
       { time:"11:15", name:"Woonkamer", tasks:[
-        {t:"Bank/stoelen stofzuigen en stoomcleanen", d:""},
-        {t:"Bank, salontafel en tv-meubel reinigen met stoomcleaner", d:""},
-        {t:"Kussens kloppen en opfrissen", d:""},
-        {t:"Tv en tv-meubel afnemen", d:""},
-        {t:"Eettafel en stoelen grondig reinigen", d:""},
-        {t:"Vensterbanken reinigen", d:""},
-        {t:"Decoratie afnemen en terugplaatsen", d:""},
-        {t:"Vloer grondig schrobben en dweilen", d:""},
+        {t:"(Werkzaamheden nog toe te voegen)", d:""},
       ]},
       { time:"12:00", name:"Balkon", tasks:[
-        {t:"Vloer schrobben", d:""},
-        {t:"Glas en railingen reinigen", d:""},
-        {t:"Schuifdeur binnen- en buitenkant reinigen, ook sloten", d:""},
-        {t:"Meubilair reinigen met schuurspons", d:""},
-        {t:"Asbak reinigen", d:""},
-        {t:"Balkondrain controleren op verstopping", d:""},
+        {t:"(Werkzaamheden nog toe te voegen)", d:""},
       ]},
       { time:"12:20", name:"Toilet", tasks:[
-        {t:"Toiletpot grondig reinigen en desinfecteren", d:""},
-        {t:"Toiletbril en deksel reinigen", d:""},
-        {t:"Wastafel en kraan ontkalken en reinigen", d:""},
-        {t:"Spiegel reinigen", d:""},
-        {t:"Tegelwanden reinigen", d:""},
-        {t:"Vloer reinigen en desinfecteren", d:""},
-        {t:"Toiletrolhouder en accessoires reinigen", d:""},
-        {t:"Prullenbak reinigen", d:""},
+        {t:"(Werkzaamheden nog toe te voegen)", d:""},
       ]},
       { time:"12:40", name:"Badkamer", tasks:[
-        {t:"Douchewanden en deur ontkalken", d:""},
-        {t:"Kranen en afvoerputjes ontkalken", d:""},
-        {t:"Schimmel verwijderen met stoomcleaner", d:""},
-        {t:"Douche/bad grondig reinigen", d:""},
-        {t:"Douchedrain reinigen", d:""},
-        {t:"Wastafel en kraan reinigen", d:""},
-        {t:"Spiegel reinigen", d:""},
-        {t:"Tegelwanden reinigen", d:""},
-        {t:"Vloer reinigen en desinfecteren", d:""},
-        {t:"Handdoekhouders reinigen", d:""},
+        {t:"(Werkzaamheden nog toe te voegen)", d:""},
       ]},
       { time:"13:20", name:"Slaapkamers", tasks:[
-        {t:"Kozijnen en ramen reinigen", d:""},
-        {t:"Lampen afnemen en reinigen", d:""},
-        {t:"Ventilatie/afzuiging afnemen en reinigen", d:""},
-        {t:"Bed uit elkaar schuiven, eronder stofzuigen", d:""},
-        {t:"Hoofdbord en bed reinigen met stoomcleaner", d:""},
-        {t:"Kledingkasten afstoffen en soppen — binnen en buitenkant", d:""},
-        {t:"Matras keren en stofzuigen", d:""},
-        {t:"Nachtkastjes van buiten en binnen reinigen", d:""},
-        {t:"Gordijnen/vitrages controleren", d:""},
-        {t:"Vloer grondig stofzuigen en dweilen", d:""},
+        {t:"(Werkzaamheden nog toe te voegen)", d:""},
       ]},
       { time:"14:00", name:"Technische ruimte", tasks:[
-        {t:"Ventilatoren checken en schoonmaken", d:""},
-        {t:"Stofzuigerzak vervangen en stofzuiger afnemen", d:""},
-        {t:"Droger en filters schoonmaken", d:""},
-        {t:"Wasmachine en zeeplade schoonmaken", d:""},
-        {t:"Eventuele schade of lekkage melden bij TD", d:""},
-        {t:"Vloer reinigen", d:""},
+        {t:"(Werkzaamheden nog toe te voegen)", d:""},
       ]},
     ]
   }
@@ -2226,50 +2168,88 @@ async function renderContent(){
         const clWrap = document.createElement("div");
         clWrap.className = "task-cl";
 
-        const total = task.checklist.length * 2;
+        // Bepaal of dit een OTA/PMS checklist is of een gewone (enkel vakje)
+        const cols = task.columns || null; // bijv. ["OTA","PMS"] voor 72-uur controle
+        const total = cols ? task.checklist.length * cols.length : task.checklist.length;
         const countChecked = ()=> task.checklist.reduce((sum, _, i)=>{
           const c = entry.cl[i] || {};
-          return sum + (c.ota ? 1 : 0) + (c.pms ? 1 : 0);
+          if(cols) return sum + cols.filter(col=> c[col.toLowerCase()]).length;
+          return sum + (c.done ? 1 : 0);
         }, 0);
 
         const toggle = document.createElement("button");
         toggle.className = "task-cl-toggle";
         toggle.type = "button";
         const setToggleLabel = ()=>{
-          toggle.textContent = `${clWrap.classList.contains("open") ? "▾" : "▸"} Controlepunten OTA/PMS (${countChecked()}/${total})`;
+          const label = cols ? `Controlepunten ${cols.join("/")}` : "Controlepunten";
+          toggle.textContent = `${clWrap.classList.contains("open") ? "▾" : "▸"} ${label} (${countChecked()}/${total})`;
         };
 
         const table = document.createElement("div");
         table.className = "task-cl-table";
-        const headRow = document.createElement("div");
-        headRow.className = "task-cl-row task-cl-head";
-        headRow.innerHTML = `<div>Controlepunt</div><div>OTA</div><div>PMS</div>`;
-        table.appendChild(headRow);
 
-        task.checklist.forEach((label, i)=>{
-          if(!entry.cl[i]) entry.cl[i] = {ota:false, pms:false};
-          const row = document.createElement("div");
-          row.className = "task-cl-row";
-          const nameCell = document.createElement("div");
-          nameCell.textContent = label;
-          row.appendChild(nameCell);
-          ["ota","pms"].forEach(col=>{
+        if(cols){
+          // Meerdere kolommen (OTA/PMS)
+          const headRow = document.createElement("div");
+          headRow.className = "task-cl-row task-cl-head";
+          headRow.style.gridTemplateColumns = `1fr ${cols.map(()=>'60px').join(' ')}`;
+          headRow.innerHTML = `<div>Controlepunt</div>${cols.map(c=>`<div>${c}</div>`).join('')}`;
+          table.appendChild(headRow);
+          task.checklist.forEach((label, i)=>{
+            if(!entry.cl[i]) entry.cl[i] = {};
+            const row = document.createElement("div");
+            row.className = "task-cl-row";
+            row.style.gridTemplateColumns = `1fr ${cols.map(()=>'60px').join(' ')}`;
+            const nameCell = document.createElement("div");
+            nameCell.textContent = label;
+            row.appendChild(nameCell);
+            cols.forEach(col=>{
+              const colKey = col.toLowerCase();
+              const cell = document.createElement("div");
+              const cb = document.createElement("input");
+              cb.type = "checkbox";
+              cb.checked = !!entry.cl[i][colKey];
+              cb.disabled = tooEarly && !isAdmin;
+              cb.onchange = ()=>{
+                entry.cl[i][colKey] = cb.checked;
+                dayLog[taskId] = entry;
+                scheduleLogSave(selectedDate, activeShiftKey());
+                setToggleLabel();
+              };
+              cell.appendChild(cb);
+              row.appendChild(cell);
+            });
+            table.appendChild(row);
+          });
+        } else {
+          // Eén vakje per punt (gewone checklist)
+          table.style.gridTemplateColumns = "auto 1fr";
+          task.checklist.forEach((label, i)=>{
+            if(!entry.cl[i]) entry.cl[i] = {};
+            const row = document.createElement("div");
+            row.className = "task-cl-row";
+            row.style.gridTemplateColumns = "32px 1fr";
             const cell = document.createElement("div");
             const cb = document.createElement("input");
             cb.type = "checkbox";
-            cb.checked = !!entry.cl[i][col];
+            cb.checked = !!entry.cl[i].done;
             cb.disabled = tooEarly && !isAdmin;
             cb.onchange = ()=>{
-              entry.cl[i][col] = cb.checked;
+              entry.cl[i].done = cb.checked;
+              labelEl.classList.toggle("checked", cb.checked);
               dayLog[taskId] = entry;
               scheduleLogSave(selectedDate, activeShiftKey());
               setToggleLabel();
             };
             cell.appendChild(cb);
+            const labelEl = document.createElement("div");
+            labelEl.textContent = label;
+            if(entry.cl[i].done) labelEl.classList.add("checked");
             row.appendChild(cell);
+            row.appendChild(labelEl);
+            table.appendChild(row);
           });
-          table.appendChild(row);
-        });
+        }
 
         setToggleLabel();
         toggle.onclick = ()=>{
