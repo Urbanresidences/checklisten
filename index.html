@@ -1072,7 +1072,7 @@
       <h1 class="landing-title">Welkom, <span id="dept-welcome-name"></span></h1>
       <p class="landing-sub">Kies je afdeling om te starten</p>
       <div id="dept-buttons" class="dept-grid"></div>
-      <button class="landing-logout" onklik="logout()">Andere naam inloggen</button>
+      <button class="landing-logout" onclick="logout()">Andere naam inloggen</button>
     </div>
   </div>
 </div>
@@ -1517,7 +1517,7 @@ const SHIFTS = {
   },
 
   hk: {
-    rev: 5,
+    rev: 6,
     dept: "hk",
     label: "HK Supervisor",
     time: "09:00 – 17:00 uur",
@@ -1545,10 +1545,9 @@ const SHIFTS = {
         {t:"Linnen en vuilnis naar beneden", d:"Linnen en vuilnis voor de pauze naar beneden brengen."},
       ]},
       { time:"12:30 - 13:00", name:"Pauze", tasks:[
-        {t:"Lunchpauze", d:"Lunchpauze. Zorg voor bezetting van de balie of draag over aan een collega."},
+        {t:"Lunchpauze", d:"Lunchpauze. Draag lopende zaken over aan een collega."},
       ]},
       { time:"13:00 - 15:30", name:"Afhandeling", tasks:[
-        {t:"Bevindingen verwerken", d:"Geconstateerde gebreken en TD-punten aanmaken als taak in MEWS (Tasks) en verwerken in de Timeline."},
         {t:"Voorraadcontrole", d:"Linnen, schoonmaakmiddelen en amenities controleren en aanvullen/bestellen indien nodig."},
       ]},
       { time:"16:00 - 17:00", name:"Afronden", tasks:[
@@ -1837,7 +1836,7 @@ async function touchUser(){
 
 function startAutoLogout(){
   let lastActivity = Date.now();
-  ["klik","keydown","touchstart"].forEach(ev=>{
+  ["click","keydown","touchstart"].forEach(ev=>{
     document.addEventListener(ev, ()=>{ lastActivity = Date.now(); touchUser(); }, true);
   });
   setInterval(()=>{
