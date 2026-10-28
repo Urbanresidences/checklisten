@@ -1530,16 +1530,16 @@ const SHIFTS = {
         {t:"Dagplanning HK doornemen", d:"Vertrekkende, aankomende en stayover-kamers bepalen; taken verdelen onder het team.", sopId:"housekeepinglijst-controleren"},
       ]},
       { time:"09:30 - 12:30", name:"Kamercontrole", tasks:[
-        {t:"Kamercontrole — Entree", d:"Plafondlampen; Muren."},
-        {t:"Kamercontrole — WC", d:"Spiegellamp; WC rolhouders; WC borstelhouder; Muren checken."},
-        {t:"Kamercontrole — Woonkamer", d:"Plafondlampen; Staande lampen; TV + antenne + afstandsbediening; Gordijnen schoon?; Fauteuil en bank schoon?; Tapijt schoon?"},
-        {t:"Kamercontrole — Eetkamer", d:"Hanglamp."},
-        {t:"Kamercontrole — Keuken", d:"Afzuigkap lamp en afzuiging; Plafondlampen; Koelkast schoon en werkend; Vaatwasser leeg, schoon en werkend; Inventaris checken; Wasbak schoon/wit?; Aanrecht schoon?; Waterkoker ontkalken; Nespresso nalopen."},
-        {t:"Kamercontrole — Washok", d:"Plafondlamp; Wasmachines laten draaien; Droger checken op stof."},
-        {t:"Kamercontrole — Badkamer", d:"Douchestang; Doucheputje; Wc-rolhouder; Wc-borstel; Plafondlamp; Spiegellamp; Afvoerputje bad; Kranen goed afgesteld in bad?; Zeep bijgevuld?"},
+        {t:"Kamercontrole — Entree", d:"Plafondlampen; Muren.", sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — WC", d:"Spiegellamp; WC rolhouders; WC borstelhouder; Muren checken.", sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — Woonkamer", d:"Plafondlampen; Staande lampen; TV + antenne + afstandsbediening; Gordijnen schoon?; Fauteuil en bank schoon?; Tapijt schoon?", sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — Eetkamer", d:"Hanglamp.", sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — Keuken", d:"Afzuigkap lamp en afzuiging; Plafondlampen; Koelkast schoon en werkend; Vaatwasser leeg, schoon en werkend; Inventaris checken; Wasbak schoon/wit?; Aanrecht schoon?; Waterkoker ontkalken; Nespresso nalopen.", sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — Washok", d:"Plafondlamp; Wasmachines laten draaien; Droger checken op stof.", sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — Badkamer", d:"Douchestang; Doucheputje; Wc-rolhouder; Wc-borstel; Plafondlamp; Spiegellamp; Afvoerputje bad; Kranen goed afgesteld in bad?; Zeep bijgevuld?", sopId:"kamercontrole-hk-supervisor"},
       ]},
       { time:"12:00", name:"TD/MEWS", tasks:[
-        {t:"Bevindingen verwerken", d:"Geconstateerde gebreken en TD-punten aanmaken als taak in MEWS (Tasks) en verwerken in de Timeline."},
+        {t:"Bevindingen verwerken", d:"Geconstateerde gebreken en TD-punten aanmaken als taak in MEWS (Tasks) en verwerken in de Timeline.", sopId:"bevindingen-verwerken-mews"},
       ]},
       { time:"12:30", name:"Voor pauze", tasks:[
         {t:"Linnen en vuilnis naar beneden", d:"Linnen en vuilnis voor de pauze naar beneden brengen."},
@@ -3345,6 +3345,89 @@ const SOPS = [
     <tr><td>Politie Rotterdam</td><td>0900 8844</td></tr>
     <tr><td>Meldkamer</td><td>088 8779000</td></tr>
   </table>
+`
+  },
+  {
+    id: "kamercontrole-hk-supervisor",
+    title: "Kamercontrole HK Supervisor",
+    category: "Housekeeping",
+    html: `
+  <h2>Doel</h2>
+  <p>Elk appartement is voordat de gast aankomt schoon, heel, compleet en technisch in orde.</p>
+  <h2>Wanneer van toepassing</h2>
+  <p>Dagelijks tussen 09:30 en 12:30, bij elk appartement dat door housekeeping schoon is gemeld.</p>
+  <h2>Stappen</h2>
+  <ol>
+    <li>Pak de housekeepinglijst (MEWS, Space status) en loop de appartementen langs die schoon zijn gemeld.</li>
+    <li>Loop door het appartement zoals een gast: kijk ook onderaan, achter deuren, in hoeken en langs randen.</li>
+    <li>Controleer per ruimte de punten hieronder.</li>
+    <li>Controleer overal: alles recht, aantallen kloppen, geen vlekken, haren, stof, kalk of spinnenwebben, glas en spiegels streeploos.</li>
+    <li>Alles uit en dicht: lampen, kranen, ramen en apparaten.</li>
+    <li>Alles goed? Geef het appartement vrij.</li>
+    <li>Iets niet goed? Roep de medewerker terug of herstel het zelf en controleer opnieuw.</li>
+    <li>Is iets kapot of werkt iets niet? Zie de SOP Bevindingen verwerken in MEWS.</li>
+  </ol>
+  <h2>Controlepunten per ruimte</h2>
+  <p><strong>Entree</strong></p>
+  <ul><li>Plafondlampen werken</li><li>Muren schoon, geen scheuren of beschadigingen</li></ul>
+  <p><strong>WC</strong></p>
+  <ul><li>Spiegellamp werkt</li><li>Wc-rolhouder en wc-borstelhouder aanwezig en schoon</li><li>Muren schoon</li><li>Geen rioollucht</li></ul>
+  <p><strong>Woonkamer</strong></p>
+  <ul><li>Plafondlampen en staande lampen werken</li><li>TV, antenne en afstandsbediening werken</li><li>Gordijnen, fauteuil, bank en tapijt schoon</li></ul>
+  <p><strong>Eetkamer</strong></p>
+  <ul><li>Hanglamp werkt</li></ul>
+  <p><strong>Keuken</strong></p>
+  <ul><li>Afzuigkap: lamp en afzuiging werken</li><li>Plafondlampen werken</li><li>Koelkast schoon en werkend</li><li>Vaatwasser leeg, schoon en werkend</li><li>Wasbak schoon en wit, aanrecht schoon</li><li>Waterkoker ontkalkt</li><li>Nespresso nagelopen</li><li>Basisuitrusting compleet (zie lijst hieronder)</li></ul>
+  <p><strong>Basisuitrusting keuken</strong> (controleer per appartement)</p>
+  <ul><li>Snijplank</li><li>Koekenpan en steelpannen met deksel</li><li>Magnetron</li><li>Mokken en glazen, ook een mok om melk in te verwarmen</li><li>Borden, kommen en bestek voor alle gasten</li><li>Scherp mes, pollepel, spatel en vergiet</li><li>Placemats en theedoeken</li></ul>
+  <p><strong>Slaapkamers</strong></p>
+  <ul><li>Beddengoed schoon en netjes</li><li>Eén dekbed per persoon: slapen twee personen in één bed, dan twee dekbedden</li><li>Kussens aanwezig en schoon</li><li>Matras niet doorgezakt of te zacht, zo ja melden</li><li>Lampen werken</li></ul>
+  <p><strong>Washok</strong></p>
+  <ul><li>Plafondlamp werkt</li><li>Wasmachines laten draaien</li><li>Droger checken op stof</li></ul>
+  <p><strong>Badkamer</strong></p>
+  <ul><li>Douchestang en doucheputje schoon en kalkvrij</li><li>Kranen van douche, bad en wastafel laten lopen: werken goed en zijn goed afgesteld</li><li>Afvoerputjes van bad, douche en wastafel schoon, water loopt weg, geen rioollucht</li><li>Wc-rolhouder en wc-borstel aanwezig</li><li>Plafondlamp en spiegellamp werken</li><li>Zeep bijgevuld</li></ul>
+  <p><strong>Hele appartement</strong></p>
+  <ul><li>Muren, vloer en plinten: geen scheuren of beschadigingen, anders melden</li><li>Meubels heel</li><li>Bij warm weer: ventilator aanwezig en werkend (er is geen airco)</li></ul>
+  <h2>Wat te doen bij afwijkingen</h2>
+  <ul>
+    <li>Kapot of werkt niet: leg het vast volgens de SOP Bevindingen verwerken in MEWS. Geef het appartement pas vrij als het is opgelost of beoordeeld.</li>
+    <li>Rioollucht, schimmel of lekkage: direct melden bij het management en de TD.</li>
+    <li>Lift werkt niet: direct melden bij het management en de TD.</li>
+    <li>Spullen van een gast gevonden: afgeven bij Front Office. Nooit zelf houden of weggooien.</li>
+    <li>Twijfel je? Geef het appartement niet vrij en vraag het management.</li>
+  </ul>
+  <h2>Verantwoordelijke rol</h2>
+  <p>HK Supervisor</p>
+`
+  },
+  {
+    id: "bevindingen-verwerken-mews",
+    title: "Bevindingen verwerken in MEWS",
+    category: "Housekeeping",
+    html: `
+  <h2>Doel</h2>
+  <p>Elk gebrek wordt vastgelegd en opgepakt, zodat de Technische Dienst (TD) het oplost en er niets blijft liggen.</p>
+  <h2>Wanneer van toepassing</h2>
+  <p>Zodra je tijdens de kamercontrole iets ziet dat kapot is of niet werkt. Leg het uiterlijk om 12:00 vast.</p>
+  <h2>Stappen</h2>
+  <ol>
+    <li>Laat het zoals het is en maak een foto.</li>
+    <li>Kun je het direct zelf oplossen, bijvoorbeeld een lamp vervangen? Doe dat en controleer opnieuw.</li>
+    <li>Lukt dat niet: maak in MEWS bij Tasks een taak aan voor de TD.</li>
+    <li>Zet in de taak het appartementnummer, een korte omschrijving en de foto.</li>
+    <li>Verwerk het punt ook in de Timeline.</li>
+    <li>Geef het appartement pas vrij als het gebrek is opgelost of is beoordeeld.</li>
+    <li>Volg open taken aan het eind van de dag op.</li>
+    <li>Zet openstaande punten in de rapportage en de overdracht aan de volgende dienst.</li>
+  </ol>
+  <div class="sop-callout">Taken voor andere afdelingen dan de TD maak je ook aan in MEWS (Tasks) en verwerk je in de Timeline. Is de vloer nat? Zet een waarschuwingsbord neer.</div>
+  <h2>Wat te doen bij afwijkingen</h2>
+  <ul>
+    <li>Gevaar (lekkage, schimmel, elektra, brand): direct melden bij het management. Wacht niet op de taak.</li>
+    <li>Weet je niet of het een gebrek is: maak toch de foto en vraag het management.</li>
+  </ul>
+  <h2>Verantwoordelijke rol</h2>
+  <p>HK Supervisor: vastleggen en opvolgen. Technische Dienst: oplossen.</p>
 `
   },
 ];
