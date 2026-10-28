@@ -810,6 +810,11 @@
     margin-right:-4px;
     border-radius:3px;
   }
+  .task-items{margin:6px 0 2px;}
+  .task-items label{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:#57503F;line-height:1.5;padding:3px 0;cursor:pointer;}
+  .task-items input{margin-top:4px;accent-color:#B08D57;}
+  .task-items label.done span{color:#A79C8C;text-decoration:line-through;}
+  .task-items-count{font-size:12px;color:#8B8477;margin-top:4px;}
   .task-notes{
     font-size:12.5px;
     color:#8B8477;
@@ -1530,13 +1535,14 @@ const SHIFTS = {
         {t:"Dagplanning HK doornemen", d:"Vertrekkende, aankomende en stayover-kamers bepalen; taken verdelen onder het team.", sopId:"housekeepinglijst-controleren"},
       ]},
       { time:"09:30 - 12:30", name:"Kamercontrole", tasks:[
-        {t:"Kamercontrole — Entree", d:"Plafondlampen; Muren.", sopId:"kamercontrole-hk-supervisor"},
-        {t:"Kamercontrole — WC", d:"Spiegellamp; WC rolhouders; WC borstelhouder; Muren checken.", sopId:"kamercontrole-hk-supervisor"},
-        {t:"Kamercontrole — Woonkamer", d:"Plafondlampen; Staande lampen; TV + antenne + afstandsbediening; Gordijnen schoon?; Fauteuil en bank schoon?; Tapijt schoon?", sopId:"kamercontrole-hk-supervisor"},
-        {t:"Kamercontrole — Eetkamer", d:"Hanglamp.", sopId:"kamercontrole-hk-supervisor"},
-        {t:"Kamercontrole — Keuken", d:"Afzuigkap lamp en afzuiging; Plafondlampen; Koelkast schoon en werkend; Vaatwasser leeg, schoon en werkend; Inventaris checken; Wasbak schoon/wit?; Aanrecht schoon?; Waterkoker ontkalken; Nespresso nalopen.", sopId:"kamercontrole-hk-supervisor"},
-        {t:"Kamercontrole — Washok", d:"Plafondlamp; Wasmachines laten draaien; Droger checken op stof.", sopId:"kamercontrole-hk-supervisor"},
-        {t:"Kamercontrole — Badkamer", d:"Douchestang; Doucheputje; Wc-rolhouder; Wc-borstel; Plafondlamp; Spiegellamp; Afvoerputje bad; Kranen goed afgesteld in bad?; Zeep bijgevuld?", sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — Entree", d:"", items:["Plafondlampen werken","Muren schoon, geen scheuren of beschadigingen"], sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — WC", d:"", items:["Spiegellamp werkt","Wc-rolhouder aanwezig","Wc-borstelhouder aanwezig","Muren schoon","Geen rioollucht"], sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — Woonkamer", d:"", items:["Plafondlampen werken","Staande lampen werken","TV, antenne en afstandsbediening werken","Gordijnen schoon","Fauteuil en bank schoon","Tapijt schoon"], sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — Eetkamer", d:"", items:["Hanglamp werkt"], sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — Slaapkamers", d:"", items:["Beddengoed schoon en netjes","Eén dekbed per persoon","Kussens aanwezig en schoon","Matras niet doorgezakt of te zacht","Lampen werken","Bij warm weer: ventilator aanwezig en werkend"], sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — Keuken", d:"", items:["Afzuigkap: lamp en afzuiging werken","Plafondlampen werken","Koelkast schoon en werkend","Vaatwasser leeg, schoon en werkend","Inventaris compleet (snijplank, pannen, magnetron, mokken, bestek, placemats)","Wasbak schoon en wit","Aanrecht schoon","Waterkoker ontkalkt","Nespresso nagelopen"], sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — Washok", d:"", items:["Plafondlamp werkt","Wasmachines laten draaien","Droger gecheckt op stof"], sopId:"kamercontrole-hk-supervisor"},
+        {t:"Kamercontrole — Badkamer", d:"", items:["Douchestang en doucheputje schoon","Wc-rolhouder en wc-borstel aanwezig","Plafondlamp en spiegellamp werken","Kranen van bad, douche en wastafel goed afgesteld","Afvoerputjes schoon, water loopt weg, geen rioollucht","Zeep bijgevuld"], sopId:"kamercontrole-hk-supervisor"},
       ]},
       { time:"12:00", name:"TD/MEWS", tasks:[
         {t:"Bevindingen verwerken", d:"Geconstateerde gebreken en TD-punten aanmaken als taak in MEWS (Tasks) en verwerken in de Timeline.", sopId:"bevindingen-verwerken-mews"},
@@ -2212,7 +2218,39 @@ async function renderContent(){
       noteMeta.textContent = (entry.n && entry.n.trim() && entry.nBy) ? `— ${entry.nBy}, ${entry.nAt || ""}` : "";
 
       mainCol.appendChild(title);
-      mainCol.appendChild(desc);
+      if(task.d || !task.items) mainCol.appendChild(desc);
+      if(task.items){
+        if(!entry.ck) entry.ck = {};
+        const ul = document.createElement("div");
+        ul.className = "task-items";
+        const cnt = document.createElement("div");
+        cnt.className = "task-items-count";
+        const upd = ()=>{ const n = task.items.filter((_, i)=> entry.ck[i]).length; cnt.textContent = n + " van " + task.items.length + " gecontroleerd"; };
+        task.items.forEach((label, i)=>{
+          const lb = document.createElement("label");
+          const cb = document.createElement("input");
+          cb.type = "checkbox";
+          cb.checked = !!entry.ck[i];
+          cb.disabled = tooEarly && !isAdmin;
+          if(cb.checked) lb.classList.add("done");
+          cb.onchange = ()=>{
+            if(!currentUser){ cb.checked = false; showUserOverlay(shift.dept); return; }
+            entry.ck[i] = cb.checked;
+            lb.classList.toggle("done", cb.checked);
+            dayLog[taskId] = entry;
+            scheduleLogSave(selectedDate, activeShiftKey());
+            upd();
+          };
+          const sp = document.createElement("span");
+          sp.textContent = label;
+          lb.appendChild(cb);
+          lb.appendChild(sp);
+          ul.appendChild(lb);
+        });
+        upd();
+        ul.appendChild(cnt);
+        mainCol.appendChild(ul);
+      }
       mainCol.appendChild(notes);
       mainCol.appendChild(noteMeta);
 
