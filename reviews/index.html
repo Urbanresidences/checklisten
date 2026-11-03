@@ -1,0 +1,1130 @@
+<!doctype html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Reviewrapport Urban Residences</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+</head><body>
+<script>
+(function () {
+  var RAW = { reviews: [{"id": "r0", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-11-03", "date_approx": false, "room": "242", "mews_res": "", "match": "", "issue": "Verf en verwarming moeten aandacht krijgen", "topics": "Onderhoud;Klimaat", "praise": "Uitzicht;Personeel", "status": "te beantwoorden", "property": "URR"}, {"id": "r1", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-11-02", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r2", "platform": "Booking.com", "reviewer": "Gast", "score": 1, "scale": 10, "date": "2026-11-02", "date_approx": false, "room": "142", "mews_res": "", "match": "", "issue": "Verwarming werkte niet bij aankomst, douche defect, slechte geluidsisolatie; kind van 18 maanden twee dagen in de kou", "topics": "Klimaat;Geluid;Sanitair", "praise": "Locatie", "status": "te beantwoorden", "property": "URR"}, {"id": "r3", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-11-01", "date_approx": false, "room": "220", "mews_res": "", "match": "", "issue": "Geen tekst; lage cijfers voor personeel, faciliteiten, comfort en bed", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r4", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-11-01", "date_approx": false, "room": "202", "mews_res": "", "match": "", "issue": "Appartement gedateerd; badkamer en kranen niet schoon genoeg", "topics": "Onderhoud;Schoonmaak", "praise": "Uitzicht", "status": "beantwoord", "property": "URR"}, {"id": "r5", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-11-01", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r6", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-30", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Uitzicht", "status": "beantwoord", "property": "URR"}, {"id": "r7", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-30", "date_approx": false, "room": "250", "mews_res": "", "match": "", "issue": "Verwarming werkte niet, op plekken vermoeid", "topics": "Klimaat;Onderhoud", "praise": "Locatie;Uitzicht", "status": "beantwoord", "property": "URR"}, {"id": "r8", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-30", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r9", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-30", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r10", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-29", "date_approx": false, "room": "246", "mews_res": "", "match": "", "issue": "", "topics": "Schoonmaak", "praise": "Locatie", "status": "beantwoord", "property": "URR"}, {"id": "r11", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-29", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r12", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-10-29", "date_approx": false, "room": "246", "mews_res": "", "match": "", "issue": "Voordeur moeilijk te openen, maar een lift werkte, lange wachttijd", "topics": "Lift;Sleutels", "praise": "Personeel;Uitzicht", "status": "beantwoord", "property": "URR"}, {"id": "r13", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-29", "date_approx": false, "room": "238", "mews_res": "", "match": "", "issue": "", "topics": "Onderhoud", "praise": "Locatie;Uitzicht", "status": "beantwoord", "property": "URR"}, {"id": "r14", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-28", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r15", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-28", "date_approx": false, "room": "156", "mews_res": "", "match": "", "issue": "", "topics": "Lift", "praise": "Locatie", "status": "beantwoord", "property": "URR"}, {"id": "r16", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-27", "date_approx": false, "room": "242", "mews_res": "", "match": "", "issue": "", "topics": "Lift", "praise": "Uitzicht;Locatie", "status": "beantwoord", "property": "URR"}, {"id": "r17", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-27", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r18", "platform": "Booking.com", "reviewer": "Gast", "score": 6, "scale": 10, "date": "2026-10-24", "date_approx": false, "room": "186", "mews_res": "", "match": "", "issue": "TV werkte niet, verwarming niet aan, schoonmaak slecht", "topics": "Klimaat;Schoonmaak;Onderhoud", "praise": "", "status": "beantwoord", "property": "URR"}, {"id": "r19", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-24", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r20", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-23", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie;Ruimte", "status": "beantwoord", "property": "URR"}, {"id": "r21", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-23", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie;Schoonmaak", "status": "beantwoord", "property": "URR"}, {"id": "r22", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-23", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Uitzicht;Locatie", "status": "beantwoord", "property": "URR"}, {"id": "r23", "platform": "Booking.com", "reviewer": "Gast", "score": 5, "scale": 10, "date": "2026-10-23", "date_approx": false, "room": "116", "mews_res": "", "match": "", "issue": "Een van de twee liften defect, hal en trappenhuis vervallen, balkon tegen betonnen muur", "topics": "Lift;Onderhoud", "praise": "Ruimte", "status": "beantwoord", "property": "URR"}, {"id": "r24", "platform": "Booking.com", "reviewer": "Gast", "score": 1, "scale": 10, "date": "2026-10-22", "date_approx": false, "room": "198", "mews_res": "", "match": "", "issue": "Extreem vies, oud en vervallen, douche werkte niet goed", "topics": "Schoonmaak;Onderhoud;Sanitair", "praise": "Uitzicht", "status": "beantwoord", "property": "URR"}, {"id": "r25", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-21", "date_approx": false, "room": "232", "mews_res": "", "match": "", "issue": "", "topics": "Lift", "praise": "Uitzicht", "status": "beantwoord", "property": "URR"}, {"id": "r26", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-19", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie", "status": "beantwoord", "property": "URR"}, {"id": "r27", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-18", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r28", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-18", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r29", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-16", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r30", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-14", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r31", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-14", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Uitzicht", "status": "beantwoord", "property": "URR"}, {"id": "r32", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-13", "date_approx": false, "room": "172", "mews_res": "", "match": "", "issue": "", "topics": "Lift", "praise": "Schoonmaak;Locatie;Uitzicht", "status": "beantwoord", "property": "URR"}, {"id": "r33", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-13", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie", "status": "beantwoord", "property": "URR"}, {"id": "r34", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-11", "date_approx": false, "room": "118", "mews_res": "", "match": "", "issue": "", "topics": "Keukeninventaris", "praise": "Locatie;Ruimte", "status": "beantwoord", "property": "URR"}, {"id": "r35", "platform": "Booking.com", "reviewer": "Gast", "score": 3, "scale": 10, "date": "2026-10-10", "date_approx": false, "room": "220", "mews_res": "", "match": "", "issue": "Achterstallig onderhoud, veel defect, lift buiten gebruik, geluidsoverlast", "topics": "Onderhoud;Lift;Geluid", "praise": "Locatie;Uitzicht", "status": "beantwoord", "property": "URR"}, {"id": "r36", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-09", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r37", "platform": "Booking.com", "reviewer": "Gast", "score": 1, "scale": 10, "date": "2026-10-08", "date_approx": false, "room": "212", "mews_res": "", "match": "", "issue": "Geen tekst; lage cijfers op alle onderdelen", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r38", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-06", "date_approx": false, "room": "166", "mews_res": "", "match": "", "issue": "", "topics": "Onderhoud", "praise": "Locatie;Personeel", "status": "beantwoord", "property": "URR"}, {"id": "r39", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-10-06", "date_approx": false, "room": "222", "mews_res": "", "match": "", "issue": "Schoonmaak voor de prijs beneden de maat", "topics": "Schoonmaak", "praise": "Uitzicht;Locatie", "status": "beantwoord", "property": "URR"}, {"id": "r40", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-02", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Uitzicht", "status": "beantwoord", "property": "URR"}, {"id": "r41", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-10-02", "date_approx": false, "room": "126", "mews_res": "", "match": "", "issue": "Factuur steeds met verkeerde gegevens en laat", "topics": "Facturatie", "praise": "", "status": "beantwoord", "property": "URR"}, {"id": "r42", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-02", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r43", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-01", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Uitzicht;Personeel;Locatie", "status": "beantwoord", "property": "URR"}, {"id": "r44", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-09-30", "date_approx": false, "room": "154", "mews_res": "", "match": "", "issue": "", "topics": "Keukeninventaris", "praise": "Locatie", "status": "beantwoord", "property": "URR"}, {"id": "r45", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-09-30", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r46", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-09-29", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie;Personeel", "status": "reactie afgekeurd", "property": "URR"}, {"id": "r47", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-09-29", "date_approx": false, "room": "242", "mews_res": "", "match": "", "issue": "", "topics": "Comfort", "praise": "Locatie", "status": "beantwoord", "property": "URR"}, {"id": "r48", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-09-28", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r49", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-09-28", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r50", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-09-27", "date_approx": false, "room": "216", "mews_res": "", "match": "", "issue": "", "topics": "Onderhoud", "praise": "Uitzicht", "status": "beantwoord", "property": "URR"}, {"id": "r51", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-09-26", "date_approx": false, "room": "196", "mews_res": "", "match": "", "issue": "Slecht onderhouden, bedden schuiven uit elkaar", "topics": "Onderhoud;Comfort", "praise": "Locatie;Uitzicht;Personeel", "status": "beantwoord", "property": "URR"}, {"id": "r52", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-09-26", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "", "status": "geen tekst", "property": "URR"}, {"id": "r53", "platform": "Google", "reviewer": "Gast", "score": 5, "scale": 5, "date": "2026-10-31", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "Positief, wil terugkomen", "status": "niet beantwoord", "topics": "", "praise": "", "property": "URR"}, {"id": "r54", "platform": "Google", "reviewer": "Gast", "score": 5, "scale": 5, "date": "2026-10-30", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "Familieverblijf, positief", "status": "niet beantwoord", "topics": "", "praise": "", "property": "URR"}, {"id": "r55", "platform": "Google", "reviewer": "Gast", "score": 1, "scale": 5, "date": "2026-10-27", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "Locatie goed, verder negatief (Frans); tekst afgekapt", "status": "niet beantwoord", "topics": "", "praise": "", "property": "URR"}, {"id": "r56", "platform": "Google", "reviewer": "Gast", "score": 1, "scale": 5, "date": "2026-10-27", "date_approx": true, "room": "226", "mews_res": "", "match": "", "issue": "Slechte staat van de kamers, schimmel op de muren (foto's)", "status": "niet beantwoord", "topics": "Onderhoud;Schoonmaak", "praise": "", "property": "URR"}, {"id": "r57", "platform": "Google", "reviewer": "Gast", "score": 3, "scale": 5, "date": "2026-10-20", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "Lift is vaak kapot, kamer bereiken kan 30 minuten duren", "status": "niet beantwoord", "topics": "Lift;Sleutels", "praise": "", "property": "URR"}, {"id": "r58", "platform": "Google", "reviewer": "Gast", "score": 1, "scale": 5, "date": "2026-10-13", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "Verblijf van 4 dagen, ervaring zeer slecht (Arabisch); tekst afgekapt", "status": "niet beantwoord", "topics": "", "praise": "", "property": "URR"}, {"id": "r59", "platform": "Google", "reviewer": "Gast", "score": 1, "scale": 5, "date": "2026-10-13", "date_approx": true, "room": "210", "mews_res": "", "match": "", "issue": "Sleutels werken niet, vaak naar receptie, 1 van 2 liften al 2 weken uit; wel vriendelijke receptie", "status": "niet beantwoord", "topics": "Lift;Sleutels", "praise": "", "property": "URR"}, {"id": "r60", "platform": "Google", "reviewer": "Gast", "score": 1, "scale": 5, "date": "2026-10-13", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "Prijs-kwaliteit onaanvaardbaar (Frans), foto's van schimmel en afwerking in de douche", "status": "niet beantwoord", "topics": "Onderhoud;Schoonmaak", "praise": "", "property": "URR"}, {"id": "r61", "platform": "Google", "reviewer": "Gast", "score": 5, "scale": 5, "date": "2026-10-06", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "Zakelijk, positief", "status": "niet beantwoord", "topics": "", "praise": "", "property": "URR"}, {"id": "r62", "platform": "Google", "reviewer": "Gast", "score": 2, "scale": 5, "date": "2026-10-06", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "5e verblijf, deze keer rampzalig: kamer veel te warm", "status": "niet beantwoord", "topics": "Klimaat", "praise": "", "property": "URR"}, {"id": "r63", "platform": "Google", "reviewer": "Gast", "score": 2, "scale": 5, "date": "2026-09-29", "date_approx": true, "room": "238", "mews_res": "", "match": "", "issue": "Zes jaar geleden positief, nu niet; tekst afgekapt", "status": "niet beantwoord", "topics": "", "praise": "", "property": "URR"}, {"id": "r64", "platform": "Google", "reviewer": "Gast", "score": 4, "scale": 5, "date": "2026-09-22", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "Rustig verblijf, positief", "status": "niet beantwoord", "topics": "", "praise": "", "property": "URR"}, {"id": "r65", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-11-03", "date_approx": false, "room": "C04", "mews_res": "", "match": "", "issue": "Appartement bij aankomst (14:30) nog niet afgeschoond; vloer niet gedweild", "topics": "Schoonmaak", "praise": "Ruimte", "status": "te beantwoorden"}, {"id": "r66", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-11-02", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r67", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-11-01", "date_approx": false, "room": "A02", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r68", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-11-01", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r69", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-11-01", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie;Ruimte;Inrichting", "status": "te beantwoorden"}, {"id": "r70", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-31", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie;Personeel", "status": "te beantwoorden"}, {"id": "r71", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-30", "date_approx": false, "room": "C06", "mews_res": "", "match": "", "issue": "Geen lift, lastig met oudere gasten", "topics": "Lift", "praise": "Locatie;Ruimte;Schoonmaak", "status": "te beantwoorden"}, {"id": "r72", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 6, "scale": 10, "date": "2026-10-29", "date_approx": false, "room": "C03", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r73", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-28", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie", "status": "te beantwoorden"}, {"id": "r74", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-10-28", "date_approx": false, "room": "C07", "mews_res": "", "match": "", "issue": "Badkamer aan renovatie toe, lawaai 's avonds, schoonmaak onder bed, koffiemachine werkt niet, sleutel alleen voor 17u", "topics": "Onderhoud;Geluid;Schoonmaak;Voorzieningen;Service", "praise": "Locatie;Keuken;Ruimte", "status": "te beantwoorden"}, {"id": "r75", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 6, "scale": 10, "date": "2026-10-27", "date_approx": false, "room": "C04", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r76", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-25", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r77", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-25", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r78", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-24", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r79", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-24", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r80", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-24", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Inrichting;Locatie", "status": "te beantwoorden"}, {"id": "r81", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 6, "scale": 10, "date": "2026-10-22", "date_approx": false, "room": "C01", "mews_res": "", "match": "", "issue": "Hoekjes vergeten (achter gordijnen, deuren); redelijk maar prijzig", "topics": "Schoonmaak;Kosten", "praise": "Locatie", "status": "te beantwoorden"}, {"id": "r82", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-10-21", "date_approx": false, "room": "B04", "mews_res": "", "match": "", "issue": "Verwarming deed weinig, gordijnen los, zware kastdeuren en losse stangen", "topics": "Klimaat;Onderhoud", "praise": "Ruimte;Locatie;Comfort", "status": "te beantwoorden"}, {"id": "r83", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-21", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r84", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-10-21", "date_approx": false, "room": "B02", "mews_res": "", "match": "", "issue": "Oven vies, borden niet schoon, slechte zitbank", "topics": "Schoonmaak;Comfort", "praise": "Locatie", "status": "te beantwoorden"}, {"id": "r85", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-21", "date_approx": false, "room": "C11", "mews_res": "", "match": "", "issue": "Geen wasmachine", "topics": "Voorzieningen", "praise": "Locatie;Ruimte;Schoonmaak;Keuken", "status": "te beantwoorden"}, {"id": "r86", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-21", "date_approx": false, "room": "P01", "mews_res": "", "match": "", "issue": "Incheck onduidelijk uitgelegd: via hoofdingang naar boven gesjouwd, terwijl de balie in de kelder zit", "topics": "Service;Personeel", "praise": "Locatie;Inrichting", "status": "te beantwoorden"}, {"id": "r87", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-20", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r88", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 4, "scale": 10, "date": "2026-10-19", "date_approx": false, "room": "A01", "mews_res": "", "match": "", "issue": "Oogt niet zo fris en modern als op de foto's", "topics": "Onderhoud", "praise": "Locatie", "status": "te beantwoorden"}, {"id": "r89", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-18", "date_approx": false, "room": "C05", "mews_res": "", "match": "", "issue": "Wel oven, geen magnetron", "topics": "Voorzieningen", "praise": "Locatie;Ruimte", "status": "te beantwoorden"}, {"id": "r90", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-10-18", "date_approx": false, "room": "C06", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r91", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-17", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Toeristenbelasting (13,50 per persoon) niet vooraf duidelijk", "topics": "Kosten", "praise": "Schoonmaak;Ruimte;Locatie", "status": "te beantwoorden"}, {"id": "r92", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-16", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r93", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-10-16", "date_approx": false, "room": "A01", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r94", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-16", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r95", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-16", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r96", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-16", "date_approx": false, "room": "P09", "mews_res": "", "match": "", "issue": "Parkeerplaats na 17u niet bereikbaar (extra betaald); tv niet aangesloten voor Franstaligen", "topics": "Parkeren;Voorzieningen", "praise": "Comfort;Inrichting", "status": "te beantwoorden"}, {"id": "r97", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-13", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie;Comfort", "status": "te beantwoorden"}, {"id": "r98", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-12", "date_approx": false, "room": "B03", "mews_res": "", "match": "", "issue": "Maar 3 Nederlandse zenders op tv", "topics": "Voorzieningen", "praise": "Comfort;Locatie", "status": "te beantwoorden"}, {"id": "r99", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-10", "date_approx": false, "room": "C08", "mews_res": "", "match": "", "issue": "Geen keukenpapier en schoonmaakmiddelen", "topics": "Keukeninventaris", "praise": "Locatie;Personeel", "status": "te beantwoorden"}, {"id": "r100", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-10-09", "date_approx": false, "room": "B10", "mews_res": "", "match": "", "issue": "Slaapkamer benauwd, slecht bed, update nodig, bank met vlekken, gehorig door de weg", "topics": "Onderhoud;Schoonmaak;Comfort;Geluid", "praise": "Ruimte", "status": "te beantwoorden"}, {"id": "r101", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-08", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r102", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 3, "scale": 10, "date": "2026-10-07", "date_approx": false, "room": "C07", "mews_res": "", "match": "", "issue": "Suite geboekt, maisonette gekregen; lawaai, tv kapot, wasmachine verwijderd, weinig servies; geen oplossing", "topics": "Geluid;Voorzieningen;Keukeninventaris;Service", "praise": "Locatie", "status": "te beantwoorden"}, {"id": "r103", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-06", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie;Ruimte", "status": "te beantwoorden"}, {"id": "r104", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-05", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie;Schoonmaak;Personeel", "status": "te beantwoorden"}, {"id": "r105", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-10-04", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r106", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-02", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie;Ruimte;Schoonmaak", "status": "te beantwoorden"}, {"id": "r107", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-10-02", "date_approx": false, "room": "C05", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r108", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-02", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r109", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 4, "scale": 10, "date": "2026-10-01", "date_approx": false, "room": "B10", "mews_res": "", "match": "", "issue": "Accommodatie smoezelig en versleten, niets veranderd in 12 jaar", "topics": "Onderhoud;Schoonmaak", "praise": "Locatie;Keuken", "status": "te beantwoorden"}, {"id": "r110", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-01", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie;Inrichting;Ruimte", "status": "te beantwoorden"}, {"id": "r111", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 5, "scale": 10, "date": "2026-09-30", "date_approx": false, "room": "C08", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r112", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-09-29", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r113", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-09-29", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r114", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 5, "scale": 10, "date": "2026-09-28", "date_approx": false, "room": "C01", "mews_res": "", "match": "", "issue": "Woning afgewoond, terrasmeubels vies", "topics": "Onderhoud;Schoonmaak", "praise": "Locatie", "status": "te beantwoorden"}, {"id": "r115", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-09-28", "date_approx": false, "room": "B10", "mews_res": "", "match": "", "issue": "Niet perfect schoon, slaapkamer te klein", "topics": "Schoonmaak;Ruimte", "praise": "Inrichting", "status": "te beantwoorden"}, {"id": "r116", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-09-28", "date_approx": false, "room": "C07", "mews_res": "", "match": "", "issue": "Trap naar badkamer, weinig keukengerei", "topics": "Keukeninventaris;Ruimte", "praise": "Locatie", "status": "te beantwoorden"}, {"id": "r117", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-09-27", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Kurkentrekker ontbrak", "topics": "Keukeninventaris", "praise": "Locatie;Service", "status": "te beantwoorden"}, {"id": "r118", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-09-27", "date_approx": false, "room": "B03", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r119", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 9, "scale": 10, "date": "2026-09-27", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Parkeren bij aankomst om 11u niet mogelijk; 35 euro extra betaald voor extern parkeren", "topics": "Parkeren;Kosten", "praise": "Locatie;Schoonmaak;Inrichting", "status": "te beantwoorden"}, {"id": "r120", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-09-26", "date_approx": false, "room": "C07", "mews_res": "", "match": "", "issue": "Onderhoud van materialen", "topics": "Onderhoud", "praise": "Locatie;Inrichting", "status": "te beantwoorden"}, {"id": "r121", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 3, "scale": 10, "date": "2026-09-25", "date_approx": false, "room": "C07", "mews_res": "", "match": "", "issue": "Chloorlucht, etensresten, vuil bestek, haren, hellhörig, geen föhn/wasmachine/droger, doorgezakt bed, vlekken", "topics": "Schoonmaak;Geluid;Voorzieningen;Comfort;Onderhoud", "praise": "Locatie", "status": "te beantwoorden"}, {"id": "r122", "property": "URM", "platform": "Booking.com", "reviewer": "Gast", "score": 7, "scale": 10, "date": "2026-09-25", "date_approx": false, "room": "B03", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "geen tekst"}, {"id": "r123", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-11-03", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "te beantwoorden"}, {"id": "r124", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-26", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "beantwoord"}, {"id": "r125", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-24", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie", "status": "te beantwoorden"}, {"id": "r126", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-23", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "beantwoord"}, {"id": "r127", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 6, "scale": 10, "date": "2026-10-21", "date_approx": false, "room": "114", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "te beantwoorden"}, {"id": "r128", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-21", "date_approx": false, "room": "122", "mews_res": "", "match": "", "issue": "Tv deed het niet", "topics": "Voorzieningen", "praise": "Schoonmaak", "status": "te beantwoorden"}, {"id": "r129", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-19", "date_approx": false, "room": "206", "mews_res": "", "match": "", "issue": "Schemerig licht", "topics": "Comfort", "praise": "Schoonmaak;Uitzicht", "status": "te beantwoorden"}, {"id": "r130", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-16", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Schoonmaak", "status": "te beantwoorden"}, {"id": "r131", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-11", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "beantwoord"}, {"id": "r132", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 10, "scale": 10, "date": "2026-10-07", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie;Uitzicht", "status": "beantwoord"}, {"id": "r133", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-10-04", "date_approx": false, "room": "126", "mews_res": "", "match": "", "issue": "Muggen, geen buitenmeubels, vuile ramen", "topics": "Schoonmaak;Voorzieningen", "praise": "", "status": "beantwoord"}, {"id": "r134", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 2, "scale": 10, "date": "2026-09-30", "date_approx": false, "room": "238", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "te beantwoorden"}, {"id": "r135", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 6, "scale": 10, "date": "2026-09-26", "date_approx": false, "room": "218", "mews_res": "", "match": "", "issue": "Oud", "topics": "Onderhoud", "praise": "", "status": "te beantwoorden"}, {"id": "r136", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 8, "scale": 10, "date": "2026-09-26", "date_approx": false, "room": "", "mews_res": "", "match": "", "issue": "Geen tekst", "topics": "", "praise": "", "status": "beantwoord"}, {"id": "r137", "property": "URR", "platform": "Expedia", "reviewer": "Gast", "score": 6, "scale": 10, "date": "2026-09-25", "date_approx": false, "room": "218", "mews_res": "", "match": "", "issue": "Appartementen hard toe aan renovatie", "topics": "Onderhoud", "praise": "Locatie;Ruimte;Personeel", "status": "beantwoord"}, {"id": "r138", "property": "URM", "platform": "Google", "reviewer": "Gast", "score": 5, "scale": 5, "date": "2026-11-01", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Ruimte;Locatie", "status": "te beantwoorden"}, {"id": "r139", "property": "URM", "platform": "Google", "reviewer": "Gast", "score": 1, "scale": 5, "date": "2026-10-27", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "Vloer niet gepoetst, muf beddengoed, stof en haren in de badkamer; team zou terugbellen maar deed dat niet", "topics": "Schoonmaak;Onderhoud;Service", "praise": "Locatie", "status": "te beantwoorden"}, {"id": "r140", "property": "URM", "platform": "Google", "reviewer": "Gast", "score": 5, "scale": 5, "date": "2026-10-20", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Ruimte;Locatie;Keuken", "status": "te beantwoorden"}, {"id": "r141", "property": "URM", "platform": "Google", "reviewer": "Gast", "score": 4, "scale": 5, "date": "2026-10-20", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "", "topics": "", "praise": "Locatie;Personeel;Comfort;Keuken;Schoonmaak", "status": "te beantwoorden"}, {"id": "r142", "property": "URM", "platform": "Google", "reviewer": "Gast", "score": 3, "scale": 5, "date": "2026-10-06", "date_approx": true, "room": "B10", "mews_res": "", "match": "", "issue": "Maisonnette B10: slaapkamer warm en benauwd, bank groezelig, lawaai van de straat, niet fris", "topics": "Comfort;Schoonmaak;Geluid;Onderhoud", "praise": "Locatie;Ruimte;Keuken", "status": "te beantwoorden"}, {"id": "r143", "property": "URM", "platform": "Google", "reviewer": "Gast", "score": 4, "scale": 5, "date": "2026-09-29", "date_approx": true, "room": "", "mews_res": "", "match": "", "issue": "Mooi appartement, maar kritiek op de receptionist", "topics": "Personeel", "praise": "Inrichting", "status": "te beantwoorden"}], platform_scores: [{"property": "URR", "platform": "Booking.com", "score": 7.6, "scale": 10, "count": 2444, "as_of": "2026-11-03"}, {"property": "URR", "platform": "Expedia", "score": 8.8, "scale": 10, "count": 1183, "as_of": "2026-11-03"}, {"property": "URR", "platform": "Google", "score": 4.0, "scale": 5, "count": 1063, "as_of": "2026-11-03"}, {"property": "URM", "platform": "Booking.com", "score": 8.2, "scale": 10, "count": 1579, "as_of": "2026-11-03"}, {"property": "URM", "platform": "Google", "score": 4.3, "scale": 5, "count": 243, "as_of": "2026-11-03"}] };
+  var calcs = {}, memo = {}, draws = {}, cbs = [];
+  function get(n) {
+    if (RAW[n]) return RAW[n];
+    if (!(n in memo)) { var c = calcs[n]; memo[n] = c.fn.apply(null, c.inputs.map(get)); }
+    return memo[n];
+  }
+  window.dash = {
+    calc: function (n, o) { calcs[n] = o; },
+    draw: function (t, f) { draws[t] = f; },
+    onData: function (f) { cbs.push(f); },
+    data: function (n) { try { return { status: 'ok', data: get(n) }; } catch (e) { return { status: 'error', data: [] }; } },
+    setParams: function () {}, colors: []
+  };
+  window.__runDraw = function () {
+    Object.keys(draws).forEach(function (t) { document.querySelectorAll('[data-draw="' + t + '"]').forEach(draws[t]); });
+    cbs.forEach(function (f) { f(); });
+  };
+})();
+</script>
+<style>
+:root{--cds-font-size-title:1.75rem;--cds-font-size-heading:1.25rem;--cds-font-size-body:1rem;--cds-font-size-caption:.8125rem;--cds-gap-xs:.25rem;--cds-gap-sm:.5rem;--cds-gap-md:1rem;--cds-pad-xs:.25rem;--cds-pad-sm:.5rem;--cds-pad-lg:1.25rem;--cds-radius:.5rem;--cds-font-weight-medium:600;--color-fg:#2B2620;--color-fg-muted:#7A6F60;--color-panel:#fff;--color-border-line:#E4DDD1;--color-warn:#8A6A35;--color-ok:#6B7A5E;--color-bad:#B3261E;--cds-surface-popover:#fff;--cds-border:#E4DDD1;--cds-shadow-popover:0 2px 8px rgba(0,0,0,.12);--cds-dur-slow:.2s;--font-anthropic-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;--font-anthropic-serif:Georgia,serif}
+body{margin:0;background:#FAF9F6}
+
+.rv { max-width: 76rem; margin-inline: auto; font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+.rv h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0 0 var(--cds-gap-xs); }
+.rv h2 { font-family: var(--font-anthropic-serif); font-size: var(--cds-font-size-heading); font-weight: 400; margin: 0 0 var(--cds-gap-xs); }
+.rv p { margin: 0; }
+.rv b { font-weight: var(--cds-font-weight-medium); font-variant-numeric: tabular-nums; }
+.rv-take { font-size: var(--cds-font-size-body); margin-bottom: var(--cds-gap-xs); }
+.rv-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.rv-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: var(--cds-gap-md); margin: var(--cds-gap-md) 0; }
+.rv-tile, .rv-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); }
+.rv-card { margin-bottom: var(--cds-gap-md); }
+.rv-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--cds-gap-md); }
+.rv-cols .rv-card { margin-bottom: 0; }
+.rv-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.rv-big { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: calc(var(--cds-font-size-title) * 1.6); line-height: 1.15; margin: var(--cds-gap-xs) 0; font-variant-numeric: tabular-nums; }
+.rv-big b { font-weight: 400; }
+.rv-sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.rv-sub b { font-weight: 400; }
+.rv-scroll { overflow-x: auto; margin-top: var(--cds-gap-sm); }
+.rv-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.rv-table th { text-align: left; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+.rv-table td { padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
+.rv-neg td:nth-child(7) { min-width: 18rem; }
+.rv-neg td:nth-child(6) { min-width: 9rem; }
+.rv-st-warn { color: var(--color-warn); }
+.rv-st-ok { color: var(--color-ok); }
+.rv-st-muted { color: var(--color-fg-muted); }
+.rv-chart { position: relative; min-height: 7.5rem; margin-top: var(--cds-gap-sm); }
+.rv-tick { font-size: var(--cds-font-size-caption); fill: var(--color-fg-muted); }
+.rv-val { font-size: var(--cds-font-size-caption); fill: var(--color-fg); font-variant-numeric: tabular-nums; }
+.rv-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; }
+.rv-fail { display: flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 4rem; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.rv-fail[hidden] { display: none; }
+.rv-dot { width: 0.375rem; height: 0.375rem; border-radius: 50%; background: var(--color-bad); }
+.rv ul { margin: var(--cds-gap-xs) 0 0; padding-left: 1.1rem; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.rv li { margin-bottom: var(--cds-gap-xs); }
+.rv-fold { border-top: 1px solid var(--color-border-line); }
+.rv-fold summary { cursor: pointer; padding: var(--cds-pad-sm) var(--cds-pad-xs); font-size: var(--cds-font-size-body); display: flex; justify-content: space-between; gap: var(--cds-gap-md); }
+.rv-fold summary span:first-child { text-decoration: underline; text-underline-offset: 3px; }
+.rv-fold summary:hover span:first-child { text-decoration-thickness: 2px; }
+.rv-fold summary span:last-child { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.rv-fold ul { margin: 0 0 var(--cds-gap-sm); padding-left: 1.4rem; }
+.rv-fold li { display: flex; justify-content: space-between; max-width: 22rem; margin-bottom: 2px; }
+.rv-folds { margin-top: var(--cds-gap-md); }
+
+.rv { --charcoal:#1A1A1A; --ink:#2B2620; --gold:#B08D57; --gold-dark:#8A6A35; --cream:#F3EDE3; --paper:#FAF9F6; --line:#E4DDD1; --muted:#7A6F60; --gereed:#6B7A5E;
+  display: flex; max-width: none; margin: 0; background: var(--paper); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; min-height: 100vh; }
+.rv h1, .rv h2 { font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif; color: var(--ink); font-weight: 400; }
+.rv-side { width: 220px; flex: none; background: var(--charcoal); color: var(--cream); padding: 24px 0; position: sticky; top: 0; align-self: flex-start; height: 100vh; display: flex; flex-direction: column; }
+.rv-brand { display: flex; align-items: center; gap: 10px; padding: 0 20px 22px; border-bottom: 1px solid rgba(255,255,255,.12); margin-bottom: 12px; }
+.rv-mark { width: 34px; height: 34px; border: 1.5px solid var(--gold); color: var(--gold); display: grid; place-items: center; font-family: Georgia, serif; font-weight: 700; font-size: 14px; border-radius: 3px; }
+.rv-brand-t { font-family: Georgia, serif; font-size: 15px; line-height: 1.2; }
+.rv-brand-s { font-size: 11px; color: var(--gold-light, #D9C7A8); letter-spacing: .04em; }
+.rv-nav { display: flex; flex-direction: column; }
+.rv-nav a { color: var(--cream); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(243,237,227,.35); padding: 9px 20px; font-size: 13px; border-left: 3px solid transparent; }
+.rv-nav a:hover { background: rgba(255,255,255,.06); border-left-color: var(--gold); text-decoration-color: var(--gold); }
+.rv-side-foot { margin-top: auto; padding: 16px 20px 0; font-size: 11px; color: rgba(243,237,227,.6); border-top: 1px solid rgba(255,255,255,.12); }
+.rv-main { flex: 1; min-width: 0; padding: 32px 40px; max-width: 80rem; }
+.rv-tile, .rv-card { background: #fff; border: 1px solid var(--line); }
+.rv-tile { border-top: 3px solid var(--gold); }
+.rv-note, .rv-label, .rv-sub, .rv-table th, .rv ul, .rv-fold summary span:last-child { color: var(--muted); }
+.rv-table td { color: var(--ink); }
+.rv-table th, .rv-table td, .rv-fold { border-color: var(--line); }
+.rv-tick { fill: var(--muted); }
+.rv-val { fill: var(--ink); }
+.rv-tip { background: #fff; color: var(--ink); border-color: var(--line); }
+.rv-st-warn { color: var(--gold-dark); }
+.rv-st-ok { color: var(--gereed); }
+.rv-st-muted { color: var(--muted); }
+.rv-big { font-family: Georgia, serif; color: var(--ink); }
+.rv-fail { color: var(--muted); }
+.rv h2 { border-bottom: 1px solid var(--line); padding-bottom: var(--cds-gap-xs); margin-bottom: var(--cds-gap-sm); }
+@media (max-width: 52rem) {
+  .rv { flex-direction: column; }
+  .rv-side { position: static; width: auto; height: auto; padding: 14px 0 6px; }
+  .rv-nav { flex-direction: row; flex-wrap: wrap; padding: 0 12px; }
+  .rv-nav a { padding: 6px 10px; border-left: 0; }
+  .rv-side-foot { display: none; }
+  .rv-main { padding: 20px 16px; }
+}
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+[data-dash-source-state=empty] { color: transparent; }
+
+.rv-switch { display: flex; gap: 6px; padding: 0 20px 14px; }
+.rv-sw { flex: 1; background: transparent; color: var(--cream); border: 1px solid rgba(243,237,227,.35); border-radius: 3px; padding: 7px 4px; font-size: 12px; cursor: pointer; font-family: inherit; }
+.rv-sw:hover { border-color: var(--gold); }
+.rv-sw.on { background: var(--gold); color: var(--charcoal); border-color: var(--gold); }
+.rv-prop.off { height: 0; overflow: hidden; visibility: hidden; }
+</style>
+
+<div class="rv" id="reviews">
+  <aside class="rv-side">
+    <div class="rv-brand"><div class="rv-mark">UR</div><div><div class="rv-brand-t">Urban Residences</div><div class="rv-brand-s">Reviews</div></div></div>
+    <div class="rv-switch" role="group" aria-label="Hotel">
+      <button type="button" class="rv-sw on" data-pick="urr">Rotterdam</button>
+      <button type="button" class="rv-sw" data-pick="urm">Maastricht</button>
+    </div>
+    <nav class="rv-nav">
+      <a href="#kern" data-nav="kern">De kern</a>
+      <a href="#perweek" data-nav="perweek">Per week</a>
+      <a href="#verdeling" data-nav="verdeling">Scoreverdeling</a>
+      <a href="#aandacht" data-nav="aandacht">Aandachtspunten</a>
+      <a href="#waardering" data-nav="waardering">Wat gasten waarderen</a>
+      <a href="#kamers" data-nav="kamers">Kamers met klachten</a>
+      <a href="#negatief" data-nav="negatief">Negatieve reviews</a>
+      <a href="#werkwijze" data-nav="werkwijze">Zo is dit verzameld</a>
+    </nav>
+    <div class="rv-side-foot" id="rv-foot">Urban Residences Rotterdam</div>
+  </aside>
+  <div class="rv-main">
+<div class="rv-prop" data-prop="urr">
+  <header>
+    <h1>Reviewrapport Urban Residences Rotterdam</h1>
+    <p class="rv-take"><b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="week_label">—</b> (<b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="period">—</b>): gemiddeld <b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="avg_label">—</b> uit <b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="n_label">—</b> reviews op Booking.com, <b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="avg_delta">—</b> ten opzichte van de week ervoor.</p>
+    <p class="rv-note">Weken lopen van vrijdag tot en met donderdag, zoals in het bestaande weekrapport. Stand van <span data-draw="cell" data-fmt="date" data-source="platforms_urr" data-where="platform=Booking.com" data-field="as_of">—</span>.</p>
+  </header>
+
+  <section class="rv-tiles" id="kern-urr">
+    <div class="rv-tile">
+      <div class="rv-label">Gemiddeld cijfer</div>
+      <div class="rv-big"><b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="avg_label">—</b></div>
+      <div class="rv-sub"><b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="avg_delta">—</b> t.o.v. vorige week</div>
+    </div>
+    <div class="rv-tile">
+      <div class="rv-label">Aantal reviews</div>
+      <div class="rv-big"><b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="n_label">—</b></div>
+      <div class="rv-sub"><b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="n_delta">—</b> t.o.v. vorige week</div>
+    </div>
+    <div class="rv-tile">
+      <div class="rv-label">Reviews met 8 tot 10</div>
+      <div class="rv-big"><b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="high_label">—</b></div>
+      <div class="rv-sub"><b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="high_delta">—</b> t.o.v. vorige week</div>
+    </div>
+    <div class="rv-tile">
+      <div class="rv-label">Reviews met 1 tot 4</div>
+      <div class="rv-big"><b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="low_label">—</b></div>
+      <div class="rv-sub"><b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="low_delta">—</b> t.o.v. vorige week</div>
+    </div>
+  </section>
+
+  <section class="rv-card" id="perweek-urr">
+    <h2>1. Gemiddeld cijfer per week</h2>
+    <p class="rv-note">Booking.com, alleen volledige weken sinds vrijdag 25 september. De lopende week telt niet mee.</p>
+    <p class="rv-fail" data-for="weeks_urr" hidden><span class="rv-dot"></span>Failed to load</p>
+    <div class="rv-chart dash-skeleton" data-draw="vbar" data-source="weeks_urr" data-label="week_label" data-value="avg" data-fmt="one" data-max="10" data-aria="Gemiddeld cijfer per week"></div>
+    <div class="rv-scroll">
+      <table class="rv-table" data-source="weeks_urr" data-row-key="key">
+        <thead>
+          <tr>
+            <th data-field="week_label">Week</th>
+            <th data-field="period">Periode</th>
+            <th data-field="n_label">Reviews</th>
+            <th data-field="avg_label">Gemiddeld</th>
+            <th data-field="avg_delta">Verschil</th>
+            <th data-field="high_label">8 tot 10</th>
+            <th data-field="low_label">1 tot 4</th>
+            <th data-field="state">Status</th>
+          </tr>
+        </thead>
+        <tbody data-draw="rows" data-source="weeks_urr" data-cols="week_label,period,n_label,avg_label,avg_delta,high_label,low_label,state"></tbody>
+        </table>
+      </div>
+      <h2 style="margin-top: var(--cds-gap-md)">Per platform per week</h2>
+      <p class="rv-note">Gemiddeld cijfer per week, tussen haakjes het aantal reviews. Samen telt alle platforms mee, omgerekend naar een cijfer op 10. Google geeft geen exacte datum, dus de week is bij benadering. Expedia telt op datum van plaatsing. Van Google zijn alleen de recent gelezen reviews opgenomen, dus daar staan weinig reviews per week.</p>
+      <p class="rv-fail" data-for="platweeks_urr" hidden><span class="rv-dot"></span>Failed to load</p>
+      <div class="rv-scroll">
+        <table class="rv-table" data-source="platweeks_urr" data-row-key="key">
+          <thead><tr><th data-field="week_label">Week</th><th data-field="period">Periode</th><th data-field="bk">Booking.com</th><th data-field="ex">Expedia</th><th data-field="gg">Google (van 5)</th><th data-field="all">Samen (op 10)</th></tr></thead>
+          <tbody data-draw="rows" data-source="platweeks_urr" data-cols="week_label,period,bk,ex,gg,all"></tbody>
+        </table>
+      </div>
+  </section>
+
+  <div class="rv-cols">
+    <section class="rv-card" id="verdeling-urr">
+      <h2>2. Scoreverdeling</h2>
+      <p class="rv-note">Aantal reviews per cijfer in de week van de kern.</p>
+      <p class="rv-fail" data-for="dist_urr" hidden><span class="rv-dot"></span>Failed to load</p>
+      <div class="rv-chart dash-skeleton" data-draw="vbar" data-source="dist_urr" data-label="label" data-value="n" data-fmt="int" data-aria="Aantal reviews per cijfer"></div>
+    </section>
+    <section class="rv-card" id="platforms-urr">
+      <h2>Totaalscore per platform</h2>
+      <p class="rv-note">Alle reviews ooit, zoals het platform zelf rekent.</p>
+      <p class="rv-fail" data-for="platforms_urr" hidden><span class="rv-dot"></span>Failed to load</p>
+      <div class="rv-scroll">
+        <table class="rv-table" data-source="platforms_urr" data-row-key="platform">
+          <thead><tr><th data-field="platform">Platform</th><th data-field="score_label">Score</th><th data-field="count_label">Reviews</th></tr></thead>
+          <tbody data-draw="rows" data-source="platforms_urr" data-cols="platform,score_label,count_label"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="rv-cols" style="margin-top: var(--cds-gap-md)">
+    <section class="rv-card" id="aandacht-urr">
+      <h2>3. Aandachtspunten</h2>
+      <p class="rv-note">Aantal Booking.com- en Expedia-reviews waarin gasten dit noemen als minpunt, vanaf 25 september.</p>
+      <p class="rv-fail" data-for="topics_c_urr" hidden><span class="rv-dot"></span>Failed to load</p>
+      <div class="rv-chart dash-skeleton" data-draw="hbar" data-source="topics_c_urr" data-aria="Minpunten per onderwerp"></div>
+    </section>
+    <section class="rv-card" id="waardering-urr">
+      <h2>4. Wat gasten waarderen</h2>
+      <p class="rv-note">Aantal Booking.com- en Expedia-reviews waarin gasten dit noemen als pluspunt, vanaf 25 september.</p>
+      <p class="rv-fail" data-for="topics_p_urr" hidden><span class="rv-dot"></span>Failed to load</p>
+      <div class="rv-chart dash-skeleton" data-draw="hbar" data-source="topics_p_urr" data-aria="Pluspunten per onderwerp"></div>
+    </section>
+  </div>
+
+  <section class="rv-card" id="kamers-urr" style="margin-top: var(--cds-gap-md)">
+    <h2>5. Kamers met de meeste klachten</h2>
+    <p class="rv-note">Vanaf week 40, Booking.com, Expedia en Google samen. Een klacht is een review onder 8 (Booking.com en Expedia) of onder 4 sterren (Google), of een review met een genoemd minpunt. Bij gelijk aantal gaat de laagste gemiddelde score voor, daarna de nieuwste review. Lift en sleutels zijn gebouwbrede onderwerpen, niet kamergebonden.</p>
+    <p class="rv-fail" data-for="rooms_urr" hidden><span class="rv-dot"></span>Failed to load</p>
+    <div class="rv-scroll">
+      <table class="rv-table" data-source="rooms_urr" data-row-key="room">
+        <thead>
+          <tr>
+            <th data-field="room">Kamer</th>
+            <th data-field="n_label">Klachten</th>
+            <th data-field="avg_label">Gem. score (van 10)</th>
+            <th data-field="topics">Onderwerpen</th>
+            <th data-field="guests">Reviews</th>
+          </tr>
+        </thead>
+        <tbody data-draw="rows" data-source="rooms_urr" data-cols="room,n_label,avg_label,topics,guests"></tbody>
+      </table>
+    </div>
+    <h2 style="margin-top: var(--cds-gap-md)">Alle kamers met klachten, per onderwerp</h2>
+    <p class="rv-note">Klik op een kamer voor het aantal klachten per onderwerp. Een review zonder tekst telt als "Geen tekst".</p>
+    <p class="rv-fail" data-for="room_topics_urr" hidden><span class="rv-dot"></span>Failed to load</p>
+    <div class="rv-folds" data-draw="roomfold" data-source="room_topics_urr"></div>
+  </section>
+
+  <section class="rv-card" id="negatief-urr" style="margin-top: var(--cds-gap-md)">
+    <h2>6. Negatieve reviews</h2>
+    <p class="rv-note">Booking.com en Expedia onder 8 en Google onder 4 sterren, gegroepeerd per onderwerp. Een review met meer onderwerpen staat bij elk onderwerp. Klik op een onderwerp voor de reviews. De kamer komt uit Mews: bij Booking.com en Expedia via het reserveringsnummer, bij Google via naam en verblijfsperiode. Het kamernummer is opgezocht voor alle Booking.com- en Expedia-reviews met een klacht vanaf week 40.</p>
+    <p class="rv-fail" data-for="neg_topics_urr" hidden><span class="rv-dot"></span>Failed to load</p>
+    <div class="rv-folds" data-draw="negfold" data-source="neg_topics_urr"></div>
+  </section>
+
+  <section class="rv-card" id="werkwijze-urr">
+    <h2>Zo is dit verzameld</h2>
+    <ul>
+      <li>Booking.com: reviews uitgelezen uit de Extranet van Urban Residences Rotterdam, vanaf vrijdag 25 september. Het kamernummer volgt uit het reserveringsnummer in Mews en is dus zeker. Bij reviews zonder klacht is de kamer niet opgezocht.</li>
+      <li>Google: reviews uit het bedrijfsprofiel. Google noemt alleen een naam en een relatieve datum, dus de datum is bij benadering en het kamernummer is waarschijnlijk of mogelijk, niet zeker. Google telt daarom niet mee in de weekgemiddelden.</li>
+      <li>Week 42 telt hier 7 reviews waar het bestaande weekrapport er 9 noemt. Week 43 komt wel overeen met zijn cijfers.</li>
+      <li>Expedia: reviews uit Partner Central, op datum van plaatsing (tienpuntsschaal). Het kamernummer volgt uit het Expedia-reserveringsnummer in Mews. Expedia telt niet mee in de weekgemiddelden, die zijn zoals in het bestaande weekrapport alleen Booking.com.</li>
+      <li>Gastnamen zijn in deze versie weggelaten; kamernummers staan er wel in.</li>
+      <li>Minpunten en pluspunten zijn een indeling op basis van de tekst; reviews zonder tekst staan er niet in.</li>
+      <li>Nog niet opgenomen: niets meer voor Rotterdam, behalve het beantwoorden van reviews.</li>
+    </ul>
+  </section>
+</div>
+<div class="rv-prop off" data-prop="urm">
+  <header>
+    <h1>Reviewrapport Urban Residences Maastricht</h1>
+    <p class="rv-take"><b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="week_label">—</b> (<b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="period">—</b>): gemiddeld <b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="avg_label">—</b> uit <b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="n_label">—</b> reviews op Booking.com, <b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="avg_delta">—</b> ten opzichte van de week ervoor.</p>
+    <p class="rv-note">Weken lopen van vrijdag tot en met donderdag, zoals in het bestaande weekrapport. Stand van <span data-draw="cell" data-fmt="date" data-source="platforms_urm" data-where="platform=Booking.com" data-field="as_of">—</span>.</p>
+  </header>
+
+  <section class="rv-tiles" id="kern-urm">
+    <div class="rv-tile">
+      <div class="rv-label">Gemiddeld cijfer</div>
+      <div class="rv-big"><b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="avg_label">—</b></div>
+      <div class="rv-sub"><b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="avg_delta">—</b> t.o.v. vorige week</div>
+    </div>
+    <div class="rv-tile">
+      <div class="rv-label">Aantal reviews</div>
+      <div class="rv-big"><b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="n_label">—</b></div>
+      <div class="rv-sub"><b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="n_delta">—</b> t.o.v. vorige week</div>
+    </div>
+    <div class="rv-tile">
+      <div class="rv-label">Reviews met 8 tot 10</div>
+      <div class="rv-big"><b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="high_label">—</b></div>
+      <div class="rv-sub"><b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="high_delta">—</b> t.o.v. vorige week</div>
+    </div>
+    <div class="rv-tile">
+      <div class="rv-label">Reviews met 1 tot 4</div>
+      <div class="rv-big"><b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="low_label">—</b></div>
+      <div class="rv-sub"><b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="low_delta">—</b> t.o.v. vorige week</div>
+    </div>
+  </section>
+
+  <section class="rv-card" id="perweek-urm">
+    <h2>1. Gemiddeld cijfer per week</h2>
+    <p class="rv-note">Booking.com, alleen volledige weken sinds vrijdag 25 september. De lopende week telt niet mee.</p>
+    <p class="rv-fail" data-for="weeks_urm" hidden><span class="rv-dot"></span>Failed to load</p>
+    <div class="rv-chart dash-skeleton" data-draw="vbar" data-source="weeks_urm" data-label="week_label" data-value="avg" data-fmt="one" data-max="10" data-aria="Gemiddeld cijfer per week"></div>
+    <div class="rv-scroll">
+      <table class="rv-table" data-source="weeks_urm" data-row-key="key">
+        <thead>
+          <tr>
+            <th data-field="week_label">Week</th>
+            <th data-field="period">Periode</th>
+            <th data-field="n_label">Reviews</th>
+            <th data-field="avg_label">Gemiddeld</th>
+            <th data-field="avg_delta">Verschil</th>
+            <th data-field="high_label">8 tot 10</th>
+            <th data-field="low_label">1 tot 4</th>
+            <th data-field="state">Status</th>
+          </tr>
+        </thead>
+        <tbody data-draw="rows" data-source="weeks_urm" data-cols="week_label,period,n_label,avg_label,avg_delta,high_label,low_label,state"></tbody>
+        </table>
+      </div>
+      <h2 style="margin-top: var(--cds-gap-md)">Per platform per week</h2>
+      <p class="rv-note">Gemiddeld cijfer per week, tussen haakjes het aantal reviews. Samen telt alle platforms mee, omgerekend naar een cijfer op 10. Google geeft geen exacte datum, dus de week is bij benadering. Expedia telt op datum van plaatsing. Van Google zijn alleen de recent gelezen reviews opgenomen, dus daar staan weinig reviews per week.</p>
+      <p class="rv-fail" data-for="platweeks_urm" hidden><span class="rv-dot"></span>Failed to load</p>
+      <div class="rv-scroll">
+        <table class="rv-table" data-source="platweeks_urm" data-row-key="key">
+          <thead><tr><th data-field="week_label">Week</th><th data-field="period">Periode</th><th data-field="bk">Booking.com</th><th data-field="ex">Expedia</th><th data-field="gg">Google (van 5)</th><th data-field="all">Samen (op 10)</th></tr></thead>
+          <tbody data-draw="rows" data-source="platweeks_urm" data-cols="week_label,period,bk,ex,gg,all"></tbody>
+        </table>
+      </div>
+  </section>
+
+  <div class="rv-cols">
+    <section class="rv-card" id="verdeling-urm">
+      <h2>2. Scoreverdeling</h2>
+      <p class="rv-note">Aantal reviews per cijfer in de week van de kern.</p>
+      <p class="rv-fail" data-for="dist_urm" hidden><span class="rv-dot"></span>Failed to load</p>
+      <div class="rv-chart dash-skeleton" data-draw="vbar" data-source="dist_urm" data-label="label" data-value="n" data-fmt="int" data-aria="Aantal reviews per cijfer"></div>
+    </section>
+    <section class="rv-card" id="platforms-urm">
+      <h2>Totaalscore per platform</h2>
+      <p class="rv-note">Alle reviews ooit, zoals het platform zelf rekent.</p>
+      <p class="rv-fail" data-for="platforms_urm" hidden><span class="rv-dot"></span>Failed to load</p>
+      <div class="rv-scroll">
+        <table class="rv-table" data-source="platforms_urm" data-row-key="platform">
+          <thead><tr><th data-field="platform">Platform</th><th data-field="score_label">Score</th><th data-field="count_label">Reviews</th></tr></thead>
+          <tbody data-draw="rows" data-source="platforms_urm" data-cols="platform,score_label,count_label"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="rv-cols" style="margin-top: var(--cds-gap-md)">
+    <section class="rv-card" id="aandacht-urm">
+      <h2>3. Aandachtspunten</h2>
+      <p class="rv-note">Aantal Booking.com- en Expedia-reviews waarin gasten dit noemen als minpunt, vanaf 25 september.</p>
+      <p class="rv-fail" data-for="topics_c_urm" hidden><span class="rv-dot"></span>Failed to load</p>
+      <div class="rv-chart dash-skeleton" data-draw="hbar" data-source="topics_c_urm" data-aria="Minpunten per onderwerp"></div>
+    </section>
+    <section class="rv-card" id="waardering-urm">
+      <h2>4. Wat gasten waarderen</h2>
+      <p class="rv-note">Aantal Booking.com- en Expedia-reviews waarin gasten dit noemen als pluspunt, vanaf 25 september.</p>
+      <p class="rv-fail" data-for="topics_p_urm" hidden><span class="rv-dot"></span>Failed to load</p>
+      <div class="rv-chart dash-skeleton" data-draw="hbar" data-source="topics_p_urm" data-aria="Pluspunten per onderwerp"></div>
+    </section>
+  </div>
+
+  <section class="rv-card" id="kamers-urm" style="margin-top: var(--cds-gap-md)">
+    <h2>5. Kamers met de meeste klachten</h2>
+    <p class="rv-note">Vanaf week 40, Booking.com en Google samen. Een klacht is een review onder 8 (Booking.com) of onder 4 sterren (Google), of een review met een genoemd minpunt. Bij gelijk aantal gaat de laagste gemiddelde score voor, daarna de nieuwste review. Lift, sleutel en parkeren zijn gebouwbrede onderwerpen, niet kamergebonden.</p>
+    <p class="rv-fail" data-for="rooms_urm" hidden><span class="rv-dot"></span>Failed to load</p>
+    <div class="rv-scroll">
+      <table class="rv-table" data-source="rooms_urm" data-row-key="room">
+        <thead>
+          <tr>
+            <th data-field="room">Kamer</th>
+            <th data-field="n_label">Klachten</th>
+            <th data-field="avg_label">Gem. score (van 10)</th>
+            <th data-field="topics">Onderwerpen</th>
+            <th data-field="guests">Reviews</th>
+          </tr>
+        </thead>
+        <tbody data-draw="rows" data-source="rooms_urm" data-cols="room,n_label,avg_label,topics,guests"></tbody>
+      </table>
+    </div>
+    <h2 style="margin-top: var(--cds-gap-md)">Alle kamers met klachten, per onderwerp</h2>
+    <p class="rv-note">Klik op een kamer voor het aantal klachten per onderwerp. Een review zonder tekst telt als "Geen tekst".</p>
+    <p class="rv-fail" data-for="room_topics_urm" hidden><span class="rv-dot"></span>Failed to load</p>
+    <div class="rv-folds" data-draw="roomfold" data-source="room_topics_urm"></div>
+  </section>
+
+  <section class="rv-card" id="negatief-urm" style="margin-top: var(--cds-gap-md)">
+    <h2>6. Negatieve reviews</h2>
+    <p class="rv-note">Booking.com onder 8 en Google onder 4 sterren, gegroepeerd per onderwerp. Een review met meer onderwerpen staat bij elk onderwerp. Klik op een onderwerp voor de reviews. De kamer komt uit Mews: bij Booking.com via het reserveringsnummer, bij Google via naam en verblijfsperiode. Het kamernummer is opgezocht voor alle Booking.com-reviews met een klacht vanaf week 40.</p>
+    <p class="rv-fail" data-for="neg_topics_urm" hidden><span class="rv-dot"></span>Failed to load</p>
+    <div class="rv-folds" data-draw="negfold" data-source="neg_topics_urm"></div>
+  </section>
+
+  <section class="rv-card" id="werkwijze-urm">
+    <h2>Zo is dit verzameld</h2>
+    <ul>
+      <li>Booking.com: reviews uitgelezen uit de Extranet van Urban Residences Maastricht, vanaf vrijdag 25 september. Het kamernummer volgt uit het reserveringsnummer in Mews (hotel Maastricht) en is dus zeker. Bij reviews zonder klacht is de kamer niet opgezocht.</li>
+      <li>Google: reviews uit het bedrijfsprofiel van Maastricht (4,3 uit 243), alleen die van de afgelopen weken. Google noemt alleen een naam en een relatieve datum, dus de datum is bij benadering. De kamer is alleen genoemd als die in Mews zeker te herleiden was. Google telt niet mee in de weekgemiddelden.</li>
+      <li>Het bestaande weekrapport is voor Maastricht niet vergeleken.</li>
+      <li>Gastnamen zijn in deze versie weggelaten; kamernummers staan er wel in.</li>
+      <li>Minpunten en pluspunten zijn een indeling op basis van de tekst; reviews zonder tekst staan er niet in.</li>
+      <li>Nog niet opgenomen: Expedia Maastricht.</li>
+    </ul>
+  </section>
+</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const FMT = {
+    int: new Intl.NumberFormat('nl-NL', { maximumFractionDigits: 0 }),
+    one: new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 }),
+    date: new Intl.DateTimeFormat('nl-NL', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+  };
+
+  {
+    const prop = 'URR';
+  dash.calc('booking_urr', {
+    title: 'Booking.com-reviews met week',
+    description: 'Booking.com-reviews met de week (vrijdag tot en met donderdag, ISO-weeknummer van de donderdag)',
+    inputs: ['reviews'],
+    fn: (reviews) => reviews.filter((r) => r.property === prop && r.platform === 'Booking.com').map((r) => {
+      const d = new Date(r.date + 'T00:00:00Z');
+      const thu = new Date(d.getTime() + ((4 - d.getUTCDay() + 7) % 7) * 86400000);
+      const t = new Date(Date.UTC(thu.getUTCFullYear(), thu.getUTCMonth(), thu.getUTCDate()));
+      const jan1 = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
+      const week = Math.ceil(((t - jan1) / 86400000 + 1) / 7);
+      return Object.assign({}, r, { week: week, end: thu.toISOString().slice(0, 10) });
+    })
+  });
+
+  dash.calc('weeks_urr', {
+    title: 'Per week',
+    description: 'Gemiddeld cijfer, aantal en aandeel hoog en laag per week op Booking.com',
+    inputs: ['booking_urr'],
+    fn: (booking) => {
+      const MND = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+      const nf1 = new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      const sg = new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1, signDisplay: 'exceptZero' });
+      const sgi = new Intl.NumberFormat('nl-NL', { maximumFractionDigits: 0, signDisplay: 'exceptZero' });
+      const lbl = (iso) => { const p = iso.split('-').map(Number); return p[2] + ' ' + MND[p[1] - 1]; };
+      const latest = booking.reduce((m, r) => (r.date > m ? r.date : m), '');
+      const by = {};
+      booking.forEach((r) => { (by[r.end] = by[r.end] || []).push(r); });
+      const ends = Object.keys(by).sort();
+      const rows = ends.map((end, i) => {
+        const rs = by[end];
+        const n = rs.length;
+        const avg = rs.reduce((s, r) => s + r.score, 0) / n;
+        const high = rs.filter((r) => r.score >= 8).length / n * 100;
+        const low = rs.filter((r) => r.score <= 4).length / n * 100;
+        const start = new Date(new Date(end + 'T00:00:00Z').getTime() - 6 * 86400000).toISOString().slice(0, 10);
+        return { key: end, week: rs[0].week, week_label: 'Week ' + rs[0].week, period: lbl(start) + ' - ' + lbl(end),
+          n: n, avg: avg, high: high, low: low, complete: end <= latest, state: end <= latest ? 'volledig' : 'lopend' };
+      });
+      rows.forEach((r, i) => {
+        const p = i > 0 ? rows[i - 1] : null;
+        r.n_label = String(r.n);
+        r.avg_label = nf1.format(r.avg);
+        r.high_label = nf1.format(r.high) + '%';
+        r.low_label = nf1.format(r.low) + '%';
+        r.avg_delta = p ? sg.format(r.avg - p.avg) : '—';
+        r.n_delta = p ? sgi.format(r.n - p.n) : '—';
+        r.high_delta = p ? sg.format(r.high - p.high) + ' pt' : '—';
+        r.low_delta = p ? sg.format(r.low - p.low) + ' pt' : '—';
+      });
+      return rows.filter((r) => r.complete);
+    }
+  });
+
+  dash.calc('platweeks_urr', {
+    title: 'Per platform per week',
+    description: 'Gemiddeld cijfer per week voor Booking.com, Expedia en Google en samen',
+    inputs: ['reviews'],
+    fn: (reviews0) => {
+      const reviews = reviews0.filter((r) => r.property === prop);
+      const MND = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+      const nf1 = new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      const lbl = (iso) => { const p = iso.split('-').map(Number); return p[2] + ' ' + MND[p[1] - 1]; };
+      const latest = reviews.filter((r) => r.platform === 'Booking.com').reduce((m, r) => (r.date > m ? r.date : m), '');
+      const by = {};
+      reviews.forEach((r) => {
+        const d = new Date(r.date + 'T00:00:00Z');
+        const thu = new Date(d.getTime() + ((4 - d.getUTCDay() + 7) % 7) * 86400000);
+        const end = thu.toISOString().slice(0, 10);
+        const t = new Date(Date.UTC(thu.getUTCFullYear(), thu.getUTCMonth(), thu.getUTCDate()));
+        const jan1 = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
+        const week = Math.ceil(((t - jan1) / 86400000 + 1) / 7);
+        (by[end] = by[end] || { week: week, rs: [] }).rs.push(r);
+      });
+      const part = (rs, plat, tail) => {
+        const x = rs.filter((r) => r.platform === plat);
+        if (!x.length) return '—';
+        return nf1.format(x.reduce((s, r) => s + r.score, 0) / x.length) + tail + ' (' + x.length + ')';
+      };
+      const first = Object.keys(by).sort().find((e) => by[e].rs.some((r) => r.platform === 'Booking.com'));
+      return Object.keys(by).sort().filter((end) => end <= latest && end >= first).map((end) => {
+        const g = by[end];
+        const start = new Date(new Date(end + 'T00:00:00Z').getTime() - 6 * 86400000).toISOString().slice(0, 10);
+        const all = g.rs.reduce((s, r) => s + r.score / r.scale * 10, 0) / g.rs.length;
+        return { key: end, week_label: 'Week ' + g.week, period: lbl(start) + ' - ' + lbl(end),
+          bk: part(g.rs, 'Booking.com', ''), ex: part(g.rs, 'Expedia', ''), gg: part(g.rs, 'Google', ''),
+          all: nf1.format(all) + ' (' + g.rs.length + ')' };
+      });
+    }
+  });
+
+  dash.calc('focus_urr', {
+    title: 'Kern van de week',
+    description: 'De laatste volledige week met de lopende week ernaast',
+    inputs: ['weeks_urr'],
+    fn: (weeks) => {
+      const done = weeks.filter((w) => w.complete);
+      const f = done[done.length - 1];
+      if (!f) return [];
+      const run = weeks.find((w) => !w.complete);
+      return [Object.assign({}, f, {
+        run_week: run ? run.week_label : '',
+        run_avg: run ? run.avg_label : '—',
+        run_n: run ? run.n_label : '—'
+      })];
+    }
+  });
+
+  dash.calc('dist_urr', {
+    title: 'Scoreverdeling',
+    description: 'Aantal reviews per cijfer 1 tot 10 in de week van de kern',
+    inputs: ['booking_urr', 'focus_urr'],
+    fn: (booking, focus) => {
+      const f = focus[0];
+      const out = [];
+      for (let s = 1; s <= 10; s++) out.push({ label: String(s), n: 0 });
+      if (!f) return out;
+      booking.filter((r) => r.end === f.key).forEach((r) => { out[Math.min(10, Math.max(1, Math.round(r.score))) - 1].n += 1; });
+      return out;
+    }
+  });
+
+  const topicCount = (booking, field) => {
+    const c = {};
+    booking.forEach((r) => (r[field] || '').split(';').filter(Boolean).forEach((t) => { c[t] = (c[t] || 0) + 1; }));
+    return Object.keys(c).map((t) => ({ label: t, n: c[t] })).sort((a, b) => b.n - a.n || a.label.localeCompare(b.label));
+  };
+  dash.calc('ten_urr', {
+    title: 'Reviews op tienpuntsschaal',
+    description: 'Booking.com- en Expedia-reviews van dit hotel',
+    inputs: ['reviews'],
+    fn: (reviews) => reviews.filter((r) => r.property === prop && r.scale === 10)
+  });
+
+  dash.calc('topics_c_urr', {
+    title: 'Minpunten',
+    description: 'Aantal Booking.com-reviews per genoemd minpunt',
+    inputs: ['ten_urr'],
+    fn: (booking) => topicCount(booking, 'topics')
+  });
+  dash.calc('topics_p_urr', {
+    title: 'Pluspunten',
+    description: 'Aantal Booking.com-reviews per genoemd pluspunt',
+    inputs: ['ten_urr'],
+    fn: (booking) => topicCount(booking, 'praise')
+  });
+
+  dash.calc('negative_urr', {
+    title: 'Negatieve reviews',
+    description: 'Booking.com onder 8 en Google onder 4 sterren, nieuwste eerst',
+    inputs: ['reviews'],
+    fn: (reviews0) => {
+      const reviews = reviews0.filter((r) => r.property === prop);
+      const MND = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+      return reviews
+        .filter((r) => r.score < (r.scale === 10 ? 8 : 4))
+        .sort((a, b) => b.date.localeCompare(a.date) || a.platform.localeCompare(b.platform))
+        .map((r) => {
+          const booking = r.scale === 10;
+          const p = r.date.split('-').map(Number);
+          return {
+            id: r.id, platform: r.platform,
+            date_label: (r.date_approx ? 'ca. ' : '') + p[2] + ' ' + MND[p[1] - 1],
+            score_label: booking ? r.score.toFixed(1).replace('.', ',') + ' / 10' : r.score + ' / 5',
+            reviewer: r.reviewer, room: r.room || 'onbekend', match: r.match,
+            issue: r.issue || '—', status: r.status, topics: r.topics || ''
+          };
+        });
+    }
+  });
+
+  dash.calc('rooms_urr', {
+    title: 'Kamers met de meeste klachten',
+    description: 'Top 5 kamers naar aantal reviews met een klacht, vanaf week 40',
+    inputs: ['reviews'],
+    fn: (reviews0) => {
+      const reviews = reviews0.filter((r) => r.property === prop);
+      const nf1 = new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      const by = {};
+      reviews.forEach((r) => {
+        const lim = r.scale === 10 ? 8 : 4;
+        if (r.room && (r.score < lim || (r.topics || '').length)) (by[r.room] = by[r.room] || []).push(r);
+      });
+      return Object.keys(by).map((room) => {
+        const rs = by[room];
+        const avg = rs.reduce((s, r) => s + r.score / r.scale * 10, 0) / rs.length;
+        const topics = Array.from(new Set(rs.flatMap((r) => (r.topics || '').split(';').filter(Boolean))));
+        const last = rs.reduce((m, r) => (r.date > m ? r.date : m), '');
+        return {
+          room: room, n: rs.length, n_label: String(rs.length), avg: avg, avg_label: nf1.format(avg), last: last,
+          topics: topics.length ? topics.join(', ') : 'geen tekst',
+          guests: rs.map((r) => r.platform + ' ' + (r.platform === 'Google' ? r.score + '/5' : r.score)).join(', ')
+        };
+      }).sort((a, b) => b.n - a.n || a.avg - b.avg || b.last.localeCompare(a.last)).slice(0, 5);
+    }
+  });
+
+  dash.calc('room_topics_urr', {
+    title: 'Klachten per kamer en onderwerp',
+    description: 'Alle kamers met een klacht, met aantal klachten per onderwerp',
+    inputs: ['reviews'],
+    fn: (reviews0) => {
+      const reviews = reviews0.filter((r) => r.property === prop);
+      const by = {};
+      reviews.forEach((r) => {
+        const lim = r.scale === 10 ? 8 : 4;
+        if (r.room && (r.score < lim || (r.topics || '').length)) (by[r.room] = by[r.room] || []).push(r);
+      });
+      return Object.keys(by).map((room) => {
+        const rs = by[room];
+        const c = {};
+        rs.forEach((r) => {
+          const ts = (r.topics || '').split(';').filter(Boolean);
+          (ts.length ? ts : ['Geen tekst']).forEach((t) => { c[t] = (c[t] || 0) + 1; });
+        });
+        const topics = Object.keys(c).map((t) => ({ label: t, n: c[t] })).sort((a, b) => b.n - a.n || a.label.localeCompare(b.label));
+        const avg = rs.reduce((s, r) => s + r.score / r.scale * 10, 0) / rs.length;
+        const last = rs.reduce((m, r) => (r.date > m ? r.date : m), '');
+        return { room: room, n: rs.length, avg: avg, last: last, topics: topics };
+      }).sort((a, b) => b.n - a.n || a.avg - b.avg || b.last.localeCompare(a.last) || a.room.localeCompare(b.room));
+    }
+  });
+
+  dash.calc('neg_topics_urr', {
+    title: 'Negatieve reviews per onderwerp',
+    description: 'Negatieve reviews gegroepeerd per onderwerp, nieuwste eerst binnen elk onderwerp',
+    inputs: ['negative_urr'],
+    fn: (negative) => {
+      const by = {};
+      negative.forEach((r) => {
+        const ts = r.topics.split(';').filter(Boolean);
+        (ts.length ? ts : ['Geen tekst']).forEach((t) => { (by[t] = by[t] || []).push(r); });
+      });
+      return Object.keys(by).map((t) => ({ topic: t, n: by[t].length, reviews: by[t] }))
+        .sort((a, b) => b.n - a.n || a.topic.localeCompare(b.topic));
+    }
+  });
+
+  dash.calc('platforms_urr', {
+    title: 'Totaalscore per platform',
+    description: 'Score en aantal per platform als tekst',
+    inputs: ['platform_scores'],
+    fn: (ps) => ps.filter((p) => p.property === prop).map((p) => ({
+      platform: p.platform, as_of: p.as_of,
+      score_label: new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(p.score) + ' van ' + p.scale,
+      count_label: new Intl.NumberFormat('nl-NL').format(p.count)
+    }))
+  });
+
+  }
+  {
+    const prop = 'URM';
+  dash.calc('booking_urm', {
+    title: 'Booking.com-reviews met week',
+    description: 'Booking.com-reviews met de week (vrijdag tot en met donderdag, ISO-weeknummer van de donderdag)',
+    inputs: ['reviews'],
+    fn: (reviews) => reviews.filter((r) => r.property === prop && r.platform === 'Booking.com').map((r) => {
+      const d = new Date(r.date + 'T00:00:00Z');
+      const thu = new Date(d.getTime() + ((4 - d.getUTCDay() + 7) % 7) * 86400000);
+      const t = new Date(Date.UTC(thu.getUTCFullYear(), thu.getUTCMonth(), thu.getUTCDate()));
+      const jan1 = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
+      const week = Math.ceil(((t - jan1) / 86400000 + 1) / 7);
+      return Object.assign({}, r, { week: week, end: thu.toISOString().slice(0, 10) });
+    })
+  });
+
+  dash.calc('weeks_urm', {
+    title: 'Per week',
+    description: 'Gemiddeld cijfer, aantal en aandeel hoog en laag per week op Booking.com',
+    inputs: ['booking_urm'],
+    fn: (booking) => {
+      const MND = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+      const nf1 = new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      const sg = new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1, signDisplay: 'exceptZero' });
+      const sgi = new Intl.NumberFormat('nl-NL', { maximumFractionDigits: 0, signDisplay: 'exceptZero' });
+      const lbl = (iso) => { const p = iso.split('-').map(Number); return p[2] + ' ' + MND[p[1] - 1]; };
+      const latest = booking.reduce((m, r) => (r.date > m ? r.date : m), '');
+      const by = {};
+      booking.forEach((r) => { (by[r.end] = by[r.end] || []).push(r); });
+      const ends = Object.keys(by).sort();
+      const rows = ends.map((end, i) => {
+        const rs = by[end];
+        const n = rs.length;
+        const avg = rs.reduce((s, r) => s + r.score, 0) / n;
+        const high = rs.filter((r) => r.score >= 8).length / n * 100;
+        const low = rs.filter((r) => r.score <= 4).length / n * 100;
+        const start = new Date(new Date(end + 'T00:00:00Z').getTime() - 6 * 86400000).toISOString().slice(0, 10);
+        return { key: end, week: rs[0].week, week_label: 'Week ' + rs[0].week, period: lbl(start) + ' - ' + lbl(end),
+          n: n, avg: avg, high: high, low: low, complete: end <= latest, state: end <= latest ? 'volledig' : 'lopend' };
+      });
+      rows.forEach((r, i) => {
+        const p = i > 0 ? rows[i - 1] : null;
+        r.n_label = String(r.n);
+        r.avg_label = nf1.format(r.avg);
+        r.high_label = nf1.format(r.high) + '%';
+        r.low_label = nf1.format(r.low) + '%';
+        r.avg_delta = p ? sg.format(r.avg - p.avg) : '—';
+        r.n_delta = p ? sgi.format(r.n - p.n) : '—';
+        r.high_delta = p ? sg.format(r.high - p.high) + ' pt' : '—';
+        r.low_delta = p ? sg.format(r.low - p.low) + ' pt' : '—';
+      });
+      return rows.filter((r) => r.complete);
+    }
+  });
+
+  dash.calc('platweeks_urm', {
+    title: 'Per platform per week',
+    description: 'Gemiddeld cijfer per week voor Booking.com, Expedia en Google en samen',
+    inputs: ['reviews'],
+    fn: (reviews0) => {
+      const reviews = reviews0.filter((r) => r.property === prop);
+      const MND = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+      const nf1 = new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      const lbl = (iso) => { const p = iso.split('-').map(Number); return p[2] + ' ' + MND[p[1] - 1]; };
+      const latest = reviews.filter((r) => r.platform === 'Booking.com').reduce((m, r) => (r.date > m ? r.date : m), '');
+      const by = {};
+      reviews.forEach((r) => {
+        const d = new Date(r.date + 'T00:00:00Z');
+        const thu = new Date(d.getTime() + ((4 - d.getUTCDay() + 7) % 7) * 86400000);
+        const end = thu.toISOString().slice(0, 10);
+        const t = new Date(Date.UTC(thu.getUTCFullYear(), thu.getUTCMonth(), thu.getUTCDate()));
+        const jan1 = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
+        const week = Math.ceil(((t - jan1) / 86400000 + 1) / 7);
+        (by[end] = by[end] || { week: week, rs: [] }).rs.push(r);
+      });
+      const part = (rs, plat, tail) => {
+        const x = rs.filter((r) => r.platform === plat);
+        if (!x.length) return '—';
+        return nf1.format(x.reduce((s, r) => s + r.score, 0) / x.length) + tail + ' (' + x.length + ')';
+      };
+      const first = Object.keys(by).sort().find((e) => by[e].rs.some((r) => r.platform === 'Booking.com'));
+      return Object.keys(by).sort().filter((end) => end <= latest && end >= first).map((end) => {
+        const g = by[end];
+        const start = new Date(new Date(end + 'T00:00:00Z').getTime() - 6 * 86400000).toISOString().slice(0, 10);
+        const all = g.rs.reduce((s, r) => s + r.score / r.scale * 10, 0) / g.rs.length;
+        return { key: end, week_label: 'Week ' + g.week, period: lbl(start) + ' - ' + lbl(end),
+          bk: part(g.rs, 'Booking.com', ''), ex: part(g.rs, 'Expedia', ''), gg: part(g.rs, 'Google', ''),
+          all: nf1.format(all) + ' (' + g.rs.length + ')' };
+      });
+    }
+  });
+
+  dash.calc('focus_urm', {
+    title: 'Kern van de week',
+    description: 'De laatste volledige week met de lopende week ernaast',
+    inputs: ['weeks_urm'],
+    fn: (weeks) => {
+      const done = weeks.filter((w) => w.complete);
+      const f = done[done.length - 1];
+      if (!f) return [];
+      const run = weeks.find((w) => !w.complete);
+      return [Object.assign({}, f, {
+        run_week: run ? run.week_label : '',
+        run_avg: run ? run.avg_label : '—',
+        run_n: run ? run.n_label : '—'
+      })];
+    }
+  });
+
+  dash.calc('dist_urm', {
+    title: 'Scoreverdeling',
+    description: 'Aantal reviews per cijfer 1 tot 10 in de week van de kern',
+    inputs: ['booking_urm', 'focus_urm'],
+    fn: (booking, focus) => {
+      const f = focus[0];
+      const out = [];
+      for (let s = 1; s <= 10; s++) out.push({ label: String(s), n: 0 });
+      if (!f) return out;
+      booking.filter((r) => r.end === f.key).forEach((r) => { out[Math.min(10, Math.max(1, Math.round(r.score))) - 1].n += 1; });
+      return out;
+    }
+  });
+
+  const topicCount = (booking, field) => {
+    const c = {};
+    booking.forEach((r) => (r[field] || '').split(';').filter(Boolean).forEach((t) => { c[t] = (c[t] || 0) + 1; }));
+    return Object.keys(c).map((t) => ({ label: t, n: c[t] })).sort((a, b) => b.n - a.n || a.label.localeCompare(b.label));
+  };
+  dash.calc('ten_urm', {
+    title: 'Reviews op tienpuntsschaal',
+    description: 'Booking.com- en Expedia-reviews van dit hotel',
+    inputs: ['reviews'],
+    fn: (reviews) => reviews.filter((r) => r.property === prop && r.scale === 10)
+  });
+
+  dash.calc('topics_c_urm', {
+    title: 'Minpunten',
+    description: 'Aantal Booking.com-reviews per genoemd minpunt',
+    inputs: ['ten_urm'],
+    fn: (booking) => topicCount(booking, 'topics')
+  });
+  dash.calc('topics_p_urm', {
+    title: 'Pluspunten',
+    description: 'Aantal Booking.com-reviews per genoemd pluspunt',
+    inputs: ['ten_urm'],
+    fn: (booking) => topicCount(booking, 'praise')
+  });
+
+  dash.calc('negative_urm', {
+    title: 'Negatieve reviews',
+    description: 'Booking.com onder 8 en Google onder 4 sterren, nieuwste eerst',
+    inputs: ['reviews'],
+    fn: (reviews0) => {
+      const reviews = reviews0.filter((r) => r.property === prop);
+      const MND = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+      return reviews
+        .filter((r) => r.score < (r.scale === 10 ? 8 : 4))
+        .sort((a, b) => b.date.localeCompare(a.date) || a.platform.localeCompare(b.platform))
+        .map((r) => {
+          const booking = r.scale === 10;
+          const p = r.date.split('-').map(Number);
+          return {
+            id: r.id, platform: r.platform,
+            date_label: (r.date_approx ? 'ca. ' : '') + p[2] + ' ' + MND[p[1] - 1],
+            score_label: booking ? r.score.toFixed(1).replace('.', ',') + ' / 10' : r.score + ' / 5',
+            reviewer: r.reviewer, room: r.room || 'onbekend', match: r.match,
+            issue: r.issue || '—', status: r.status, topics: r.topics || ''
+          };
+        });
+    }
+  });
+
+  dash.calc('rooms_urm', {
+    title: 'Kamers met de meeste klachten',
+    description: 'Top 5 kamers naar aantal reviews met een klacht, vanaf week 40',
+    inputs: ['reviews'],
+    fn: (reviews0) => {
+      const reviews = reviews0.filter((r) => r.property === prop);
+      const nf1 = new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      const by = {};
+      reviews.forEach((r) => {
+        const lim = r.scale === 10 ? 8 : 4;
+        if (r.room && (r.score < lim || (r.topics || '').length)) (by[r.room] = by[r.room] || []).push(r);
+      });
+      return Object.keys(by).map((room) => {
+        const rs = by[room];
+        const avg = rs.reduce((s, r) => s + r.score / r.scale * 10, 0) / rs.length;
+        const topics = Array.from(new Set(rs.flatMap((r) => (r.topics || '').split(';').filter(Boolean))));
+        const last = rs.reduce((m, r) => (r.date > m ? r.date : m), '');
+        return {
+          room: room, n: rs.length, n_label: String(rs.length), avg: avg, avg_label: nf1.format(avg), last: last,
+          topics: topics.length ? topics.join(', ') : 'geen tekst',
+          guests: rs.map((r) => r.platform + ' ' + (r.platform === 'Google' ? r.score + '/5' : r.score)).join(', ')
+        };
+      }).sort((a, b) => b.n - a.n || a.avg - b.avg || b.last.localeCompare(a.last)).slice(0, 5);
+    }
+  });
+
+  dash.calc('room_topics_urm', {
+    title: 'Klachten per kamer en onderwerp',
+    description: 'Alle kamers met een klacht, met aantal klachten per onderwerp',
+    inputs: ['reviews'],
+    fn: (reviews0) => {
+      const reviews = reviews0.filter((r) => r.property === prop);
+      const by = {};
+      reviews.forEach((r) => {
+        const lim = r.scale === 10 ? 8 : 4;
+        if (r.room && (r.score < lim || (r.topics || '').length)) (by[r.room] = by[r.room] || []).push(r);
+      });
+      return Object.keys(by).map((room) => {
+        const rs = by[room];
+        const c = {};
+        rs.forEach((r) => {
+          const ts = (r.topics || '').split(';').filter(Boolean);
+          (ts.length ? ts : ['Geen tekst']).forEach((t) => { c[t] = (c[t] || 0) + 1; });
+        });
+        const topics = Object.keys(c).map((t) => ({ label: t, n: c[t] })).sort((a, b) => b.n - a.n || a.label.localeCompare(b.label));
+        const avg = rs.reduce((s, r) => s + r.score / r.scale * 10, 0) / rs.length;
+        const last = rs.reduce((m, r) => (r.date > m ? r.date : m), '');
+        return { room: room, n: rs.length, avg: avg, last: last, topics: topics };
+      }).sort((a, b) => b.n - a.n || a.avg - b.avg || b.last.localeCompare(a.last) || a.room.localeCompare(b.room));
+    }
+  });
+
+  dash.calc('neg_topics_urm', {
+    title: 'Negatieve reviews per onderwerp',
+    description: 'Negatieve reviews gegroepeerd per onderwerp, nieuwste eerst binnen elk onderwerp',
+    inputs: ['negative_urm'],
+    fn: (negative) => {
+      const by = {};
+      negative.forEach((r) => {
+        const ts = r.topics.split(';').filter(Boolean);
+        (ts.length ? ts : ['Geen tekst']).forEach((t) => { (by[t] = by[t] || []).push(r); });
+      });
+      return Object.keys(by).map((t) => ({ topic: t, n: by[t].length, reviews: by[t] }))
+        .sort((a, b) => b.n - a.n || a.topic.localeCompare(b.topic));
+    }
+  });
+
+  dash.calc('platforms_urm', {
+    title: 'Totaalscore per platform',
+    description: 'Score en aantal per platform als tekst',
+    inputs: ['platform_scores'],
+    fn: (ps) => ps.filter((p) => p.property === prop).map((p) => ({
+      platform: p.platform, as_of: p.as_of,
+      score_label: new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(p.score) + ' van ' + p.scale,
+      count_label: new Intl.NumberFormat('nl-NL').format(p.count)
+    }))
+  });
+
+  }
+
+  const rowsOf = (name) => { const g = dash.data(name); return g.status === 'ok' && Array.isArray(g.data) ? g.data : []; };
+
+  dash.draw('cell', (el) => {
+    const rows = rowsOf(el.dataset.source);
+    let row = rows[0];
+    if (el.dataset.where) {
+      const want = Array.from(new URLSearchParams(el.dataset.where));
+      row = rows.find((r) => want.every(([k, v]) => String(r[k]) === v));
+    }
+    const v = row ? row[el.dataset.field] : undefined;
+    if (v === undefined || v === null || v === '') { el.textContent = '—'; return; }
+    if (el.dataset.fmt === 'date') el.textContent = FMT.date.format(new Date(v));
+    else el.textContent = String(v);
+  });
+
+  dash.draw('rows', (tb) => {
+    const rows = rowsOf(tb.dataset.source);
+    const cols = tb.dataset.cols.split(',');
+    const tone = { 'te beantwoorden': 'warn', 'niet beantwoord': 'warn', 'beantwoord': 'ok', 'lopend': 'warn' };
+    tb.replaceChildren(...rows.map((r) => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = r.id || r.key || r.platform;
+      cols.forEach((c) => {
+        const td = document.createElement('td');
+        td.textContent = r[c] === undefined || r[c] === '' ? '—' : r[c];
+        if (c === 'status' || c === 'state') td.className = 'rv-st-' + (tone[r[c]] || 'muted');
+        tr.append(td);
+      });
+      return tr;
+    }));
+  });
+
+  dash.draw('roomfold', (el) => {
+    const rows = rowsOf(el.dataset.source);
+    el.replaceChildren(...rows.map((r) => {
+      const d = document.createElement('details');
+      d.className = 'rv-fold';
+      d.dataset.key = r.room;
+      const s = document.createElement('summary');
+      const a = document.createElement('span');
+      a.textContent = 'Kamer ' + r.room;
+      const b = document.createElement('span');
+      b.textContent = r.n + (r.n === 1 ? ' klacht' : ' klachten');
+      s.append(a, b);
+      const ul = document.createElement('ul');
+      r.topics.forEach((t) => {
+        const li = document.createElement('li');
+        const x = document.createElement('span');
+        x.textContent = t.label;
+        const y = document.createElement('span');
+        y.textContent = String(t.n);
+        li.append(x, y);
+        ul.append(li);
+      });
+      d.append(s, ul);
+      return d;
+    }));
+  });
+
+  dash.draw('negfold', (el) => {
+    const rows = rowsOf(el.dataset.source);
+    const tone = { 'te beantwoorden': 'warn', 'niet beantwoord': 'warn', 'beantwoord': 'ok' };
+    el.replaceChildren(...rows.map((g) => {
+      const d = document.createElement('details');
+      d.className = 'rv-fold';
+      d.dataset.key = g.topic;
+      const s = document.createElement('summary');
+      const a = document.createElement('span');
+      a.textContent = g.topic;
+      const b = document.createElement('span');
+      b.textContent = g.n + (g.n === 1 ? ' review' : ' reviews');
+      s.append(a, b);
+      const box = document.createElement('div');
+      box.className = 'rv-scroll';
+      const tbl = document.createElement('table');
+      tbl.className = 'rv-table';
+      const head = document.createElement('tr');
+      ['Platform', 'Datum', 'Score', 'Kamer', 'Kernpunt', 'Status'].forEach((t) => {
+        const th = document.createElement('th');
+        th.textContent = t;
+        head.append(th);
+      });
+      const thead = document.createElement('thead');
+      thead.append(head);
+      const tb = document.createElement('tbody');
+      g.reviews.forEach((r) => {
+        const tr = document.createElement('tr');
+        ['platform', 'date_label', 'score_label', 'room', 'issue', 'status'].forEach((c) => {
+          const td = document.createElement('td');
+          td.textContent = r[c] === undefined || r[c] === '' ? '—' : r[c];
+          if (c === 'status') td.className = 'rv-st-' + (tone[r.status] || 'muted');
+          if (c === 'issue') td.style.minWidth = '16rem';
+          tr.append(td);
+        });
+        tb.append(tr);
+      });
+      tbl.append(thead, tb);
+      box.append(tbl);
+      d.append(s, box);
+      return d;
+    }));
+  });
+
+  const tipFor = (el) => d3.select(el).append('div').attr('class', 'rv-tip').style('display', 'none');
+  const showTip = (el, tip, ev, text) => {
+    const box = el.getBoundingClientRect();
+    tip.style('display', 'block').text(text);
+    const w = tip.node().offsetWidth;
+    tip.style('left', Math.min(Math.max(0, ev.clientX - box.left + 12), box.width - w) + 'px')
+      .style('top', Math.max(0, ev.clientY - box.top - 34) + 'px');
+  };
+
+  dash.draw('vbar', (el) => {
+    const g = dash.data(el.dataset.source);
+    el.replaceChildren();
+    el.classList.toggle('dash-skeleton', g.status === 'loading');
+    if (g.status !== 'ok' || !g.data.length) return;
+    const lf = el.dataset.label, vf = el.dataset.value;
+    const fmt = FMT[el.dataset.fmt] || FMT.int;
+    const data = g.data;
+    const W = Math.max(240, el.clientWidth), H = 190, mt = 18, mb = 24;
+    const max = el.dataset.max ? +el.dataset.max : Math.max(1, d3.max(data, (d) => d[vf]));
+    const x = d3.scaleBand(data.map((d) => d[lf]), [0, W]).padding(0.3);
+    const y = d3.scaleLinear([0, max], [H - mb, mt]);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', '0 0 ' + W + ' ' + H)
+      .attr('role', 'img').attr('aria-label', el.dataset.aria);
+    const tip = tipFor(el);
+    const col = svg.selectAll('g').data(data).join('g');
+    col.append('rect').attr('x', (d) => x(d[lf])).attr('width', x.bandwidth()).attr('y', (d) => y(d[vf]))
+      .attr('height', (d) => y(0) - y(d[vf])).attr('rx', 3).attr('fill', '#B08D57');
+    col.append('text').attr('class', 'rv-val').attr('text-anchor', 'middle').attr('x', (d) => x(d[lf]) + x.bandwidth() / 2)
+      .attr('y', (d) => y(d[vf]) - 5).text((d) => fmt.format(d[vf]));
+    col.append('text').attr('class', 'rv-tick').attr('text-anchor', 'middle').attr('x', (d) => x(d[lf]) + x.bandwidth() / 2)
+      .attr('y', H - 6).text((d) => d[lf]);
+    col.on('mousemove', (ev, d) => showTip(el, tip, ev, d[lf] + ': ' + fmt.format(d[vf])))
+      .on('mouseleave', () => tip.style('display', 'none'));
+  });
+
+  dash.draw('hbar', (el) => {
+    const g = dash.data(el.dataset.source);
+    el.replaceChildren();
+    el.classList.toggle('dash-skeleton', g.status === 'loading');
+    if (g.status !== 'ok' || !g.data.length) return;
+    const data = g.data;
+    const W = Math.max(240, el.clientWidth), rowH = 30, pad = 4;
+    const H = pad * 2 + data.length * rowH;
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', '0 0 ' + W + ' ' + H)
+      .attr('role', 'img').attr('aria-label', el.dataset.aria);
+    const probe = svg.append('text').attr('class', 'rv-tick');
+    let ml = 0;
+    data.forEach((d) => { probe.text(d.label); ml = Math.max(ml, probe.node().getComputedTextLength()); });
+    probe.remove();
+    ml += 14;
+    const x = d3.scaleLinear([0, d3.max(data, (d) => d.n)], [0, Math.max(40, W - ml - 32)]);
+    const tip = tipFor(el);
+    const row = svg.selectAll('g').data(data).join('g').attr('transform', (d, i) => 'translate(0,' + (pad + i * rowH) + ')');
+    row.append('text').attr('class', 'rv-tick').attr('x', ml - 8).attr('y', rowH / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text((d) => d.label);
+    row.append('rect').attr('x', ml).attr('y', (rowH - 16) / 2).attr('height', 16).attr('rx', 3).attr('width', (d) => x(d.n)).attr('fill', '#B08D57');
+    row.append('text').attr('class', 'rv-val').attr('x', (d) => ml + x(d.n) + 6).attr('y', rowH / 2).attr('dy', '0.32em').text((d) => FMT.int.format(d.n));
+    row.on('mousemove', (ev, d) => showTip(el, tip, ev, d.label + ': ' + d.n + (d.n === 1 ? ' review' : ' reviews')))
+      .on('mouseleave', () => tip.style('display', 'none'));
+  });
+
+
+  const NAMES = { urr: 'Urban Residences Rotterdam', urm: 'Urban Residences Maastricht' };
+  let cur = 'urr';
+  try { const s = localStorage.getItem('rv-prop'); if (s === 'urm' || s === 'urr') cur = s; } catch (e) {}
+  const apply = () => {
+    document.querySelectorAll('.rv-prop').forEach((p) => { p.classList.toggle('off', p.dataset.prop !== cur); });
+    document.querySelectorAll('.rv-sw').forEach((b) => b.classList.toggle('on', b.dataset.pick === cur));
+    const f = document.getElementById('rv-foot'); if (f) f.textContent = NAMES[cur];
+    document.querySelectorAll('.rv-nav a[data-nav]').forEach((a) => { a.setAttribute('href', '#' + a.dataset.nav + '-' + cur); });
+  };
+  document.querySelectorAll('.rv-sw').forEach((b) => b.addEventListener('click', () => {
+    cur = b.dataset.pick;
+    try { localStorage.setItem('rv-prop', cur); } catch (e) {}
+    apply();
+    window.scrollTo(0, 0);
+  }));
+  apply();
+
+  dash.onData(() => {
+    document.querySelectorAll('.rv-fail[data-for]').forEach((p) => {
+      p.hidden = dash.data(p.dataset.for).status !== 'error';
+    });
+  });
+})();
+</script>
+
+<script>
+window.__runDraw();
+var __t; window.addEventListener('resize', function () { clearTimeout(__t); __t = setTimeout(window.__runDraw, 150); });
+</script>
+</body></html>
