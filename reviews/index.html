@@ -173,6 +173,9 @@ body{margin:0;background:#FAF9F6}
 .rv-quick { background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: 3px; padding: 7px 10px; font: inherit; font-size: var(--cds-font-size-caption); cursor: pointer; }
 .rv-quick:hover { border-color: var(--gold); }
 .rv-quick.on { background: var(--gold); border-color: var(--gold); color: var(--charcoal); }
+.rv-chan { background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: 3px; padding: 7px 10px; font: inherit; font-size: var(--cds-font-size-caption); cursor: pointer; }
+.rv-chan:hover { border-color: var(--gold); }
+.rv-chan.on { background: var(--gold); border-color: var(--gold); color: var(--charcoal); }
 .rv-warn { font-size: var(--cds-font-size-caption); color: var(--gold-dark); margin: var(--cds-gap-xs) 0; }
 .rv-pnow { font-size: var(--cds-font-size-body); margin: var(--cds-gap-xs) 0 var(--cds-gap-sm); }
 .rv-grp th { background: var(--cream); color: var(--ink); }
@@ -233,7 +236,7 @@ body{margin:0;background:#FAF9F6}
 
   <section class="rv-card" id="periode-urr">
     <h2>Periode</h2>
-    <p class="rv-note">Kies een periode om de gemiddelden en de feedback van alleen die dagen te zien. Alle platforms tellen mee, op datum van de review. Het gemiddelde cijfer is dat van de OTA's; Google telt wel mee in de aantallen en de negatieve reviews. Google geeft geen exacte datum, dus daar is de dag bij benadering. Dit staat los van de weekweergave hieronder.</p>
+    <p class="rv-note">Kies een periode om de gemiddelden en de feedback van alleen die dagen te zien. Alle platforms tellen mee, op datum van de review. Het gemiddelde cijfer is dat van de OTA's; Google telt wel mee in de aantallen en de negatieve reviews. Google geeft geen exacte datum, dus daar is de dag bij benadering. Kies eventueel een kanaal om één platform te bekijken. Dit staat los van de weekweergave hieronder.</p>
     <div class="rv-bar">
       <label class="rv-fld">Van<input class="rv-from" type="date" min="2025-01-01" max="2099-12-31"></label>
       <label class="rv-fld">Tot en met<input class="rv-to" type="date" min="2025-01-01" max="2099-12-31"></label>
@@ -246,19 +249,30 @@ body{margin:0;background:#FAF9F6}
         <button type="button" class="rv-quick" data-quick="month">Vorige maand</button>
       </div>
     </div>
+    <div class="rv-bar">
+      <div class="rv-fld">Kanaal
+        <div class="rv-quicks" role="group" aria-label="Kanaal">
+          <button type="button" class="rv-chan on" data-chan="">Alle kanalen</button>
+          <button type="button" class="rv-chan" data-chan="Booking.com">Booking.com</button>
+          <button type="button" class="rv-chan" data-chan="Expedia">Expedia</button>
+          <button type="button" class="rv-chan" data-chan="Google">Google</button>
+          <button type="button" class="rv-chan" data-chan="TripAdvisor">TripAdvisor</button>
+        </div>
+      </div>
+    </div>
     <p class="rv-warn" data-warn="range" hidden>De begindatum ligt na de einddatum. Pas een van beide aan.</p>
     <p class="rv-pnow">Periode: <b data-draw="plabel">—</b></p>
     <p class="rv-note" data-pempty="URR" hidden>Er zijn geen reviews in deze periode.</p>
     <div class="rv-tiles">
       <div class="rv-tile">
-        <div class="rv-label">Gemiddeld cijfer (OTA's, op 10)</div>
+        <div class="rv-label" data-draw="pval" data-prop="URR" data-what="avg_title">Gemiddeld cijfer (OTA's, op 10)</div>
         <div class="rv-big"><b data-draw="pval" data-prop="URR" data-what="avg">—</b></div>
         <div class="rv-sub">Alleen Booking.com: <b data-draw="pval" data-prop="URR" data-what="bk_avg">—</b></div>
       </div>
       <div class="rv-tile">
         <div class="rv-label">Aantal reviews</div>
         <div class="rv-big"><b data-draw="pval" data-prop="URR" data-what="n">—</b></div>
-        <div class="rv-sub">Booking.com <b data-draw="pval" data-prop="URR" data-what="bk_n">—</b>, Expedia <b data-draw="pval" data-prop="URR" data-what="ex_n">—</b>, Google <b data-draw="pval" data-prop="URR" data-what="gg_n">—</b></div>
+        <div class="rv-sub">Booking.com <b data-draw="pval" data-prop="URR" data-what="bk_n">—</b>, Expedia <b data-draw="pval" data-prop="URR" data-what="ex_n">—</b>, Google <b data-draw="pval" data-prop="URR" data-what="gg_n">—</b>, TripAdvisor <b data-draw="pval" data-prop="URR" data-what="ta_n">—</b></div>
       </div>
       <div class="rv-tile">
         <div class="rv-label">Negatieve reviews</div>
@@ -273,13 +287,13 @@ body{margin:0;background:#FAF9F6}
     </div>
 
     <h2 style="margin-top: var(--cds-gap-md)">Per platform</h2>
-    <p class="rv-note">Gemiddeld cijfer op de eigen schaal van het platform. OTA's samen is omgerekend naar een cijfer op 10. Google is geen boekingskanaal maar alleen een reviewbron, met sterren van 5 en een datum bij benadering. Negatief is onder 8 bij de OTA's en onder 4 sterren op Google.</p>
+    <p class="rv-note">Gemiddeld cijfer op de eigen schaal van het platform. OTA's samen is omgerekend naar een cijfer op 10. Google en TripAdvisor zijn geen boekingskanaal maar alleen een reviewbron, met sterren van 5 en een datum bij benadering. Negatief is onder 8 bij de OTA's en onder 4 sterren op Google en TripAdvisor.</p>
     <div class="rv-scroll">
       <table class="rv-table">
         <thead><tr><th>Platform</th><th>Reviews</th><th>Gemiddeld</th><th>Negatief</th></tr></thead>
         <tbody class="rv-grp"><tr><th colspan="4">OTA's (Booking.com en Expedia)</th></tr></tbody>
         <tbody data-draw="ptable" data-group="ota" data-prop="URR" data-source="reviews"></tbody>
-        <tbody class="rv-grp"><tr><th colspan="4">Google (alleen reviews, geen boekingen)</th></tr></tbody>
+        <tbody class="rv-grp"><tr><th colspan="4">Google en TripAdvisor (alleen reviews, geen boekingen)</th></tr></tbody>
         <tbody data-draw="ptable" data-group="google" data-prop="URR" data-source="reviews"></tbody>
       </table>
     </div>
@@ -334,7 +348,7 @@ body{margin:0;background:#FAF9F6}
         </table>
       </div>
       <h2 style="margin-top: var(--cds-gap-md)">Per platform per week</h2>
-      <p class="rv-note">Gemiddeld cijfer per week, tussen haakjes het aantal reviews. OTA's samen is omgerekend naar een cijfer op 10. Expedia telt op datum van plaatsing. Google is geen boekingskanaal maar alleen een reviewbron, met sterren van 5. Google geeft geen exacte datum, dus de week is bij benadering, en er zijn alleen recent gelezen reviews opgenomen, dus daar staan weinig reviews per week.</p>
+      <p class="rv-note">Gemiddeld cijfer per week, tussen haakjes het aantal reviews. OTA's samen is omgerekend naar een cijfer op 10. Expedia telt op datum van plaatsing. Google en TripAdvisor zijn geen boekingskanaal maar alleen een reviewbron, met sterren van 5. Google geeft geen exacte datum, dus de week is bij benadering, en er zijn alleen recent gelezen reviews opgenomen, dus daar staan weinig reviews per week.</p>
       <p class="rv-fail" data-for="platweeks_urr" hidden><span class="rv-dot"></span>Failed to load</p>
       <div class="rv-scroll">
         <table class="rv-table" data-source="platweeks_urr" data-row-key="key">
@@ -345,9 +359,9 @@ body{margin:0;background:#FAF9F6}
       </div>
       <div class="rv-scroll">
         <table class="rv-table" data-source="platweeks_urr" data-row-key="key">
-          <thead><tr><th data-field="week_label">Week</th><th data-field="period">Periode</th><th data-field="gg">Google (van 5)</th></tr></thead>
-          <tbody class="rv-grp"><tr><th colspan="3">Google (alleen reviews, geen boekingen)</th></tr></tbody>
-          <tbody data-draw="rows" data-source="platweeks_urr" data-cols="week_label,period,gg"></tbody>
+          <thead><tr><th data-field="week_label">Week</th><th data-field="period">Periode</th><th data-field="gg">Google (van 5)</th><th data-field="ta">TripAdvisor (van 5)</th></tr></thead>
+          <tbody class="rv-grp"><tr><th colspan="4">Google en TripAdvisor (alleen reviews, geen boekingen)</th></tr></tbody>
+          <tbody data-draw="rows" data-source="platweeks_urr" data-cols="week_label,period,gg,ta"></tbody>
         </table>
       </div>
   </section>
@@ -451,7 +465,7 @@ body{margin:0;background:#FAF9F6}
 
   <section class="rv-card" id="periode-urm">
     <h2>Periode</h2>
-    <p class="rv-note">Kies een periode om de gemiddelden en de feedback van alleen die dagen te zien. Booking.com en Google tellen mee, op datum van de review. Het gemiddelde cijfer is dat van Booking.com; Google telt wel mee in de aantallen en de negatieve reviews. Google geeft geen exacte datum, dus daar is de dag bij benadering. Expedia Maastricht is nog niet opgenomen. Dit staat los van de weekweergave hieronder.</p>
+    <p class="rv-note">Kies een periode om de gemiddelden en de feedback van alleen die dagen te zien. Booking.com en Google tellen mee, op datum van de review. Het gemiddelde cijfer is dat van Booking.com; Google telt wel mee in de aantallen en de negatieve reviews. Google geeft geen exacte datum, dus daar is de dag bij benadering. Expedia Maastricht is nog niet opgenomen. Kies eventueel een kanaal om één platform te bekijken. Dit staat los van de weekweergave hieronder.</p>
     <div class="rv-bar">
       <label class="rv-fld">Van<input class="rv-from" type="date" min="2025-01-01" max="2099-12-31"></label>
       <label class="rv-fld">Tot en met<input class="rv-to" type="date" min="2025-01-01" max="2099-12-31"></label>
@@ -464,19 +478,30 @@ body{margin:0;background:#FAF9F6}
         <button type="button" class="rv-quick" data-quick="month">Vorige maand</button>
       </div>
     </div>
+    <div class="rv-bar">
+      <div class="rv-fld">Kanaal
+        <div class="rv-quicks" role="group" aria-label="Kanaal">
+          <button type="button" class="rv-chan on" data-chan="">Alle kanalen</button>
+          <button type="button" class="rv-chan" data-chan="Booking.com">Booking.com</button>
+          <button type="button" class="rv-chan" data-chan="Expedia">Expedia</button>
+          <button type="button" class="rv-chan" data-chan="Google">Google</button>
+          <button type="button" class="rv-chan" data-chan="TripAdvisor">TripAdvisor</button>
+        </div>
+      </div>
+    </div>
     <p class="rv-warn" data-warn="range" hidden>De begindatum ligt na de einddatum. Pas een van beide aan.</p>
     <p class="rv-pnow">Periode: <b data-draw="plabel">—</b></p>
     <p class="rv-note" data-pempty="URM" hidden>Er zijn geen reviews in deze periode.</p>
     <div class="rv-tiles">
       <div class="rv-tile">
-        <div class="rv-label">Gemiddeld cijfer (OTA's, op 10)</div>
+        <div class="rv-label" data-draw="pval" data-prop="URM" data-what="avg_title">Gemiddeld cijfer (OTA's, op 10)</div>
         <div class="rv-big"><b data-draw="pval" data-prop="URM" data-what="avg">—</b></div>
         <div class="rv-sub">Alleen Booking.com: <b data-draw="pval" data-prop="URM" data-what="bk_avg">—</b></div>
       </div>
       <div class="rv-tile">
         <div class="rv-label">Aantal reviews</div>
         <div class="rv-big"><b data-draw="pval" data-prop="URM" data-what="n">—</b></div>
-        <div class="rv-sub">Booking.com <b data-draw="pval" data-prop="URM" data-what="bk_n">—</b>, Expedia <b data-draw="pval" data-prop="URM" data-what="ex_n">—</b>, Google <b data-draw="pval" data-prop="URM" data-what="gg_n">—</b></div>
+        <div class="rv-sub">Booking.com <b data-draw="pval" data-prop="URM" data-what="bk_n">—</b>, Expedia <b data-draw="pval" data-prop="URM" data-what="ex_n">—</b>, Google <b data-draw="pval" data-prop="URM" data-what="gg_n">—</b>, TripAdvisor <b data-draw="pval" data-prop="URM" data-what="ta_n">—</b></div>
       </div>
       <div class="rv-tile">
         <div class="rv-label">Negatieve reviews</div>
@@ -491,13 +516,13 @@ body{margin:0;background:#FAF9F6}
     </div>
 
     <h2 style="margin-top: var(--cds-gap-md)">Per platform</h2>
-    <p class="rv-note">Gemiddeld cijfer op de eigen schaal van het platform. OTA's samen is omgerekend naar een cijfer op 10. Google is geen boekingskanaal maar alleen een reviewbron, met sterren van 5 en een datum bij benadering. Negatief is onder 8 bij de OTA's en onder 4 sterren op Google.</p>
+    <p class="rv-note">Gemiddeld cijfer op de eigen schaal van het platform. OTA's samen is omgerekend naar een cijfer op 10. Google en TripAdvisor zijn geen boekingskanaal maar alleen een reviewbron, met sterren van 5 en een datum bij benadering. Negatief is onder 8 bij de OTA's en onder 4 sterren op Google en TripAdvisor.</p>
     <div class="rv-scroll">
       <table class="rv-table">
         <thead><tr><th>Platform</th><th>Reviews</th><th>Gemiddeld</th><th>Negatief</th></tr></thead>
         <tbody class="rv-grp"><tr><th colspan="4">OTA's (Booking.com en Expedia)</th></tr></tbody>
         <tbody data-draw="ptable" data-group="ota" data-prop="URM" data-source="reviews"></tbody>
-        <tbody class="rv-grp"><tr><th colspan="4">Google (alleen reviews, geen boekingen)</th></tr></tbody>
+        <tbody class="rv-grp"><tr><th colspan="4">Google en TripAdvisor (alleen reviews, geen boekingen)</th></tr></tbody>
         <tbody data-draw="ptable" data-group="google" data-prop="URM" data-source="reviews"></tbody>
       </table>
     </div>
@@ -552,7 +577,7 @@ body{margin:0;background:#FAF9F6}
         </table>
       </div>
       <h2 style="margin-top: var(--cds-gap-md)">Per platform per week</h2>
-      <p class="rv-note">Gemiddeld cijfer per week, tussen haakjes het aantal reviews. OTA's samen is omgerekend naar een cijfer op 10. Expedia telt op datum van plaatsing. Google is geen boekingskanaal maar alleen een reviewbron, met sterren van 5. Google geeft geen exacte datum, dus de week is bij benadering, en er zijn alleen recent gelezen reviews opgenomen, dus daar staan weinig reviews per week.</p>
+      <p class="rv-note">Gemiddeld cijfer per week, tussen haakjes het aantal reviews. OTA's samen is omgerekend naar een cijfer op 10. Expedia telt op datum van plaatsing. Google en TripAdvisor zijn geen boekingskanaal maar alleen een reviewbron, met sterren van 5. Google geeft geen exacte datum, dus de week is bij benadering, en er zijn alleen recent gelezen reviews opgenomen, dus daar staan weinig reviews per week.</p>
       <p class="rv-fail" data-for="platweeks_urm" hidden><span class="rv-dot"></span>Failed to load</p>
       <div class="rv-scroll">
         <table class="rv-table" data-source="platweeks_urm" data-row-key="key">
@@ -563,9 +588,9 @@ body{margin:0;background:#FAF9F6}
       </div>
       <div class="rv-scroll">
         <table class="rv-table" data-source="platweeks_urm" data-row-key="key">
-          <thead><tr><th data-field="week_label">Week</th><th data-field="period">Periode</th><th data-field="gg">Google (van 5)</th></tr></thead>
-          <tbody class="rv-grp"><tr><th colspan="3">Google (alleen reviews, geen boekingen)</th></tr></tbody>
-          <tbody data-draw="rows" data-source="platweeks_urm" data-cols="week_label,period,gg"></tbody>
+          <thead><tr><th data-field="week_label">Week</th><th data-field="period">Periode</th><th data-field="gg">Google (van 5)</th><th data-field="ta">TripAdvisor (van 5)</th></tr></thead>
+          <tbody class="rv-grp"><tr><th colspan="4">Google en TripAdvisor (alleen reviews, geen boekingen)</th></tr></tbody>
+          <tbody data-draw="rows" data-source="platweeks_urm" data-cols="week_label,period,gg,ta"></tbody>
         </table>
       </div>
   </section>
@@ -736,6 +761,7 @@ body{margin:0;background:#FAF9F6}
         const all = ota.length ? ota.reduce((s, r) => s + r.score / r.scale * 10, 0) / ota.length : null;
         return { key: end, week_label: 'Week ' + g.week, period: lbl(start) + ' - ' + lbl(end),
           bk: part(g.rs, 'Booking.com', ''), ex: part(g.rs, 'Expedia', ''), gg: part(g.rs, 'Google', ''),
+          ta: part(g.rs, 'TripAdvisor', ''),
           all: all === null ? '—' : nf1.format(all) + ' (' + ota.length + ')' };
       });
     }
@@ -993,6 +1019,7 @@ body{margin:0;background:#FAF9F6}
         const all = ota.length ? ota.reduce((s, r) => s + r.score / r.scale * 10, 0) / ota.length : null;
         return { key: end, week_label: 'Week ' + g.week, period: lbl(start) + ' - ' + lbl(end),
           bk: part(g.rs, 'Booking.com', ''), ex: part(g.rs, 'Expedia', ''), gg: part(g.rs, 'Google', ''),
+          ta: part(g.rs, 'TripAdvisor', ''),
           all: all === null ? '—' : nf1.format(all) + ' (' + ota.length + ')' };
       });
     }
@@ -1382,11 +1409,12 @@ body{margin:0;background:#FAF9F6}
   });
 
   // Periodefilter: gemiddelden en feedback van een gekozen periode
-  const PSTATE = { from: '', to: '' };
+  const PSTATE = { from: '', to: '', channel: '' };
   dash.params = () => PSTATE;
   dash.setParams = (p) => {
     if (p && 'from' in p) PSTATE.from = p.from || '';
     if (p && 'to' in p) PSTATE.to = p.to || '';
+    if (p && 'channel' in p) PSTATE.channel = p.channel || '';
     window.__runDraw();
   };
   const ISO = /^\d{4}-\d{2}-\d{2}$/;
@@ -1418,10 +1446,12 @@ body{margin:0;background:#FAF9F6}
     return { from: from, to: to, bad: !!(from && to && from > to) };
   };
   const ready = () => dash.data('reviews').status === 'ok';
+  const CHANNELS = ['Booking.com', 'Expedia', 'Google', 'TripAdvisor'];
+  const chan = () => { const p = dash.params(); return CHANNELS.indexOf(p.channel) >= 0 ? p.channel : ''; };
   const periodRows = (prop) => {
     const r = range();
     if (!ready() || r.bad) return [];
-    return rowsOf('reviews').filter((x) => x.property === prop && (!r.from || x.date >= r.from) && (!r.to || x.date <= r.to));
+    return rowsOf('reviews').filter((x) => x.property === prop && (!chan() || x.platform === chan()) && (!r.from || x.date >= r.from) && (!r.to || x.date <= r.to));
   };
   const isNeg = (x) => x.score < (x.scale === 10 ? 8 : 4);
   const norm = (x) => x.score / x.scale * 10;
@@ -1435,12 +1465,14 @@ body{margin:0;background:#FAF9F6}
   const pstats = (prop) => {
     const rs = periodRows(prop);
     const by = (name) => rs.filter((x) => x.platform === name);
-    const bk = by('Booking.com'), ex = by('Expedia'), gg = by('Google');
+    const bk = by('Booking.com'), ex = by('Expedia'), gg = by('Google'), ta = by('TripAdvisor');
     const neg = rs.filter(isNeg);
-    const top = tally(rs.filter((x) => x.scale === 10), 'topics')[0];
+    const c = chan(), five = c === 'Google' || c === 'TripAdvisor';
+    const top = tally(c ? rs : rs.filter((x) => x.scale === 10), 'topics')[0];
     return {
-      avg: one(avgOf(rs.filter((x) => x.scale === 10), norm)), bk_avg: one(avgOf(bk, (x) => x.score)),
-      n: String(rs.length), bk_n: String(bk.length), ex_n: String(ex.length), gg_n: String(gg.length),
+      avg_title: 'Gemiddeld cijfer (' + (c ? c + ', ' + (five ? 'van 5' : 'op 10') : "OTA's, op 10") + ')',
+      avg: one(c ? avgOf(rs, (x) => x.score) : avgOf(rs.filter((x) => x.scale === 10), norm)), bk_avg: one(avgOf(bk, (x) => x.score)),
+      n: String(rs.length), bk_n: String(bk.length), ex_n: String(ex.length), gg_n: String(gg.length), ta_n: String(ta.length),
       neg_n: String(neg.length), neg_pct: rs.length ? FMT.one.format(neg.length / rs.length * 100) + '%' : '—',
       top_c: top ? top.label : '—', top_c_n: top ? String(top.n) : '—'
     };
@@ -1548,7 +1580,7 @@ body{margin:0;background:#FAF9F6}
     el.textContent = (r.from ? FMT.date.format(new Date(r.from)) : 'het begin') + ' t/m ' + (r.to ? FMT.date.format(new Date(r.to)) : 'vandaag');
   });
   dash.draw('pval', (el) => {
-    if (!ready() || range().bad) { el.textContent = '—'; return; }
+    if (!ready() || range().bad) { if (el.dataset.what !== 'avg_title') el.textContent = '—'; return; }
     const v = pstats(el.dataset.prop)[el.dataset.what];
     el.textContent = v === undefined || v === '' ? '—' : String(v);
   });
@@ -1565,12 +1597,16 @@ body{margin:0;background:#FAF9F6}
         line("OTA's samen", rs.filter((r) => r.scale === 10), norm, 10)
       );
     } else {
-      lines.push(line('Google', rs.filter((r) => r.platform === 'Google'), own, 5));
+      lines.push(
+        line('Google', rs.filter((r) => r.platform === 'Google'), own, 5),
+        line('TripAdvisor', rs.filter((r) => r.platform === 'TripAdvisor'), own, 5)
+      );
     }
     tb.replaceChildren(...lines.map((l) => rowEl(l, l[0])));
   });
   dash.draw('phbar', (el) => {
-    const rs = periodRows(el.dataset.prop).filter((x) => x.scale === 10);
+    const rs0 = periodRows(el.dataset.prop);
+    const rs = chan() ? rs0 : rs0.filter((x) => x.scale === 10);
     pHbar(el, tally(rs, el.dataset.topic));
   });
   dash.draw('pnegfold', (el) => pNegFold(el, negGroups(periodRows(el.dataset.prop))));
@@ -1600,6 +1636,7 @@ body{margin:0;background:#FAF9F6}
       const v = QUICK[b.dataset.quick]();
       b.classList.toggle('on', v[0] === r.from && v[1] === r.to);
     });
+    document.querySelectorAll('.rv-chan').forEach((b) => b.classList.toggle('on', b.dataset.chan === chan()));
     document.querySelectorAll('[data-warn="range"]').forEach((p) => { p.hidden = !r.bad; });
     document.querySelectorAll('[data-pempty]').forEach((p) => {
       p.hidden = !(ready() && !r.bad && periodRows(p.dataset.pempty).length === 0);
@@ -1608,6 +1645,10 @@ body{margin:0;background:#FAF9F6}
   document.querySelectorAll('.rv-quick').forEach((b) => b.addEventListener('click', () => {
     const v = QUICK[b.dataset.quick]();
     dash.setParams({ from: v[0] || null, to: v[1] || null });
+  }));
+  document.querySelectorAll('.rv-chan').forEach((b) => b.addEventListener('click', () => {
+    dash.setParams({ channel: b.dataset.chan || null });
+    syncControls();
   }));
   document.querySelectorAll('.rv-from, .rv-to').forEach((inp) => {
     const key = inp.classList.contains('rv-from') ? 'from' : 'to';
