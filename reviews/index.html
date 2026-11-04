@@ -334,12 +334,20 @@ body{margin:0;background:#FAF9F6}
         </table>
       </div>
       <h2 style="margin-top: var(--cds-gap-md)">Per platform per week</h2>
-      <p class="rv-note">Gemiddeld cijfer per week, tussen haakjes het aantal reviews. Samen telt alle platforms mee, omgerekend naar een cijfer op 10. Google geeft geen exacte datum, dus de week is bij benadering. Expedia telt op datum van plaatsing. Van Google zijn alleen de recent gelezen reviews opgenomen, dus daar staan weinig reviews per week.</p>
+      <p class="rv-note">Gemiddeld cijfer per week, tussen haakjes het aantal reviews. OTA's samen is omgerekend naar een cijfer op 10. Expedia telt op datum van plaatsing. Google is geen boekingskanaal maar alleen een reviewbron, met sterren van 5. Google geeft geen exacte datum, dus de week is bij benadering, en er zijn alleen recent gelezen reviews opgenomen, dus daar staan weinig reviews per week.</p>
       <p class="rv-fail" data-for="platweeks_urr" hidden><span class="rv-dot"></span>Failed to load</p>
       <div class="rv-scroll">
         <table class="rv-table" data-source="platweeks_urr" data-row-key="key">
-          <thead><tr><th data-field="week_label">Week</th><th data-field="period">Periode</th><th data-field="bk">Booking.com</th><th data-field="ex">Expedia</th><th data-field="gg">Google (van 5)</th><th data-field="all">Samen (op 10)</th></tr></thead>
-          <tbody data-draw="rows" data-source="platweeks_urr" data-cols="week_label,period,bk,ex,gg,all"></tbody>
+          <thead><tr><th data-field="week_label">Week</th><th data-field="period">Periode</th><th data-field="bk">Booking.com</th><th data-field="ex">Expedia</th><th data-field="all">OTA's samen (op 10)</th></tr></thead>
+          <tbody class="rv-grp"><tr><th colspan="5">OTA's (Booking.com en Expedia)</th></tr></tbody>
+          <tbody data-draw="rows" data-source="platweeks_urr" data-cols="week_label,period,bk,ex,all"></tbody>
+        </table>
+      </div>
+      <div class="rv-scroll">
+        <table class="rv-table" data-source="platweeks_urr" data-row-key="key">
+          <thead><tr><th data-field="week_label">Week</th><th data-field="period">Periode</th><th data-field="gg">Google (van 5)</th></tr></thead>
+          <tbody class="rv-grp"><tr><th colspan="3">Google (alleen reviews, geen boekingen)</th></tr></tbody>
+          <tbody data-draw="rows" data-source="platweeks_urr" data-cols="week_label,period,gg"></tbody>
         </table>
       </div>
   </section>
@@ -544,12 +552,20 @@ body{margin:0;background:#FAF9F6}
         </table>
       </div>
       <h2 style="margin-top: var(--cds-gap-md)">Per platform per week</h2>
-      <p class="rv-note">Gemiddeld cijfer per week, tussen haakjes het aantal reviews. Samen telt alle platforms mee, omgerekend naar een cijfer op 10. Google geeft geen exacte datum, dus de week is bij benadering. Expedia telt op datum van plaatsing. Van Google zijn alleen de recent gelezen reviews opgenomen, dus daar staan weinig reviews per week.</p>
+      <p class="rv-note">Gemiddeld cijfer per week, tussen haakjes het aantal reviews. OTA's samen is omgerekend naar een cijfer op 10. Expedia telt op datum van plaatsing. Google is geen boekingskanaal maar alleen een reviewbron, met sterren van 5. Google geeft geen exacte datum, dus de week is bij benadering, en er zijn alleen recent gelezen reviews opgenomen, dus daar staan weinig reviews per week.</p>
       <p class="rv-fail" data-for="platweeks_urm" hidden><span class="rv-dot"></span>Failed to load</p>
       <div class="rv-scroll">
         <table class="rv-table" data-source="platweeks_urm" data-row-key="key">
-          <thead><tr><th data-field="week_label">Week</th><th data-field="period">Periode</th><th data-field="bk">Booking.com</th><th data-field="ex">Expedia</th><th data-field="gg">Google (van 5)</th><th data-field="all">Samen (op 10)</th></tr></thead>
-          <tbody data-draw="rows" data-source="platweeks_urm" data-cols="week_label,period,bk,ex,gg,all"></tbody>
+          <thead><tr><th data-field="week_label">Week</th><th data-field="period">Periode</th><th data-field="bk">Booking.com</th><th data-field="ex">Expedia</th><th data-field="all">OTA's samen (op 10)</th></tr></thead>
+          <tbody class="rv-grp"><tr><th colspan="5">OTA's (Booking.com en Expedia)</th></tr></tbody>
+          <tbody data-draw="rows" data-source="platweeks_urm" data-cols="week_label,period,bk,ex,all"></tbody>
+        </table>
+      </div>
+      <div class="rv-scroll">
+        <table class="rv-table" data-source="platweeks_urm" data-row-key="key">
+          <thead><tr><th data-field="week_label">Week</th><th data-field="period">Periode</th><th data-field="gg">Google (van 5)</th></tr></thead>
+          <tbody class="rv-grp"><tr><th colspan="3">Google (alleen reviews, geen boekingen)</th></tr></tbody>
+          <tbody data-draw="rows" data-source="platweeks_urm" data-cols="week_label,period,gg"></tbody>
         </table>
       </div>
   </section>
@@ -716,10 +732,11 @@ body{margin:0;background:#FAF9F6}
       return Object.keys(by).sort().filter((end) => end <= latest && end >= first).map((end) => {
         const g = by[end];
         const start = new Date(new Date(end + 'T00:00:00Z').getTime() - 6 * 86400000).toISOString().slice(0, 10);
-        const all = g.rs.reduce((s, r) => s + r.score / r.scale * 10, 0) / g.rs.length;
+        const ota = g.rs.filter((r) => r.scale === 10);
+        const all = ota.length ? ota.reduce((s, r) => s + r.score / r.scale * 10, 0) / ota.length : null;
         return { key: end, week_label: 'Week ' + g.week, period: lbl(start) + ' - ' + lbl(end),
           bk: part(g.rs, 'Booking.com', ''), ex: part(g.rs, 'Expedia', ''), gg: part(g.rs, 'Google', ''),
-          all: nf1.format(all) + ' (' + g.rs.length + ')' };
+          all: all === null ? '—' : nf1.format(all) + ' (' + ota.length + ')' };
       });
     }
   });
@@ -972,10 +989,11 @@ body{margin:0;background:#FAF9F6}
       return Object.keys(by).sort().filter((end) => end <= latest && end >= first).map((end) => {
         const g = by[end];
         const start = new Date(new Date(end + 'T00:00:00Z').getTime() - 6 * 86400000).toISOString().slice(0, 10);
-        const all = g.rs.reduce((s, r) => s + r.score / r.scale * 10, 0) / g.rs.length;
+        const ota = g.rs.filter((r) => r.scale === 10);
+        const all = ota.length ? ota.reduce((s, r) => s + r.score / r.scale * 10, 0) / ota.length : null;
         return { key: end, week_label: 'Week ' + g.week, period: lbl(start) + ' - ' + lbl(end),
           bk: part(g.rs, 'Booking.com', ''), ex: part(g.rs, 'Expedia', ''), gg: part(g.rs, 'Google', ''),
-          all: nf1.format(all) + ' (' + g.rs.length + ')' };
+          all: all === null ? '—' : nf1.format(all) + ' (' + ota.length + ')' };
       });
     }
   });
