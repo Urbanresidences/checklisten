@@ -125,6 +125,9 @@ body{margin:0;background:#FAF9F6}
 .rv-warn { font-size: var(--cds-font-size-caption); color: var(--gold-dark); margin: var(--cds-gap-xs) 0; }
 .rv-pnow { font-size: var(--cds-font-size-body); margin: var(--cds-gap-xs) 0 var(--cds-gap-sm); }
 .rv-grp th { background: var(--cream); color: var(--ink); }
+.rv-topic { margin-left: 1.2rem; }
+.rv-topic summary { font-size: var(--cds-font-size-caption); }
+.rv-topic .rv-scroll { margin-bottom: var(--cds-gap-sm); }
 </style>
 
 <div class="rv" id="reviews">
@@ -818,7 +821,12 @@ body{margin:0;background:#FAF9F6}
           const ts = (r.topics || '').split(';').filter(Boolean);
           (ts.length ? ts : ['Geen tekst']).forEach((t) => { c[t] = (c[t] || 0) + 1; });
         });
-        const topics = Object.keys(c).map((t) => ({ label: t, n: c[t] })).sort((a, b) => b.n - a.n || a.label.localeCompare(b.label));
+        const MND = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+        const topics = Object.keys(c).map((t) => ({ label: t, n: c[t] })).sort((a, b) => b.n - a.n || a.label.localeCompare(b.label)).map((tp) => Object.assign(tp, {
+          reviews: rs.filter((r) => { const ts = (r.topics || '').split(';').filter(Boolean); return (ts.length ? ts : ['Geen tekst']).indexOf(tp.label) >= 0; })
+            .sort((a, b) => b.date.localeCompare(a.date))
+            .map((r) => { const p = r.date.split('-').map(Number); return { platform: r.platform, date_label: (r.date_approx ? 'ca. ' : '') + p[2] + ' ' + MND[p[1] - 1], score_label: r.scale === 10 ? r.score.toFixed(1).replace('.', ',') + ' / 10' : r.score + ' / 5', reviewer: r.reviewer, issue: r.issue || '—', status: r.status }; })
+        }));
         const avg = rs.reduce((s, r) => s + r.score / r.scale * 10, 0) / rs.length;
         const last = rs.reduce((m, r) => (r.date > m ? r.date : m), '');
         return { room: room, n: rs.length, avg: avg, last: last, topics: topics };
@@ -1069,7 +1077,12 @@ body{margin:0;background:#FAF9F6}
           const ts = (r.topics || '').split(';').filter(Boolean);
           (ts.length ? ts : ['Geen tekst']).forEach((t) => { c[t] = (c[t] || 0) + 1; });
         });
-        const topics = Object.keys(c).map((t) => ({ label: t, n: c[t] })).sort((a, b) => b.n - a.n || a.label.localeCompare(b.label));
+        const MND = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+        const topics = Object.keys(c).map((t) => ({ label: t, n: c[t] })).sort((a, b) => b.n - a.n || a.label.localeCompare(b.label)).map((tp) => Object.assign(tp, {
+          reviews: rs.filter((r) => { const ts = (r.topics || '').split(';').filter(Boolean); return (ts.length ? ts : ['Geen tekst']).indexOf(tp.label) >= 0; })
+            .sort((a, b) => b.date.localeCompare(a.date))
+            .map((r) => { const p = r.date.split('-').map(Number); return { platform: r.platform, date_label: (r.date_approx ? 'ca. ' : '') + p[2] + ' ' + MND[p[1] - 1], score_label: r.scale === 10 ? r.score.toFixed(1).replace('.', ',') + ' / 10' : r.score + ' / 5', reviewer: r.reviewer, issue: r.issue || '—', status: r.status }; })
+        }));
         const avg = rs.reduce((s, r) => s + r.score / r.scale * 10, 0) / rs.length;
         const last = rs.reduce((m, r) => (r.date > m ? r.date : m), '');
         return { room: room, n: rs.length, avg: avg, last: last, topics: topics };
@@ -1149,15 +1162,46 @@ body{margin:0;background:#FAF9F6}
       const b = document.createElement('span');
       b.textContent = r.n + (r.n === 1 ? ' klacht' : ' klachten');
       s.append(a, b);
-      const ul = document.createElement('ul');
+      const ul = document.createElement('div');
+      const tone = { 'te beantwoorden': 'warn', 'niet beantwoord': 'warn', 'beantwoord': 'ok' };
       r.topics.forEach((t) => {
-        const li = document.createElement('li');
+        const td = document.createElement('details');
+        td.className = 'rv-fold rv-topic';
+        td.dataset.key = r.room + '|' + t.label;
+        const ts = document.createElement('summary');
         const x = document.createElement('span');
         x.textContent = t.label;
         const y = document.createElement('span');
-        y.textContent = String(t.n);
-        li.append(x, y);
-        ul.append(li);
+        y.textContent = t.n + (t.n === 1 ? ' review' : ' reviews');
+        ts.append(x, y);
+        const box = document.createElement('div');
+        box.className = 'rv-scroll';
+        const tbl = document.createElement('table');
+        tbl.className = 'rv-table';
+        const head = document.createElement('tr');
+        ['Platform', 'Datum', 'Score', 'Gast', 'Kernpunt', 'Status'].forEach((h) => {
+          const th = document.createElement('th');
+          th.textContent = h;
+          head.append(th);
+        });
+        const thead = document.createElement('thead');
+        thead.append(head);
+        const tb = document.createElement('tbody');
+        (t.reviews || []).forEach((rv) => {
+          const tr = document.createElement('tr');
+          ['platform', 'date_label', 'score_label', 'reviewer', 'issue', 'status'].forEach((c) => {
+            const cell = document.createElement('td');
+            cell.textContent = rv[c] === undefined || rv[c] === '' ? '—' : rv[c];
+            if (c === 'status') cell.className = 'rv-st-' + (tone[rv.status] || 'muted');
+            if (c === 'issue') cell.style.minWidth = '16rem';
+            tr.append(cell);
+          });
+          tb.append(tr);
+        });
+        tbl.append(thead, tb);
+        box.append(tbl);
+        td.append(ts, box);
+        ul.append(td);
       });
       d.append(s, ul);
       return d;
