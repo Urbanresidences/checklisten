@@ -182,6 +182,11 @@ body{margin:0;background:#FAF9F6}
 .rv-topic { margin-left: 1.2rem; }
 .rv-topic summary { font-size: var(--cds-font-size-caption); }
 .rv-topic .rv-scroll { margin-bottom: var(--cds-gap-sm); }
+.rv-mcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: var(--cds-gap-md); margin: var(--cds-gap-md) 0; }
+.rv-mcard.now { background: var(--cream); }
+.rv-mcard .rv-big { margin: 2px 0 var(--cds-gap-xs); }
+.rv-mcard .rv-sub { margin-top: 3px; }
+.rv-mcard .rv-state { font-size: var(--cds-font-size-caption); color: var(--gold-dark); }
 </style>
 
 <div class="rv" id="reviews">
@@ -192,6 +197,7 @@ body{margin:0;background:#FAF9F6}
       <button type="button" class="rv-sw" data-pick="urm">Maastricht</button>
     </div>
     <nav class="rv-nav">
+      <a href="#maand" data-nav="maand">Maandoverzicht</a>
       <a href="#kern" data-nav="kern">De kern</a>
       <a href="#periode" data-nav="periode">Periode</a>
       <a href="#perweek" data-nav="perweek">Per week</a>
@@ -210,6 +216,51 @@ body{margin:0;background:#FAF9F6}
     <p class="rv-take"><b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="week_label">—</b> (<b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="period">—</b>): gemiddeld <b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="avg_label">—</b> uit <b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="n_label">—</b> reviews op Booking.com, <b data-draw="cell" data-fmt="text" data-source="focus_urr" data-field="avg_delta">—</b> ten opzichte van de week ervoor.</p>
     <p class="rv-note">Weken lopen van vrijdag tot en met donderdag, zoals in het bestaande weekrapport. Stand van <span data-draw="cell" data-fmt="date" data-source="platforms_urr" data-where="platform=Booking.com" data-field="as_of">—</span>.</p>
   </header>
+
+  <section class="rv-card" id="maand-urr">
+    <h2>Maandoverzicht</h2>
+    <p class="rv-take"><b data-draw="cell" data-fmt="text" data-source="monthfocus_urr" data-field="month_label">—</b> (<b data-draw="cell" data-fmt="text" data-source="monthfocus_urr" data-field="period">—</b>): gemiddeld <b data-draw="cell" data-fmt="text" data-source="monthfocus_urr" data-field="avg_label">—</b> uit <b data-draw="cell" data-fmt="text" data-source="monthfocus_urr" data-field="ota_n_label">—</b> OTA-reviews, <b data-draw="cell" data-fmt="text" data-source="monthfocus_urr" data-field="avg_delta">—</b> ten opzichte van <b data-draw="cell" data-fmt="text" data-source="monthfocus_urr" data-field="prev_label">—</b>.</p>
+    <p class="rv-note">Per kalendermaand, van de eerste tot en met de laatste dag van de maand. De rapportage start op vrijdag 25 september, dus september telt alleen vanaf die dag. Alle platforms tellen mee, op datum van de review. Het gemiddelde cijfer is dat van de OTA's (Booking.com en Expedia); Google en TripAdvisor tellen wel mee in de aantallen en de negatieve reviews. Per maand een kaart, de lopende maand eerst en daarna de vorige maanden (maximaal zes). Een maand die nog loopt of waarvan maar een deel is opgenomen, heeft de status erbij. De tabel onderaan toont alle maanden. Dit staat los van de weekweergave en het periodefilter.</p>
+    <p class="rv-fail" data-for="months_urr" hidden><span class="rv-dot"></span>Failed to load</p>
+    <template id="mcard-urr">
+      <div class="rv-tile rv-mcard">
+        <div class="rv-label"><b data-f="month_label">—</b></div>
+        <div class="rv-sub"><span data-f="period">—</span>, <span class="rv-state" data-f="state">—</span></div>
+        <div class="rv-label" style="margin-top: var(--cds-gap-sm)">Gemiddeld cijfer (OTA's, op 10)</div>
+        <div class="rv-big"><b data-f="avg_label">—</b></div>
+        <div class="rv-sub">Reviews: <b data-f="n_label">—</b> (Booking.com <b data-f="bk_n">—</b>, Expedia <b data-f="ex_n">—</b>, Google <b data-f="gg_n">—</b>, TripAdvisor <b data-f="ta_n">—</b>)</div>
+        <div class="rv-sub">Negatief: <b data-f="neg_n">—</b> (<b data-f="neg_pct">—</b> van alle reviews)</div>
+        <div class="rv-sub">Meest genoemde minpunt: <b data-f="top_c">—</b>, in <b data-f="top_c_n">—</b> reviews</div>
+      </div>
+    </template>
+    <div class="rv-mcards" data-draw="monthcards" data-source="months_urr" data-template="mcard-urr"></div>
+
+    <h2 style="margin-top: var(--cds-gap-md)">Gemiddeld cijfer per maand</h2>
+    <p class="rv-note">OTA's samen, op 10. Een maand met "deels" begint pas op 25 september, een maand met "lopend" is nog niet voorbij.</p>
+    <div class="rv-chart dash-skeleton" data-draw="vbar" data-source="months_urr" data-label="month_short" data-value="avg" data-fmt="one" data-max="10" data-aria="Gemiddeld cijfer per maand"></div>
+
+    <h2 style="margin-top: var(--cds-gap-md)">Per maand</h2>
+    <p class="rv-note">Gemiddeld cijfer per platform op de eigen schaal, tussen haakjes het aantal reviews. Google en TripAdvisor zijn geen boekingskanaal maar alleen een reviewbron, met sterren van 5. Bij Google is de datum bij benadering. Negatief is onder 8 bij de OTA's en onder 4 sterren op Google en TripAdvisor.</p>
+    <div class="rv-scroll">
+      <table class="rv-table" data-source="months_urr" data-row-key="key">
+        <thead>
+          <tr>
+            <th data-field="month_label">Maand</th>
+            <th data-field="period">Periode</th>
+            <th data-field="state">Status</th>
+            <th data-field="n_label">Reviews</th>
+            <th data-field="avg_label">Gemiddeld (OTA's, op 10)</th>
+            <th data-field="bk">Booking.com</th>
+            <th data-field="ex">Expedia</th>
+            <th data-field="gg">Google (van 5)</th>
+            <th data-field="ta">TripAdvisor (van 5)</th>
+            <th data-field="neg_label">Negatief</th>
+          </tr>
+        </thead>
+        <tbody data-draw="rows" data-source="months_urr" data-cols="month_label,period,state,n_label,avg_label,bk,ex,gg,ta,neg_label"></tbody>
+      </table>
+    </div>
+  </section>
 
   <section class="rv-tiles" id="kern-urr">
     <div class="rv-tile">
@@ -439,6 +490,51 @@ body{margin:0;background:#FAF9F6}
     <p class="rv-take"><b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="week_label">—</b> (<b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="period">—</b>): gemiddeld <b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="avg_label">—</b> uit <b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="n_label">—</b> reviews op Booking.com, <b data-draw="cell" data-fmt="text" data-source="focus_urm" data-field="avg_delta">—</b> ten opzichte van de week ervoor.</p>
     <p class="rv-note">Weken lopen van vrijdag tot en met donderdag, zoals in het bestaande weekrapport. Stand van <span data-draw="cell" data-fmt="date" data-source="platforms_urm" data-where="platform=Booking.com" data-field="as_of">—</span>.</p>
   </header>
+
+  <section class="rv-card" id="maand-urm">
+    <h2>Maandoverzicht</h2>
+    <p class="rv-take"><b data-draw="cell" data-fmt="text" data-source="monthfocus_urm" data-field="month_label">—</b> (<b data-draw="cell" data-fmt="text" data-source="monthfocus_urm" data-field="period">—</b>): gemiddeld <b data-draw="cell" data-fmt="text" data-source="monthfocus_urm" data-field="avg_label">—</b> uit <b data-draw="cell" data-fmt="text" data-source="monthfocus_urm" data-field="ota_n_label">—</b> OTA-reviews, <b data-draw="cell" data-fmt="text" data-source="monthfocus_urm" data-field="avg_delta">—</b> ten opzichte van <b data-draw="cell" data-fmt="text" data-source="monthfocus_urm" data-field="prev_label">—</b>.</p>
+    <p class="rv-note">Per kalendermaand, van de eerste tot en met de laatste dag van de maand. De rapportage start op vrijdag 25 september, dus september telt alleen vanaf die dag. Alle platforms tellen mee, op datum van de review. Het gemiddelde cijfer is dat van Booking.com (Expedia Maastricht is nog niet opgenomen); Google en TripAdvisor tellen wel mee in de aantallen en de negatieve reviews. Per maand een kaart, de lopende maand eerst en daarna de vorige maanden (maximaal zes). Een maand die nog loopt of waarvan maar een deel is opgenomen, heeft de status erbij. De tabel onderaan toont alle maanden. Dit staat los van de weekweergave en het periodefilter.</p>
+    <p class="rv-fail" data-for="months_urm" hidden><span class="rv-dot"></span>Failed to load</p>
+    <template id="mcard-urm">
+      <div class="rv-tile rv-mcard">
+        <div class="rv-label"><b data-f="month_label">—</b></div>
+        <div class="rv-sub"><span data-f="period">—</span>, <span class="rv-state" data-f="state">—</span></div>
+        <div class="rv-label" style="margin-top: var(--cds-gap-sm)">Gemiddeld cijfer (OTA's, op 10)</div>
+        <div class="rv-big"><b data-f="avg_label">—</b></div>
+        <div class="rv-sub">Reviews: <b data-f="n_label">—</b> (Booking.com <b data-f="bk_n">—</b>, Expedia <b data-f="ex_n">—</b>, Google <b data-f="gg_n">—</b>, TripAdvisor <b data-f="ta_n">—</b>)</div>
+        <div class="rv-sub">Negatief: <b data-f="neg_n">—</b> (<b data-f="neg_pct">—</b> van alle reviews)</div>
+        <div class="rv-sub">Meest genoemde minpunt: <b data-f="top_c">—</b>, in <b data-f="top_c_n">—</b> reviews</div>
+      </div>
+    </template>
+    <div class="rv-mcards" data-draw="monthcards" data-source="months_urm" data-template="mcard-urm"></div>
+
+    <h2 style="margin-top: var(--cds-gap-md)">Gemiddeld cijfer per maand</h2>
+    <p class="rv-note">OTA's samen, op 10. Een maand met "deels" begint pas op 25 september, een maand met "lopend" is nog niet voorbij.</p>
+    <div class="rv-chart dash-skeleton" data-draw="vbar" data-source="months_urm" data-label="month_short" data-value="avg" data-fmt="one" data-max="10" data-aria="Gemiddeld cijfer per maand"></div>
+
+    <h2 style="margin-top: var(--cds-gap-md)">Per maand</h2>
+    <p class="rv-note">Gemiddeld cijfer per platform op de eigen schaal, tussen haakjes het aantal reviews. Google en TripAdvisor zijn geen boekingskanaal maar alleen een reviewbron, met sterren van 5. Bij Google is de datum bij benadering. Negatief is onder 8 bij de OTA's en onder 4 sterren op Google en TripAdvisor.</p>
+    <div class="rv-scroll">
+      <table class="rv-table" data-source="months_urm" data-row-key="key">
+        <thead>
+          <tr>
+            <th data-field="month_label">Maand</th>
+            <th data-field="period">Periode</th>
+            <th data-field="state">Status</th>
+            <th data-field="n_label">Reviews</th>
+            <th data-field="avg_label">Gemiddeld (OTA's, op 10)</th>
+            <th data-field="bk">Booking.com</th>
+            <th data-field="ex">Expedia</th>
+            <th data-field="gg">Google (van 5)</th>
+            <th data-field="ta">TripAdvisor (van 5)</th>
+            <th data-field="neg_label">Negatief</th>
+          </tr>
+        </thead>
+        <tbody data-draw="rows" data-source="months_urm" data-cols="month_label,period,state,n_label,avg_label,bk,ex,gg,ta,neg_label"></tbody>
+      </table>
+    </div>
+  </section>
 
   <section class="rv-tiles" id="kern-urm">
     <div class="rv-tile">
@@ -919,6 +1015,75 @@ body{margin:0;background:#FAF9F6}
     }
   });
 
+  dash.calc('months_urr', {
+    title: 'Per maand',
+    description: 'Aantal reviews, gemiddeld cijfer en negatieve reviews per kalendermaand vanaf 25 september',
+    inputs: ['reviews'],
+    fn: (reviews0) => {
+      const START = '2026-09-25';
+      const MND = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+      const FULL = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
+      const nf1 = new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      const sp = START.split('-').map(Number);
+      const startLabel = sp[2] + ' ' + MND[sp[1] - 1];
+      const reviews = reviews0.filter((r) => r.property === prop && r.date >= START);
+      const latest = reviews.filter((r) => r.scale === 10).reduce((m, r) => (r.date > m ? r.date : m), '');
+      const by = {};
+      reviews.forEach((r) => { const k = r.date.slice(0, 7); (by[k] = by[k] || []).push(r); });
+      const part = (rs, plat) => {
+        const x = rs.filter((r) => r.platform === plat);
+        if (!x.length) return '—';
+        return nf1.format(x.reduce((s, r) => s + r.score, 0) / x.length) + ' (' + x.length + ')';
+      };
+      return Object.keys(by).sort().map((key) => {
+        const y = +key.slice(0, 4), mo = +key.slice(5, 7);
+        const monthEnd = new Date(Date.UTC(y, mo, 0)).toISOString().slice(0, 10);
+        const rs = by[key];
+        const ota = rs.filter((r) => r.scale === 10);
+        const neg = rs.filter((r) => r.score < (r.scale === 10 ? 8 : 4));
+        const running = latest < monthEnd;
+        const partial = START > key + '-01';
+        const name = FULL[mo - 1] + ' ' + y;
+        const tc = {};
+        ota.forEach((r) => (r.topics || '').split(';').filter(Boolean).forEach((t) => { tc[t] = (tc[t] || 0) + 1; }));
+        const top = Object.keys(tc).map((t) => ({ label: t, n: tc[t] })).sort((a, b) => b.n - a.n || a.label.localeCompare(b.label))[0];
+        const avg = ota.length ? ota.reduce((s, r) => s + r.score, 0) / ota.length : null;
+        const cnt = (plat) => rs.filter((r) => r.platform === plat).length;
+        const pct = rs.length ? nf1.format(neg.length / rs.length * 100) + '%' : '—';
+        return {
+          key: key, name: name, period: '1 ' + MND[mo - 1] + ' - ' + monthEnd.slice(8).replace(/^0/, '') + ' ' + MND[mo - 1], month_label: name.charAt(0).toUpperCase() + name.slice(1),
+          month_short: MND[mo - 1] + (running ? ' (lopend)' : partial ? ' (deels)' : ''),
+          state: running ? 'lopend' : partial ? 'deels (vanaf ' + startLabel + ')' : 'volledig',
+          running: running, partial: partial,
+          n: rs.length, n_label: String(rs.length), ota_n_label: String(ota.length),
+          avg: avg, avg_label: avg === null ? '—' : nf1.format(avg),
+          bk: part(rs, 'Booking.com'), ex: part(rs, 'Expedia'), gg: part(rs, 'Google'), ta: part(rs, 'TripAdvisor'),
+          bk_n: String(cnt('Booking.com')), ex_n: String(cnt('Expedia')), gg_n: String(cnt('Google')), ta_n: String(cnt('TripAdvisor')),
+          neg_n: String(neg.length), neg_pct: pct, neg_label: neg.length + ' (' + pct + ')',
+          top_c: top ? top.label : '—', top_c_n: top ? String(top.n) : '—'
+        };
+      });
+    }
+  });
+
+  dash.calc('monthfocus_urr', {
+    title: 'Kern van de maand',
+    description: 'De laatste volledige maand met het verschil in gemiddeld cijfer ten opzichte van de maand ervoor',
+    inputs: ['months_urr'],
+    fn: (months) => {
+      const sg = new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1, signDisplay: 'exceptZero' });
+      const done = months.filter((m) => !m.running);
+      const f = done[done.length - 1];
+      if (!f) return [];
+      const i = months.indexOf(f);
+      const p = i > 0 ? months[i - 1] : null;
+      return [Object.assign({}, f, {
+        prev_label: p ? p.name + (p.partial ? ' (deels)' : '') : '—',
+        avg_delta: p && p.avg !== null && f.avg !== null ? sg.format(f.avg - p.avg) : '—'
+      })];
+    }
+  });
+
   dash.calc('platforms_urr', {
     title: 'Totaalscore per platform',
     description: 'Score en aantal per platform als tekst',
@@ -1177,6 +1342,75 @@ body{margin:0;background:#FAF9F6}
     }
   });
 
+  dash.calc('months_urm', {
+    title: 'Per maand',
+    description: 'Aantal reviews, gemiddeld cijfer en negatieve reviews per kalendermaand vanaf 25 september',
+    inputs: ['reviews'],
+    fn: (reviews0) => {
+      const START = '2026-09-25';
+      const MND = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+      const FULL = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
+      const nf1 = new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      const sp = START.split('-').map(Number);
+      const startLabel = sp[2] + ' ' + MND[sp[1] - 1];
+      const reviews = reviews0.filter((r) => r.property === prop && r.date >= START);
+      const latest = reviews.filter((r) => r.scale === 10).reduce((m, r) => (r.date > m ? r.date : m), '');
+      const by = {};
+      reviews.forEach((r) => { const k = r.date.slice(0, 7); (by[k] = by[k] || []).push(r); });
+      const part = (rs, plat) => {
+        const x = rs.filter((r) => r.platform === plat);
+        if (!x.length) return '—';
+        return nf1.format(x.reduce((s, r) => s + r.score, 0) / x.length) + ' (' + x.length + ')';
+      };
+      return Object.keys(by).sort().map((key) => {
+        const y = +key.slice(0, 4), mo = +key.slice(5, 7);
+        const monthEnd = new Date(Date.UTC(y, mo, 0)).toISOString().slice(0, 10);
+        const rs = by[key];
+        const ota = rs.filter((r) => r.scale === 10);
+        const neg = rs.filter((r) => r.score < (r.scale === 10 ? 8 : 4));
+        const running = latest < monthEnd;
+        const partial = START > key + '-01';
+        const name = FULL[mo - 1] + ' ' + y;
+        const tc = {};
+        ota.forEach((r) => (r.topics || '').split(';').filter(Boolean).forEach((t) => { tc[t] = (tc[t] || 0) + 1; }));
+        const top = Object.keys(tc).map((t) => ({ label: t, n: tc[t] })).sort((a, b) => b.n - a.n || a.label.localeCompare(b.label))[0];
+        const avg = ota.length ? ota.reduce((s, r) => s + r.score, 0) / ota.length : null;
+        const cnt = (plat) => rs.filter((r) => r.platform === plat).length;
+        const pct = rs.length ? nf1.format(neg.length / rs.length * 100) + '%' : '—';
+        return {
+          key: key, name: name, period: '1 ' + MND[mo - 1] + ' - ' + monthEnd.slice(8).replace(/^0/, '') + ' ' + MND[mo - 1], month_label: name.charAt(0).toUpperCase() + name.slice(1),
+          month_short: MND[mo - 1] + (running ? ' (lopend)' : partial ? ' (deels)' : ''),
+          state: running ? 'lopend' : partial ? 'deels (vanaf ' + startLabel + ')' : 'volledig',
+          running: running, partial: partial,
+          n: rs.length, n_label: String(rs.length), ota_n_label: String(ota.length),
+          avg: avg, avg_label: avg === null ? '—' : nf1.format(avg),
+          bk: part(rs, 'Booking.com'), ex: part(rs, 'Expedia'), gg: part(rs, 'Google'), ta: part(rs, 'TripAdvisor'),
+          bk_n: String(cnt('Booking.com')), ex_n: String(cnt('Expedia')), gg_n: String(cnt('Google')), ta_n: String(cnt('TripAdvisor')),
+          neg_n: String(neg.length), neg_pct: pct, neg_label: neg.length + ' (' + pct + ')',
+          top_c: top ? top.label : '—', top_c_n: top ? String(top.n) : '—'
+        };
+      });
+    }
+  });
+
+  dash.calc('monthfocus_urm', {
+    title: 'Kern van de maand',
+    description: 'De laatste volledige maand met het verschil in gemiddeld cijfer ten opzichte van de maand ervoor',
+    inputs: ['months_urm'],
+    fn: (months) => {
+      const sg = new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1, signDisplay: 'exceptZero' });
+      const done = months.filter((m) => !m.running);
+      const f = done[done.length - 1];
+      if (!f) return [];
+      const i = months.indexOf(f);
+      const p = i > 0 ? months[i - 1] : null;
+      return [Object.assign({}, f, {
+        prev_label: p ? p.name + (p.partial ? ' (deels)' : '') : '—',
+        avg_delta: p && p.avg !== null && f.avg !== null ? sg.format(f.avg - p.avg) : '—'
+      })];
+    }
+  });
+
   dash.calc('platforms_urm', {
     title: 'Totaalscore per platform',
     description: 'Score en aantal per platform als tekst',
@@ -1203,6 +1437,26 @@ body{margin:0;background:#FAF9F6}
     if (v === undefined || v === null || v === '') { el.textContent = '—'; return; }
     if (el.dataset.fmt === 'date') el.textContent = FMT.date.format(new Date(v));
     else el.textContent = String(v);
+  });
+
+  dash.draw('monthcards', (el) => {
+    const tpl = document.getElementById(el.dataset.template);
+    const rows = rowsOf(el.dataset.source).slice().reverse().slice(0, 6);
+    if (!tpl || !rows.length) { el.replaceChildren(); return; }
+    el.replaceChildren(...rows.map((m) => {
+      const frag = tpl.content.cloneNode(true);
+      frag.querySelectorAll('[data-f]').forEach((n) => {
+        const f = n.dataset.f;
+        n.textContent = m[f] === undefined || m[f] === null || m[f] === '' ? '—' : String(m[f]);
+        n.setAttribute('data-source', el.dataset.source);
+        n.setAttribute('data-field', f);
+        n.setAttribute('data-where', 'key=' + m.key);
+        n.removeAttribute('data-f');
+      });
+      const card = frag.firstElementChild;
+      if (m.running) card.classList.add('now');
+      return card;
+    }));
   });
 
   dash.draw('rows', (tb) => {
