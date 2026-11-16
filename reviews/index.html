@@ -420,9 +420,9 @@ body{margin:0;background:#FAF9F6}
   <div class="rv-cols">
     <section class="rv-card" id="verdeling-urr">
       <h2>2. Scoreverdeling</h2>
-      <p class="rv-note">Aantal reviews per cijfer in de week van de kern.</p>
+      <p class="rv-note">Aantal Booking.com- en Expedia-reviews per cijfer in de gekozen periode (zie Periode bovenaan).</p>
       <p class="rv-fail" data-for="dist_urr" hidden><span class="rv-dot"></span>Failed to load</p>
-      <div class="rv-chart dash-skeleton" data-draw="vbar" data-source="dist_urr" data-label="label" data-value="n" data-fmt="int" data-aria="Aantal reviews per cijfer"></div>
+      <div class="rv-chart dash-skeleton" data-draw="pdist" data-prop="URR" data-source="reviews" data-label="label" data-value="n" data-fmt="int" data-aria="Aantal reviews per cijfer"></div>
     </section>
     <section class="rv-card" id="platforms-urr">
       <h2>Totaalscore per platform</h2>
@@ -440,15 +440,15 @@ body{margin:0;background:#FAF9F6}
   <div class="rv-cols" style="margin-top: var(--cds-gap-md)">
     <section class="rv-card" id="aandacht-urr">
       <h2>3. Aandachtspunten</h2>
-      <p class="rv-note">Aantal Booking.com- en Expedia-reviews waarin gasten dit noemen als minpunt, vanaf 25 september.</p>
+      <p class="rv-note">Aantal reviews waarin gasten dit noemen als minpunt, in de gekozen periode (zie Periode bovenaan). Zonder kanaalkeuze tellen alleen Booking.com en Expedia mee.</p>
       <p class="rv-fail" data-for="topics_c_urr" hidden><span class="rv-dot"></span>Failed to load</p>
-      <div class="rv-chart dash-skeleton" data-draw="hbar" data-source="topics_c_urr" data-aria="Minpunten per onderwerp"></div>
+      <div class="rv-chart dash-skeleton" data-draw="phbar" data-prop="URR" data-topic="topics" data-source="reviews" data-aria="Minpunten per onderwerp"></div>
     </section>
     <section class="rv-card" id="waardering-urr">
       <h2>4. Wat gasten waarderen</h2>
-      <p class="rv-note">Aantal Booking.com- en Expedia-reviews waarin gasten dit noemen als pluspunt, vanaf 25 september.</p>
+      <p class="rv-note">Aantal reviews waarin gasten dit noemen als pluspunt, in de gekozen periode (zie Periode bovenaan). Zonder kanaalkeuze tellen alleen Booking.com en Expedia mee.</p>
       <p class="rv-fail" data-for="topics_p_urr" hidden><span class="rv-dot"></span>Failed to load</p>
-      <div class="rv-chart dash-skeleton" data-draw="hbar" data-source="topics_p_urr" data-aria="Pluspunten per onderwerp"></div>
+      <div class="rv-chart dash-skeleton" data-draw="phbar" data-prop="URR" data-topic="praise" data-source="reviews" data-aria="Pluspunten per onderwerp"></div>
     </section>
   </div>
 
@@ -694,9 +694,9 @@ body{margin:0;background:#FAF9F6}
   <div class="rv-cols">
     <section class="rv-card" id="verdeling-urm">
       <h2>2. Scoreverdeling</h2>
-      <p class="rv-note">Aantal reviews per cijfer in de week van de kern.</p>
+      <p class="rv-note">Aantal Booking.com- en Expedia-reviews per cijfer in de gekozen periode (zie Periode bovenaan).</p>
       <p class="rv-fail" data-for="dist_urm" hidden><span class="rv-dot"></span>Failed to load</p>
-      <div class="rv-chart dash-skeleton" data-draw="vbar" data-source="dist_urm" data-label="label" data-value="n" data-fmt="int" data-aria="Aantal reviews per cijfer"></div>
+      <div class="rv-chart dash-skeleton" data-draw="pdist" data-prop="URM" data-source="reviews" data-label="label" data-value="n" data-fmt="int" data-aria="Aantal reviews per cijfer"></div>
     </section>
     <section class="rv-card" id="platforms-urm">
       <h2>Totaalscore per platform</h2>
@@ -714,15 +714,15 @@ body{margin:0;background:#FAF9F6}
   <div class="rv-cols" style="margin-top: var(--cds-gap-md)">
     <section class="rv-card" id="aandacht-urm">
       <h2>3. Aandachtspunten</h2>
-      <p class="rv-note">Aantal Booking.com- en Expedia-reviews waarin gasten dit noemen als minpunt, vanaf 25 september.</p>
+      <p class="rv-note">Aantal reviews waarin gasten dit noemen als minpunt, in de gekozen periode (zie Periode bovenaan). Zonder kanaalkeuze tellen alleen Booking.com en Expedia mee.</p>
       <p class="rv-fail" data-for="topics_c_urm" hidden><span class="rv-dot"></span>Failed to load</p>
-      <div class="rv-chart dash-skeleton" data-draw="hbar" data-source="topics_c_urm" data-aria="Minpunten per onderwerp"></div>
+      <div class="rv-chart dash-skeleton" data-draw="phbar" data-prop="URM" data-topic="topics" data-source="reviews" data-aria="Minpunten per onderwerp"></div>
     </section>
     <section class="rv-card" id="waardering-urm">
       <h2>4. Wat gasten waarderen</h2>
-      <p class="rv-note">Aantal Booking.com- en Expedia-reviews waarin gasten dit noemen als pluspunt, vanaf 25 september.</p>
+      <p class="rv-note">Aantal reviews waarin gasten dit noemen als pluspunt, in de gekozen periode (zie Periode bovenaan). Zonder kanaalkeuze tellen alleen Booking.com en Expedia mee.</p>
       <p class="rv-fail" data-for="topics_p_urm" hidden><span class="rv-dot"></span>Failed to load</p>
-      <div class="rv-chart dash-skeleton" data-draw="hbar" data-source="topics_p_urm" data-aria="Pluspunten per onderwerp"></div>
+      <div class="rv-chart dash-skeleton" data-draw="phbar" data-prop="URM" data-topic="praise" data-source="reviews" data-aria="Pluspunten per onderwerp"></div>
     </section>
   </div>
 
@@ -1530,8 +1530,7 @@ body{margin:0;background:#FAF9F6}
       .style('top', Math.max(0, ev.clientY - box.top - 34) + 'px');
   };
 
-  dash.draw('vbar', (el) => {
-    const g = dash.data(el.dataset.source);
+  const drawVbar = (el, g) => {
     el.replaceChildren();
     el.classList.toggle('dash-skeleton', g.status === 'loading');
     if (g.status !== 'ok' || !g.data.length) return;
@@ -1554,7 +1553,8 @@ body{margin:0;background:#FAF9F6}
       .attr('y', H - 6).text((d) => d[lf]);
     col.on('mousemove', (ev, d) => showTip(el, tip, ev, d[lf] + ': ' + fmt.format(d[vf])))
       .on('mouseleave', () => tip.style('display', 'none'));
-  });
+  };
+  dash.draw('vbar', (el) => drawVbar(el, dash.data(el.dataset.source)));
 
   dash.draw('hbar', (el) => {
     const g = dash.data(el.dataset.source);
@@ -1898,6 +1898,13 @@ body{margin:0;background:#FAF9F6}
     const rs = chan() ? rs0 : rs0.filter((x) => x.scale === 10);
     pHbar(el, tally(rs, el.dataset.topic));
   });
+  dash.draw('pdist', (el) => {
+    const out = [];
+    for (let s = 1; s <= 10; s++) out.push({ label: String(s), n: 0 });
+    periodRows(el.dataset.prop).filter((x) => x.scale === 10).forEach((x) => { out[Math.min(10, Math.max(1, Math.round(x.score))) - 1].n += 1; });
+    drawVbar(el, { status: 'ok', data: out });
+  });
+
   dash.draw('pnegfold', (el) => pNegFold(el, negGroups(periodRows(el.dataset.prop))));
   dash.draw('prooms', (tb) => {
     const by = {};
